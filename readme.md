@@ -28,7 +28,9 @@ To run the application, you need to use **Docker Compose**. This will set up and
 ## Way 1: Running the Gateway API locally
 Once the infrastructure is up and running, you can start the Gateway API without building the entire Docker image. To do this:
 
-Start the Gateway API locally using:
+1. Set up your .env file
+
+2. Start the Gateway API locally using:
 
 ```sh
 npm run start
