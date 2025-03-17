@@ -9,6 +9,10 @@ import { PrismaClient } from '@prisma/client';
 // Load environment variables from .env
 dotenv.config();
 
+const host = process.env.HOST || 'localhost';
+const port = process.env.PORT ? Number(process.env.PORT) : 3000;
+
+
 // Ensure DATABASE_URL is available
 // if (!process.env.DATABASE_URL) {
 //   console.error('DATABASE_URL environment variable is not set');
@@ -50,7 +54,7 @@ async function startServer() {
         url: 'https://swagger.io',
         description: 'Find more info here'
       },
-      host: process.env.HOST || 'localhost',
+      host: host+":"+port,
       schemes: ['http'],
       consumes: ['application/json'],
       produces: ['application/json']
@@ -58,18 +62,14 @@ async function startServer() {
     exposeRoute: true,
   });
 
-  // 3. Register Swagger UI plugin (serves the interactive UI)
   fastify.register(fastifySwaggerUi, {
     routePrefix: '/docs'
   });
 
-  // 4. Register routes (Swagger will include these in the generated spec)
-  registerRoutes(fastify);
+  fastify.register(registerRoutes);
 
   // 5. Start server
   try {
-    const port = Number(process.env.PORT) || 3000;
-    const host = process.env.HOST || '0.0.0.0';
     await fastify.listen({ port, host });
     fastify.log.info(`Server started on port ${port}`);
   } catch (err) {
