@@ -1,7 +1,7 @@
 import { Config } from './app/services.config';
 const config = Config.getInstance();
 console.log(`User management IP: ${config.getUserManagementIP()}`);
-import { AccountManagementService } from './app/services/accountManagement.service';
+import { AccountManagementService } from './app/services/accountManagement/accountManagement.service';
 import { 
   UserType, 
   UserWithHelpersType, 
@@ -10,7 +10,7 @@ import {
   CommercialType, 
   MaintainerType, 
   AdminType 
-} from './app/services/types';
+} from './app/services/accountManagement/types';
 
 const service = new AccountManagementService();
 

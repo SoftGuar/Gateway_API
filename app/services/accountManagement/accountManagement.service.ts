@@ -1,4 +1,4 @@
-import { Config } from '../services.config';
+import { Config } from '../../services.config';
 import { UserService } from './user.service';
 import { HelperService } from './helper.service';
 import { DeciderService } from './decider.service';

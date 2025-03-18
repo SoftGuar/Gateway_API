@@ -1,4 +1,4 @@
-import { Config } from '../services.config';
+import { Config } from '../../services.config';
 
 import { CommercialType } from './types';
 

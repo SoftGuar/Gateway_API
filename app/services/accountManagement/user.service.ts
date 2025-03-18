@@ -1,4 +1,4 @@
-import { Config } from '../services.config';
+import { Config } from '../../services.config';
 
 import { UserType, UserWithHelpersType,HelperType } from './types';
   
