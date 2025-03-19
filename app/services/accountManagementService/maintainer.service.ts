@@ -2,6 +2,16 @@ import { Config } from '../../services.config';
 
 import { MaintainerType } from './types';
 
+
+export interface CreateMaintainerData {
+  first_name: string;
+  last_name: string;
+  email: string;
+  password: string;
+  phone?: string;
+}
+
+
 export class MaintainerService {
   private baseUrl: string;
 
@@ -10,13 +20,7 @@ export class MaintainerService {
   }
 
         // POST /maintainer
-        async createMaintainer(maintainerData: {
-            first_name: string;
-            last_name: string;
-            email: string;
-            password: string;
-            phone?: string;
-          }): Promise<MaintainerType> {
+        async createMaintainer(maintainerData: CreateMaintainerData): Promise<MaintainerType> {
             const response = await fetch(`${this.baseUrl}/maintainer`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
@@ -54,13 +58,7 @@ export class MaintainerService {
           }
         
           // PUT /maintainer/:id
-          async updateMaintainer(id: string, updateData: Partial<{
-            first_name: string;
-            last_name: string;
-            email: string;
-            password: string;
-            phone?: string;
-          }>): Promise<MaintainerType> {
+          async updateMaintainer(id: string, updateData: Partial<CreateMaintainerData>): Promise<MaintainerType> {
             const response = await fetch(`${this.baseUrl}/maintainer/${id}`, {
               method: 'PUT',
               headers: { 'Content-Type': 'application/json' },

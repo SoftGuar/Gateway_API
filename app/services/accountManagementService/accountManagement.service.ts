@@ -6,6 +6,15 @@ import { CommercialService } from './commercial.service';
 import { MaintainerService } from './maintainer.service';
 import { AdminService } from './admin.service';
 
+import { CreateUserData } from './user.service';
+import { CreateDeciderData } from './decider.service';
+import { CreateHelperData } from './helper.service';
+import { CreateCommercialData } from './commercial.service';
+import { CreateMaintainerData } from './maintainer.service';
+import { CreateAdminData } from './admin.service';
+
+
+
 import { 
   UserType, 
   UserWithHelpersType, 
@@ -15,6 +24,17 @@ import {
   MaintainerType, 
   AdminType 
 } from './types';
+
+
+
+
+
+
+
+
+
+
+
 
 export class AccountManagementService {
   private userService: UserService;
@@ -34,13 +54,7 @@ export class AccountManagementService {
   }
 
   // User methods
-  async createUser(userData: {
-    first_name: string;
-    last_name: string;
-    email: string;
-    password: string;
-    phone?: string;
-  }): Promise<UserType> {
+  async createUser(userData: CreateUserData): Promise<UserType> {
     return this.userService.createUser(userData);
   }
 
@@ -52,13 +66,7 @@ export class AccountManagementService {
     return this.userService.getUserById(id);
   }
 
-  async updateUser(id: string, updateData: Partial<{
-    first_name: string;
-    last_name: string;
-    email: string;
-    password: string;
-    phone?: string;
-  }>): Promise<UserType> {
+  async updateUser(id: string, updateData: Partial<CreateUserData>): Promise<UserType> {
     return this.userService.updateUser(id, updateData);
   }
 
@@ -79,13 +87,7 @@ export class AccountManagementService {
   }
 
   // Helper methods
-  async createHelper(helperData: {
-    first_name: string;
-    last_name: string;
-    email: string;
-    password: string;
-    phone?: string;
-  }): Promise<HelperType> {
+  async createHelper(helperData: CreateHelperData): Promise<HelperType> {
     return this.helperService.createHelper(helperData);
   }
 
@@ -97,13 +99,7 @@ export class AccountManagementService {
     return this.helperService.getHelperById(id);
   }
 
-  async updateHelper(id: string, updateData: Partial<{
-    first_name: string;
-    last_name: string;
-    email: string;
-    password: string;
-    phone?: string;
-  }>): Promise<HelperType> {
+  async updateHelper(id: string, updateData: Partial<CreateHelperData>): Promise<HelperType> {
     return this.helperService.updateHelper(id, updateData);
   }
 
@@ -112,13 +108,7 @@ export class AccountManagementService {
   }
 
   // Decider methods
-  async createDecider(deciderData: {
-    first_name: string;
-    last_name: string;
-    email: string;
-    password: string;
-    phone?: string;
-  }): Promise<DeciderType> {
+  async createDecider(deciderData: CreateDeciderData): Promise<DeciderType> {
     return this.deciderService.createDecider(deciderData);
   }
 
@@ -130,13 +120,7 @@ export class AccountManagementService {
     return this.deciderService.getDeciderById(id);
   }
 
-  async updateDecider(id: string, updateData: Partial<{
-    first_name: string;
-    last_name: string;
-    email: string;
-    password: string;
-    phone?: string;
-  }>): Promise<DeciderType> {
+  async updateDecider(id: string, updateData: Partial<CreateDeciderData>): Promise<DeciderType> {
     return this.deciderService.updateDecider(id, updateData);
   }
 
@@ -145,13 +129,7 @@ export class AccountManagementService {
   }
 
   // Commercial methods
-  async createCommercial(CommercialData: {
-    first_name: string;
-    last_name: string;
-    email: string;
-    password: string;
-    phone?: string;
-  }): Promise<CommercialType> {
+  async createCommercial(CommercialData: CreateCommercialData): Promise<CommercialType> {
     return this.CommercialService.createCommercial(CommercialData);
   }
 
@@ -163,13 +141,7 @@ export class AccountManagementService {
     return this.CommercialService.getCommercialById(id);
   }
 
-  async updateCommercial(id: string, updateData: Partial<{
-    first_name: string;
-    last_name: string;
-    email: string;
-    password: string;
-    phone?: string;
-  }>): Promise<CommercialType> {
+  async updateCommercial(id: string, updateData: Partial<CreateCommercialData>): Promise<CommercialType> {
     return this.CommercialService.updateCommercial(id, updateData);
   }
 
@@ -178,13 +150,7 @@ export class AccountManagementService {
   }
 
   // Maintainer methods
-  async createMaintainer(maintainerData: {
-    first_name: string;
-    last_name: string;
-    email: string;
-    password: string;
-    phone?: string;
-  }): Promise<MaintainerType> {
+  async createMaintainer(maintainerData: CreateMaintainerData): Promise<MaintainerType> {
     return this.maintainerService.createMaintainer(maintainerData);
   }
 
@@ -196,13 +162,7 @@ export class AccountManagementService {
     return this.maintainerService.getMaintainerById(id);
   }
 
-  async updateMaintainer(id: string, updateData: Partial<{
-    first_name: string;
-    last_name: string;
-    email: string;
-    password: string;
-    phone?: string;
-  }>): Promise<MaintainerType> {
+  async updateMaintainer(id: string, updateData: Partial<CreateMaintainerData>): Promise<MaintainerType> {
     return this.maintainerService.updateMaintainer(id, updateData);
   }
 
@@ -211,14 +171,7 @@ export class AccountManagementService {
   }
 
   // Admin methods
-  async createAdmin(adminData: {
-    first_name: string;
-    last_name: string;
-    email: string;
-    password: string;
-    phone?: string;
-    add_by: number;
-  }): Promise<AdminType> {
+  async createAdmin(adminData: CreateAdminData): Promise<AdminType> {
     return this.adminService.createAdmin(adminData);
   }
 
@@ -230,13 +183,7 @@ export class AccountManagementService {
     return this.adminService.getAdminById(id);
   }
 
-  async updateAdmin(id: string, updateData: Partial<{
-    first_name: string;
-    last_name: string;
-    email: string;
-    password: string;
-    phone?: string;
-  }>): Promise<AdminType> {
+  async updateAdmin(id: string, updateData: Partial<CreateAdminData>): Promise<AdminType> {
     return this.adminService.updateAdmin(id, updateData);
   }
 

@@ -2,6 +2,17 @@ import { Config } from '../../services.config';
 
 import { DeciderType } from './types';
 
+
+
+export interface CreateDeciderData {
+  first_name: string;
+  last_name: string;
+  email: string;
+  password: string;
+  phone?: string;
+}
+
+
 export class DeciderService {
   private baseUrl: string;
 
@@ -10,13 +21,7 @@ export class DeciderService {
   }
 
         // POST /decider
-        async createDecider(DeciderData: {
-          first_name: string;
-          last_name: string;
-          email: string;
-          password: string;
-          phone?: string;
-        }): Promise<DeciderType> {
+        async createDecider(DeciderData: CreateDeciderData): Promise<DeciderType> {
           const response = await fetch(`${this.baseUrl}/decider`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -54,13 +59,7 @@ export class DeciderService {
         }
       
         // PUT /decider/:id
-        async updateDecider(id: string, updateData: Partial<{
-          first_name: string;
-          last_name: string;
-          email: string;
-          password: string;
-          phone?: string;
-        }>): Promise<DeciderType> {
+        async updateDecider(id: string, updateData: Partial<CreateDeciderData>): Promise<DeciderType> {
           const response = await fetch(`${this.baseUrl}/decider/${id}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },

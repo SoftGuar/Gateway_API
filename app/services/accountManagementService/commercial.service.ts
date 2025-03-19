@@ -2,6 +2,15 @@ import { Config } from '../../services.config';
 
 import { CommercialType } from './types';
 
+export interface CreateCommercialData {
+  first_name: string;
+  last_name: string;
+  email: string;
+  password: string;
+  phone?: string;
+}
+
+
 export class CommercialService {
   private baseUrl: string;
 
@@ -10,13 +19,7 @@ export class CommercialService {
   }
 
             // POST /commercials
-    async createCommercial(CommercialData: {
-      first_name: string;
-      last_name: string;
-      email: string;
-      password: string;
-      phone?: string;
-    }): Promise<CommercialType> {
+    async createCommercial(CommercialData: CreateCommercialData): Promise<CommercialType> {
       const response = await fetch(`${this.baseUrl}/commercials`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -54,13 +57,7 @@ export class CommercialService {
     }
   
     // PUT /commercials/:id
-    async updateCommercial(id: string, updateData: Partial<{
-      first_name: string;
-      last_name: string;
-      email: string;
-      password: string;
-      phone?: string;
-    }>): Promise<CommercialType> {
+    async updateCommercial(id: string, updateData: Partial<CreateCommercialData>): Promise<CommercialType> {
       const response = await fetch(`${this.baseUrl}/commercials/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },

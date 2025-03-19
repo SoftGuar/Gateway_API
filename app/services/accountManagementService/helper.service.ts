@@ -2,6 +2,18 @@ import { Config } from '../../services.config';
 
 import { HelperType } from './types';
 
+
+
+
+export interface CreateHelperData{
+  first_name: string;
+  last_name: string;
+  email: string;
+  password: string;
+  phone?: string;
+}
+
+
 export class HelperService {
   private baseUrl: string;
 
@@ -10,13 +22,7 @@ export class HelperService {
   }
 
     // POST /helpers
-    async createHelper(helperData: {
-      first_name: string;
-      last_name: string;
-      email: string;
-      password: string;
-      phone?: string;
-    }): Promise<HelperType> {
+    async createHelper(helperData: CreateHelperData): Promise<HelperType> {
       const response = await fetch(`${this.baseUrl}/helpers`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -54,13 +60,7 @@ export class HelperService {
     }
   
     // PUT /helpers/:id
-    async updateHelper(id: string, updateData: Partial<{
-      first_name: string;
-      last_name: string;
-      email: string;
-      password: string;
-      phone?: string;
-    }>): Promise<HelperType> {
+    async updateHelper(id: string, updateData: Partial<CreateHelperData>): Promise<HelperType> {
       const response = await fetch(`${this.baseUrl}/helpers/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },

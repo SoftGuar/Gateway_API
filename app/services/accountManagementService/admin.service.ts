@@ -2,6 +2,17 @@ import { Config } from '../../services.config';
 import { AdminType } from './types';
 
 
+export interface CreateAdminData {
+  first_name: string;
+  last_name: string;
+  email: string;
+  password: string;
+  phone?: string;
+  privilege: number;
+  add_by: number;
+}
+
+
 export class AdminService {
   private baseUrl: string;
 
@@ -10,14 +21,7 @@ export class AdminService {
   }
 
             // POST /admins
-            async createAdmin(AdminData: {
-                first_name: string;
-                last_name: string;
-                email: string;
-                password: string;
-                phone?: string;
-                add_by: number;
-              }): Promise<AdminType> {
+            async createAdmin(AdminData: CreateAdminData): Promise<AdminType> {
                 const response = await fetch(`${this.baseUrl}/admins`, {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
@@ -55,13 +59,7 @@ export class AdminService {
               }
             
               // PUT /admins/:id
-              async updateAdmin(id: string, updateData: Partial<{
-                first_name: string;
-                last_name: string;
-                email: string;
-                password: string;
-                phone?: string;
-              }>): Promise<AdminType> {
+              async updateAdmin(id: string, updateData: Partial<CreateAdminData>): Promise<AdminType> {
                 const response = await fetch(`${this.baseUrl}/admins/${id}`, {
                   method: 'PUT',
                   headers: { 'Content-Type': 'application/json' },

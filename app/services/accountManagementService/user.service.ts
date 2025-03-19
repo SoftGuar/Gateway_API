@@ -1,7 +1,14 @@
 import { Config } from '../../services.config';
 
 import { UserType, UserWithHelpersType,HelperType } from './types';
-  
+
+export interface CreateUserData {
+  first_name: string;
+  last_name: string;
+  email: string;
+  password: string;
+  phone?: string;
+}
 
 export class UserService {
   private baseUrl: string;
@@ -11,13 +18,7 @@ export class UserService {
   }
 
   // POST /users
-  async createUser(userData: {
-    first_name: string;
-    last_name: string;
-    email: string;
-    password: string;
-    phone?: string;
-  }): Promise<UserType> {
+  async createUser(userData: CreateUserData): Promise<UserType> {
     const response = await fetch(`${this.baseUrl}/users`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -55,13 +56,7 @@ export class UserService {
   }
 
   // PUT /users/:id
-  async updateUser(id: string, updateData: Partial<{
-    first_name: string;
-    last_name: string;
-    email: string;
-    password: string;
-    phone?: string;
-  }>): Promise<UserType> {
+  async updateUser(id: string, updateData: Partial<CreateUserData>): Promise<UserType> {
     const response = await fetch(`${this.baseUrl}/users/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
