@@ -7,9 +7,15 @@ import {
   createMaintainerHandler
 } from '../../../handlers/admin/accountManagementHandler';
 
+import { checkAdminRole } from '../../../middlewares/roleCheck';
+
 import { createUserSchema , createCommercialSchema , createDeciderSchema , createHelperSchema , createMaintainerSchema} from './account.schema';
 
 const adminAccountRouter = async (fastify: FastifyInstance) => {
+
+  // Register preHandler hook for all admin routes in this plugin.
+  fastify.addHook('preHandler', checkAdminRole);
+
   // Create a regular user
   fastify.post('/user', {schema: createUserSchema }, createUserHandler);
   
