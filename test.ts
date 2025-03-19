@@ -6,7 +6,7 @@ async function testLoginAndVerifyToken() {
   // Define login payload based on the login schema
   const loginPayload = {
     email: "wassim@gmail.com",
-    password: "password",
+    password: "password1234",
     role: "user"
   };
 

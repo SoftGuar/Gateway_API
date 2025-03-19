@@ -55,5 +55,6 @@ export type UserType = {
     email: string;
     password: string;
     phone: string;
+    privilege: number;
     add_by: number;
   };
