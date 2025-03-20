@@ -6,11 +6,14 @@ export class Config {
     
     private userManagementIP: string;
     private authenticationIP: string;
+    private adminServiceIP: string;
+
     
     private constructor() {
       // Load IP addresses from environment variables or fallback to defaults.
       this.userManagementIP = process.env.USER_MANAGEMENT_IP || 'http://127.0.0.1:4000';
       this.authenticationIP = process.env.AUTHENTICATION_IP || 'http://127.0.0.1:5000';
+      this.adminServiceIP=process.env.adminService_IP || 'http://127.0.0.1:8000';
     }
     
     public static getInstance(): Config {
@@ -33,6 +36,13 @@ export class Config {
     public getAuthenticationIP(): string {
       return this.authenticationIP;
     }
+      /**
+     * Get the IP address for the admine service.
+     */
+    public getadminServiceIP(): string {
+      return this.adminServiceIP;
+    }
+
     
     public getPort(): number {
       return Number(process.env.PORT) || 3000;
