@@ -8,7 +8,7 @@ import accountManagementHelperRouter from './accountManagement/helper/helper.rou
 import accountManagementCommercialRouter from './accountManagement/commercial/commercial.router'
 import accountManagementMaintainerRouter from './accountManagement/maintainer/maintainer.router'
 import accountManagementDeciderRouter from './accountManagement/decider/decider.router'
-
+import registerSalesRoutes from './sales/index';
 
 
 import loginRouter from './login/login.router';
@@ -50,7 +50,8 @@ const registerRoutes = (fastify: FastifyInstance) => {
   // Register login routes
   fastify.register(loginRouter, { prefix: '/login' });
   
-
+  //register sales routes from index.ts in sales folder
+  fastify.register(registerSalesRoutes, { prefix: '/sales' });
 };
 
 export default registerRoutes;
