@@ -115,9 +115,9 @@ export class DispositiveService {
                     return await response.json();
                   }
 
-                  // GET /dispositives/:id
-                  async getDispositiveByProductId(id: string): Promise<DispositiveType> {
-                    const response = await fetch(`${this.baseUrl}/dispositives/product/${id}`, {
+                  // GET /dispositives/product/:productId
+                  async getDispositiveByProductId(productId: string): Promise<DispositiveType> {
+                    const response = await fetch(`${this.baseUrl}/dispositives/product/${productId}`, {
                       method: 'GET'
                     });
                     if (!response.ok) {

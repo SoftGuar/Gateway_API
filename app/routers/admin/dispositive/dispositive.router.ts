@@ -12,7 +12,6 @@ import {
 
 import { checkAdminRole } from '../../../middlewares/roleCheck';
 
-// Import schemas (you'll need to create these)
 import {
   createDispositiveSchema,
   getDispositiveByIdSchema,
@@ -50,7 +49,7 @@ const adminDispositiveRouter = async (fastify: FastifyInstance) => {
   fastify.patch('/:id/block', { schema: blockDispositiveSchema }, toggleDispositiveBlockHandler);
 
   // Get dispositives by product ID
-  fastify.get('/product/:id', { schema: getDispositivesByProductSchema }, getDispositiveByProductIdHandler);
+  fastify.get('/product/:productId', { schema: getDispositivesByProductSchema }, getDispositiveByProductIdHandler);
 };
 
 export default adminDispositiveRouter;

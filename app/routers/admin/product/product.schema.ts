@@ -30,6 +30,20 @@ export const createProductSchema = {
   }
 };
 
+// Schema for getting all products
+export const getAllProductsSchema = {
+  headers: authHeader,
+  response: {
+    200: Type.Object({
+      success: Type.Literal(true),
+      data: Type.Array(
+        Type.Object(productProperties)
+      )
+    })
+  }
+};
+
+
 // Schema for getting a product by ID
 export const getProductSchema = {
   headers: authHeader,
