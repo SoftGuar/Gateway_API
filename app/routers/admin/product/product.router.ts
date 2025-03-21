@@ -11,6 +11,7 @@ import { checkAdminRole } from '../../../middlewares/roleCheck';
 
 import {
   createProductSchema,
+  getAllProductsSchema,
   getProductSchema,
   updateProductSchema,
   deleteProductSchema
@@ -24,7 +25,7 @@ const adminProductRouter = async (fastify: FastifyInstance) => {
   fastify.post('/', { schema: createProductSchema }, createProductHandler);
 
   // Get all products
-  fastify.get('/', getProductsHandler);
+  fastify.get('/', {schema : getAllProductsSchema},getProductsHandler);
 
   // Get a product by ID
   fastify.get('/:id', { schema: getProductSchema }, getProductByIdHandler);
