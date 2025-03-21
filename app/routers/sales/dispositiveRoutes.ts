@@ -1,26 +1,60 @@
-import {FastifyInstance} from 'fastify';
+import { FastifyInstance } from 'fastify';
 import * as handler from '../../handlers/sales/dispositiveHandler';
-/**
- * Registers routes for dispositive-related operations.
- *
- * @param fastify - The Fastify instance used to define the routes.
- *
- * @remarks
- * This function sets up the following routes:
- * - `GET /`: Retrieves all dispositives using the `getAllDispositives` handler.
- * - `GET /:product_id`: Retrieves available dispositives for a specific product ID using the `getAvailableDispositive` handler.
- *
- * @example
- * // Register the routes in a Fastify instance
- * import fastify from 'fastify';
- * import { dispositiveRoutes } from './dispositiveRoutes';
- *
- * const app = fastify();
- * app.register(dispositiveRoutes);
- */
-async function dispositiveRoutes (fastify: FastifyInstance){
-    fastify.get('/', handler.getAllDispositivesHandler);
-    fastify.get('/:product_id', handler.findAvailableDispositiveHandler);
+
+async function dispositiveRoutes(fastify: FastifyInstance) {
+    fastify.get(
+        '/',
+        {
+            schema: {
+                description: 'Get all dispositives',
+                tags: ['Sales'],
+                summary: 'Fetch all available dispositives',
+                response: {
+                    200: {
+                        type: 'array',
+                        items: {
+                            type: 'object',
+                            properties: {
+                                id: { type: 'string' },
+                                name: { type: 'string' },
+                                status: { type: 'string' },
+                            },
+                        },
+                    },
+                },
+            },
+        },
+        handler.getAllDispositivesHandler
+    );
+
+    fastify.get(
+        '/:product_id',
+        {
+            schema: {
+                description: 'Find available dispositive by product ID',
+                summary: 'Fetch an available dispositive for a product',
+                tags: ['Sales'],
+                params: {
+                    type: 'object',
+                    properties: {
+                        product_id: { type: 'string' },
+                    },
+                    required: ['product_id'],
+                },
+                response: {
+                    200: {
+                        type: 'object',
+                        properties: {
+                            id: { type: 'string' },
+                            name: { type: 'string' },
+                            status: { type: 'string' },
+                        },
+                    },
+                },
+            },
+        },
+        handler.findAvailableDispositiveHandler
+    );
 }
 
 export default dispositiveRoutes;
