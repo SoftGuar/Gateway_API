@@ -155,12 +155,12 @@ export async function findQuotationsByUserIdHandler(
 
 // Handler for creating a quotation request with associated products
 export async function demandeQuotationHandler(
-    request: FastifyRequest<{ Body: { userId: number; products: { productId: number; count: number }[] } }>,
+    request: FastifyRequest<{ Body: { user_id: number; products: { productId: number; count: number }[] } }>,
     reply: FastifyReply
 ) {
     try {
-        const { userId, products } = request.body;
-        const result = await QuotationService.demandeQuotation(userId, products);
+        const { user_id, products } = request.body;
+        const result = await QuotationService.demandeQuotation(user_id, products);
         return reply.code(201).send({
             success: true,
             data: result,

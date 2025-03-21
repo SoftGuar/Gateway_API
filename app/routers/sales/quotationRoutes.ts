@@ -1,7 +1,7 @@
 import { FastifyInstance } from 'fastify';
 import * as qh from '../../handlers/sales/quotationHandler';
 
-async function quotationRoutes(fastify: FastifyInstance) {
+export default async function quotationRoutes(fastify: FastifyInstance) {
   fastify.post('/', {
     schema: {
       tags: ['Sales'],
@@ -202,18 +202,18 @@ async function quotationRoutes(fastify: FastifyInstance) {
     schema: {
       tags: ['Sales'],
       summary: 'Create a new quotation demand',
-      description: 'Creates a new quotation demand',
+      description: 'Creates a new quotation demand with associated products',
       body: {
         type: 'object',
         properties: {
-          user_id: { type: 'integer' },
+          user_id: { type: 'number' },
           products: {
             type: 'array',
             items: {
               type: 'object',
               properties: {
-                product_id: { type: 'integer' },
-                count: { type: 'integer' }
+                product_id: { type: 'number' },
+                count: { type: 'number' }
               },
               required: ['product_id', 'count']
             }
@@ -226,13 +226,22 @@ async function quotationRoutes(fastify: FastifyInstance) {
           description: 'Quotation demand created successfully',
           type: 'object',
           properties: {
-            message: { type: 'string' },
-            quotation: {
+            success: { type: 'boolean' },
+            data: {
               type: 'object',
               properties: {
-                id: { type: 'integer' },
-                user_id: { type: 'integer' },
-                date: { type: 'string' }
+                id: { type: 'number' },
+                user_id: { type: 'number' },
+                products: {
+                  type: 'array',
+                  items: {
+                    type: 'object',
+                    properties: {
+                      productId: { type: 'number' },
+                      count: { type: 'number' }
+                    }
+                  }
+                }
               }
             }
           }
@@ -241,5 +250,3 @@ async function quotationRoutes(fastify: FastifyInstance) {
     }
   }, qh.demandeQuotationHandler);
 }
-
-export default quotationRoutes;

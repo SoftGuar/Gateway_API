@@ -116,12 +116,12 @@ export const QuotationService = {
    * @returns {Promise<Object>} A promise that resolves to the association result.
    * @throws {Error} If the association fails.
    */
-  associateProduct: async (quotationId: number, productId: number, count: number) => {
+  associateProduct: async (quotation_id: number, product_id: number, count: number) => {
     try {
-      const response = await fetch(`${SALES_SERVICE_BASE_URL}/quotations/ssociate/${quotationId}`, {
+      const response = await fetch(`${SALES_SERVICE_BASE_URL}/quotations/ssociate/${quotation_id}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ productId, count }),
+        body: JSON.stringify({ product_id, count }),
       });
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -139,9 +139,9 @@ export const QuotationService = {
    * @returns {Promise<Array<Object>>} A promise that resolves to an array of quotation objects.
    * @throws {Error} If the request fails.
    */
-  findByUserId: async (userId: number) => {
+  findByUserId: async (user_id: number) => {
     try {
-      const response = await fetch(`${SALES_SERVICE_BASE_URL}/quotations/user/${userId}`);
+      const response = await fetch(`${SALES_SERVICE_BASE_URL}/quotations/user/${user_id}`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -160,19 +160,26 @@ export const QuotationService = {
    * @throws {Error} If the quotation request creation fails.
    */
   demandeQuotation: async (
-    userId: number,
+    user_id: number,
     products: { productId: number, count: number }[]
   ) => {
     try {
       const response = await fetch(`${SALES_SERVICE_BASE_URL}/quotations/demande`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId, products }),
-      });
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return await response.json();
+        body: JSON.stringify({ user_id, products }),
+    });
+    
+    if (!response.ok) {
+        throw new Error(`Erreur HTTP: ${response.status}`);
+    }
+    
+    const data = await response.json();
+    console.log("Message:", data.message);
+    console.log("Quotation:", data.quotation);
+    
+    return data.quotation; 
+    
     } catch (error) {
       console.error('Error creating quotation request:', error);
       throw new Error('Failed to create quotation request');
