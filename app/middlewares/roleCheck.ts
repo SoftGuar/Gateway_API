@@ -16,7 +16,7 @@ async function checkRole(req: FastifyRequest, reply: FastifyReply, role: string)
   try {
     const decoded = await authService.verifyToken(token);
 
-    console.log('Decoded token:', decoded.role);
+
     if (decoded.role !== role) {
       return reply.code(403).send({
         success: false,

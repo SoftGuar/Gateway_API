@@ -8,12 +8,6 @@ import commercialProductRouter from './commercial/product/product.router'
 
 
 
-import accountManagementUserRouter from './accountManagement/user/user.router'
-import accManagAdminRouter from './accountManagement/admin/admin.router'
-import accountManagementHelperRouter from './accountManagement/helper/helper.router'
-import accountManagementCommercialRouter from './accountManagement/commercial/commercial.router'
-import accountManagementMaintainerRouter from './accountManagement/maintainer/maintainer.router'
-import accountManagementDeciderRouter from './accountManagement/decider/decider.router'
 import registerSalesRoutes from './sales/index';
 
 
