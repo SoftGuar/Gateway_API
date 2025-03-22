@@ -14,6 +14,7 @@ const authHeader = Type.Object({
 
 // Schema for getting all products
 export const getAllProductsSchema = {
+    tags: ['Commercial : Product management'],
     headers: authHeader,
     response: {
       200: Type.Object({
@@ -28,6 +29,9 @@ export const getAllProductsSchema = {
 
 // Schema for getting a product by ID
 export const getProductSchema = {
+  summary: "Get product details by ID",
+  description: "Retrieves detailed information about a product by providing its unique ID.",
+  tags: ['Commercial : Product management'],
   headers: authHeader,
   params: Type.Object({
     id: Type.String()

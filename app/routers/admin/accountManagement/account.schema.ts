@@ -6,6 +6,7 @@ const authHeader = Type.Object({
 
 // Schema for regular users
 export const createUserSchema = {
+  tags: ['Admin : Accounts creation'],
   headers: authHeader,
   body: Type.Object({
     first_name: Type.String(),
@@ -30,6 +31,7 @@ export const createUserSchema = {
 
 // Schema for helpers
 export const createHelperSchema = {
+  tags: ['Admin : Accounts creation'],
   headers: authHeader,
   body: Type.Object({
     first_name: Type.String(),
@@ -54,6 +56,7 @@ export const createHelperSchema = {
 
 // Schema for deciders
 export const createDeciderSchema = {
+  tags: ['Admin : Accounts creation'],
   headers: authHeader,
   body: Type.Object({
     first_name: Type.String(),
@@ -78,6 +81,7 @@ export const createDeciderSchema = {
 
 // Schema for commercials
 export const createCommercialSchema = {
+  tags: ['Admin : Accounts creation'],
   headers: authHeader,
   body: Type.Object({
     first_name: Type.String(),
@@ -102,6 +106,7 @@ export const createCommercialSchema = {
 
 // Schema for maintainers
 export const createMaintainerSchema = {
+  tags: ['Admin : Accounts creation'],
   headers: authHeader,
   body: Type.Object({
     first_name: Type.String(),

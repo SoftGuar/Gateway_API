@@ -7,7 +7,7 @@ async function productRoutes(fastify: FastifyInstance) {
     {
       schema: {
         description: 'Get all products',
-        tags: ['Sales'],
+        tags: ['Sales: Products Management'],
         summary: 'Fetch all products',
         response: {
           200: {
@@ -38,7 +38,7 @@ async function productRoutes(fastify: FastifyInstance) {
     {
       schema: {
         description: 'Get a product by ID',
-        tags: ['Sales'],
+        tags: ['Sales: Products Management'],
         summary: 'Fetch a product by its ID',
         params: {
           type: 'object',

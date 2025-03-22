@@ -22,23 +22,21 @@ const registerRoutes = (fastify: FastifyInstance) => {
   // Register admin account routes with a prefix
   fastify.register(adminAccountRouter, { prefix: '/admin/account' });
 
-    // Register admin dispositive routes with a prefix
-    fastify.register(adminDispositiveRouter, { prefix: '/admin/dispositive' });
+  // Register admin dispositive routes with a prefix
+  fastify.register(adminDispositiveRouter, { prefix: '/admin/dispositive' });
 
-      // Register admin product routes with a prefix
+  // Register admin product routes with a prefix
   fastify.register(adminProductRouter, { prefix: '/admin/product' });
- 
-     // Register commercial dispositive routes with a prefix
-     fastify.register(commercialDispositiveRouter, { prefix: '/commercial/dispositive' });
 
-     // Register admin product routes with a prefix
- fastify.register(commercialProductRouter, { prefix: '/commercial/product' });
+  // Register commercial dispositive routes with a prefix
+  fastify.register(commercialDispositiveRouter, { prefix: '/commercial/dispositive' });
 
-
+  // Register admin product routes with a prefix
+  fastify.register(commercialProductRouter, { prefix: '/commercial/product' });
 
   // Register login routes
   fastify.register(loginRouter, { prefix: '/login' });
-  
+
   //register sales routes from index.ts in sales folder
   fastify.register(registerSalesRoutes, { prefix: '/sales' });
 };

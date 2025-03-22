@@ -27,6 +27,7 @@ const productProperties = {
 
 // Schéma pour la création d'un dispositif
 export const createDispositiveSchema = {
+  tags: ['Admin : Dispositives management'],
   headers: authHeader,
   body: Type.Object({
     type: Type.String(),
@@ -54,6 +55,7 @@ export const createDispositiveSchema = {
 
 // Schéma pour récupérer tous les dispositifs
 export const getDispositivesSchema = {
+  tags: ['Admin : Dispositives management'],
   headers: authHeader,
   response: {
     200: Type.Object({
@@ -70,6 +72,7 @@ export const getDispositivesSchema = {
 
 // Schéma pour récupérer un dispositif par ID
 export const getDispositiveByIdSchema = {
+  tags: ['Admin : Dispositives management'],
   headers: authHeader,
   params: Type.Object({
     id: Type.String()
@@ -91,6 +94,7 @@ export const getDispositiveByIdSchema = {
 
 // Schéma pour récupérer les dispositifs liés à un produit
 export const getDispositivesByProductSchema = {
+  tags: ['Admin : Dispositives management'],
   headers: authHeader,
   params: Type.Object({
     productId: Type.String()
@@ -114,6 +118,7 @@ export const getDispositivesByProductSchema = {
 
 // Schéma pour mettre à jour un dispositif
 export const updateDispositiveSchema = {
+  tags: ['Admin : Dispositives management'],
   headers: authHeader,
   params: Type.Object({
     id: Type.String()
@@ -150,6 +155,7 @@ export const updateDispositiveSchema = {
 
 // Schéma pour assigner un utilisateur à un dispositif
 export const assignUserSchema = {
+  tags: ['Admin : Dispositives management'],
   headers: authHeader,
   params: Type.Object({
     id: Type.String()
@@ -178,6 +184,7 @@ export const assignUserSchema = {
 
 // Schéma pour bloquer un dispositif
 export const blockDispositiveSchema = {
+  tags: ['Admin : Dispositives management'],
   headers: authHeader,
   params: Type.Object({
     id: Type.String()
@@ -206,6 +213,7 @@ export const blockDispositiveSchema = {
 
 // Schéma pour supprimer un dispositif
 export const deleteDispositiveSchema = {
+  tags: ['Admin : Dispositives management'],
   headers: authHeader,
   params: Type.Object({
     id: Type.String()
