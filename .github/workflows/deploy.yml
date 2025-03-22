@@ -1,0 +1,35 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches:
+      - main  # Change if using a different branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Setup SSH
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan -H calm-warthog-42.telebit.io >> ~/.ssh/known_hosts
+
+    - name: Deploy App
+      run: |
+        ssh -i ~/.ssh/id_rsa \
+          -o ProxyCommand='openssl s_client -connect calm-warthog-42.telebit.io:443 -servername calm-warthog-42.telebit.io -quiet' \
+          root@calm-warthog-42.telebit.io << 'EOF'
+          cd /root/Gateway_API
+          git pull origin main
+          npm install
+          pm2 delete gateway-app || true  # Remove old process if exists
+          pm2 start npm --name "gateway-app" -- run dev
+          pm2 save
+          pm2 list
+        EOF
