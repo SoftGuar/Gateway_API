@@ -58,3 +58,12 @@ export type UserType = {
     privilege: number;
     add_by: number;
   };
+  
+  export type SuperAdminType = {
+    id: number;
+    first_name: string;
+    last_name: string;
+    email: string;
+    password: string;
+    phone: string;
+  };

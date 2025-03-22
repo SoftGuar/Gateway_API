@@ -5,6 +5,7 @@ import adminProductRouter from './admin/product/product.router';
 
 import commercialDispositiveRouter from './commercial/dispositive/dispositive.router'
 import commercialProductRouter from './commercial/product/product.router'
+import accountRouter from './account/account.router';
 
 
 
@@ -39,6 +40,11 @@ const registerRoutes = (fastify: FastifyInstance) => {
 
   //register sales routes from index.ts in sales folder
   fastify.register(registerSalesRoutes, { prefix: '/sales' });
+
+  // Register account routes
+  fastify.register(accountRouter, { prefix: '/account' });
+
+  
 };
 
 export default registerRoutes;
