@@ -18,19 +18,19 @@ jobs:
         mkdir -p ~/.ssh
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
-        ssh-keyscan -H calm-warthog-42.telebit.io >> ~/.ssh/known_hosts
+        eval "$(ssh-agent -s)"
+        ssh-add ~/.ssh/id_rsa
 
-    - name: Fix SSH Host Key Issue
+    - name: Disable SSH Host Key Checking
       run: |
-        ssh-keygen -f "$HOME/.ssh/known_hosts" -R calm-warthog-42.telebit.io
-        ssh-keyscan -H calm-warthog-42.telebit.io >> "$HOME/.ssh/known_hosts"
-
+        mkdir -p ~/.ssh
+        echo "StrictHostKeyChecking no" >> ~/.ssh/config
+        echo "UserKnownHostsFile=/dev/null" >> ~/.ssh/config
+        chmod 600 ~/.ssh/config
 
     - name: Deploy App
       run: |
-        ssh -i ~/.ssh/id_rsa \
-          -o ProxyCommand='openssl s_client -connect calm-warthog-42.telebit.io:443 -servername calm-warthog-42.telebit.io -quiet' \
-          root@calm-warthog-42.telebit.io << 'EOF'
+        ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no root@calm-warthog-42.telebit.io << 'EOF'
           cd /root/Gateway_API
           git pull origin main
           npm install
