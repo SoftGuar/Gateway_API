@@ -15,7 +15,7 @@ export default transactionRoutes;
 
 const createTransactionSchema = {
     description: 'Add Transaction',
-    tags: ['Sales'],
+    tags: ['Sales: Transactions Management'],
     summary: 'This endpoint allows you to add a new transaction.',
     body: {
         type: 'object',
@@ -43,7 +43,7 @@ const createTransactionSchema = {
 
 const getTransactionsSchema = {
     description: 'Get All Transactions',
-    tags: ['Sales'],
+    tags: ['Sales: Transactions Management'],
     summary: 'This endpoint retrieves all transactions.',
     response: {
         200: {
@@ -65,7 +65,7 @@ const getTransactionsSchema = {
 
 const getTransactionByIdSchema = {
     description: 'Get Transaction By ID',
-    tags: ['Sales'],
+    tags: ['Sales: Transactions Management'],
     summary: 'This endpoint retrieves a transaction by its ID.',
     params: {
         type: 'object',
@@ -91,7 +91,7 @@ const getTransactionByIdSchema = {
 
 const updateTransactionSchema = {
     description: 'Update Transaction',
-    tags: ['Sales'],
+    tags: ['Sales: Transactions Management'],
     summary: 'This endpoint updates a transaction by its ID.',
     params: {
         type: 'object',
@@ -126,7 +126,7 @@ const updateTransactionSchema = {
 
 const deleteTransactionSchema = {
     description: 'Delete Transaction',
-    tags: ['Sales'],
+    tags: ['Sales: Transactions Management'],
     summary: 'This endpoint is used to delete a specific transaction with the given ID.',
     params: {
         type: 'object',

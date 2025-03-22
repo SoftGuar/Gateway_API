@@ -7,7 +7,7 @@ async function dispositiveRoutes(fastify: FastifyInstance) {
         {
             schema: {
                 description: 'Get all dispositives',
-                tags: ['Sales'],
+                tags: ['Sales: Dispositive Management'],
                 summary: 'Fetch all available dispositives',
                 response: {
                     200: {
@@ -33,7 +33,7 @@ async function dispositiveRoutes(fastify: FastifyInstance) {
             schema: {
                 description: 'Find available dispositive by product ID',
                 summary: 'Fetch an available dispositive for a product',
-                tags: ['Sales'],
+                tags: ['Sales: Dispositive Management'],
                 params: {
                     type: 'object',
                     properties: {

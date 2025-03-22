@@ -28,6 +28,7 @@ const productProperties = {
 
 // Schéma pour récupérer tous les dispositifs
 export const getDispositivesSchema = {
+  tags: ['Commercial : Dispositives management'],
   headers: authHeader,
   response: {
     200: Type.Object({
@@ -44,6 +45,7 @@ export const getDispositivesSchema = {
 
 // Schéma pour récupérer un dispositif par ID
 export const getDispositiveByIdSchema = {
+  tags: ['Commercial : Dispositives management'],
   headers: authHeader,
   params: Type.Object({
     id: Type.String()
@@ -65,6 +67,7 @@ export const getDispositiveByIdSchema = {
 
 // Schéma pour récupérer les dispositifs liés à un produit
 export const getDispositivesByProductSchema = {
+  tags: ['Commercial : Dispositives management'],
   headers: authHeader,
   params: Type.Object({
     productId: Type.String()

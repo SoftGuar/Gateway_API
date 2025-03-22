@@ -6,7 +6,7 @@ async function orderRoutes(fastify: FastifyInstance) {
         '/',
         {
             schema: {
-                tags: ['Sales'],
+                tags: ['Sales: Orders Management'],
                 description: 'Place an order',
                 summary: 'Place an order for a product',
                 body: {

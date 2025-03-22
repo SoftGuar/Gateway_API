@@ -1,6 +1,9 @@
 import { Type } from '@sinclair/typebox';
 
 export const loginSchema = {
+  summary: "User Login",
+  description: "Authenticates a user using their email, password, and role, then returns an access token. The role can be : user, admin, superAdmin, maintainer, commercial, helper, decider",
+  tags: ["Authentication", "Login"],
   body: Type.Object({
     email: Type.String({ format: 'email' }),
     password: Type.String(),

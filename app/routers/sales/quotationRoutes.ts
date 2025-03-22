@@ -4,7 +4,7 @@ import * as qh from '../../handlers/sales/quotationHandler';
 export default async function quotationRoutes(fastify: FastifyInstance) {
   fastify.post('/', {
     schema: {
-      tags: ['Sales'],
+      tags: ['Sales: Quotations Management'],
       summary: 'Create a new quotation',
       description: 'Creates a new quotation',
       body: {
@@ -31,7 +31,7 @@ export default async function quotationRoutes(fastify: FastifyInstance) {
 
   fastify.get('/', {
     schema: {
-      tags: ['Sales'],
+      tags: ['Sales: Quotations Management'],
       summary: 'Retrieve all quotations',
       description: 'Retrieves all quotations',
       response: {
@@ -53,7 +53,7 @@ export default async function quotationRoutes(fastify: FastifyInstance) {
 
   fastify.put('/:id', {
     schema: {
-      tags: ['Sales'],
+      tags: ['Sales: Quotations Management'],
       summary: 'Update a quotation by ID',
       description: 'Updates an existing quotation by its ID',
       params: {
@@ -86,7 +86,7 @@ export default async function quotationRoutes(fastify: FastifyInstance) {
 
   fastify.get('/:id', {
     schema: {
-      tags: ['Sales'],
+      tags: ['Sales: Quotations Management'],
       summary: 'Retrieve a quotation by ID',
       description: 'Retrieves a specific quotation by its ID',
       params: {
@@ -111,7 +111,7 @@ export default async function quotationRoutes(fastify: FastifyInstance) {
 
   fastify.delete('/:id', {
     schema: {
-      tags: ['Sales'],
+      tags: ['Sales: Quotations Management'],
       summary: 'Delete a quotation by ID',
       description: 'Deletes a specific quotation by its ID',
       params: {
@@ -137,7 +137,7 @@ export default async function quotationRoutes(fastify: FastifyInstance) {
 
   fastify.post('/associate/:id', {
     schema: {
-      tags: ['Sales'],
+      tags: ['Sales: Quotations Management'],
       summary: 'Associate a product with a quotation',
       description: 'Associates a product with a quotation by its ID',
       params: {
@@ -171,7 +171,7 @@ export default async function quotationRoutes(fastify: FastifyInstance) {
 
   fastify.get('/user/:user_id', {
     schema: {
-      tags: ['Sales'],
+      tags: ['Sales: Quotations Management'],
       summary: 'Retrieve quotations by user ID',
       description: 'Retrieves all quotations associated with a specific user ID',
       params: {
@@ -200,7 +200,7 @@ export default async function quotationRoutes(fastify: FastifyInstance) {
 
   fastify.post('/demande', {
     schema: {
-      tags: ['Sales'],
+      tags: ['Sales: Quotations Management'],
       summary: 'Create a new quotation demand',
       description: 'Creates a new quotation demand with associated products',
       body: {

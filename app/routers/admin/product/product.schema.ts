@@ -14,6 +14,7 @@ const authHeader = Type.Object({
 
 // Schema for creating a product
 export const createProductSchema = {
+  tags: ['Admin : Products management'],
   headers: authHeader,
   body: Type.Object({
     name: Type.String(),
@@ -32,6 +33,7 @@ export const createProductSchema = {
 
 // Schema for getting all products
 export const getAllProductsSchema = {
+  tags: ['Admin : Products management'],
   headers: authHeader,
   response: {
     200: Type.Object({
@@ -46,6 +48,7 @@ export const getAllProductsSchema = {
 
 // Schema for getting a product by ID
 export const getProductSchema = {
+  tags: ['Admin : Products management'],
   headers: authHeader,
   params: Type.Object({
     id: Type.String()
@@ -60,6 +63,7 @@ export const getProductSchema = {
 
 // Schema for updating a product
 export const updateProductSchema = {
+  tags: ['Admin : Products management'],
   headers: authHeader,
   params: Type.Object({
     id: Type.String()
@@ -79,6 +83,7 @@ export const updateProductSchema = {
 
 // Schema for deleting a product
 export const deleteProductSchema = {
+  tags: ['Admin : Products management'],
   headers: authHeader,
   params: Type.Object({
     id: Type.String()
