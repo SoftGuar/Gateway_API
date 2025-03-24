@@ -33,39 +33,4 @@ export const UsersService = {
       return null;
     }
   },
-
-  /**
-   * Retrieves a user by their ID.
-   * @param {number} id - The ID of the user to retrieve.
-   * @returns {Promise<User|null>} The user object, or null if not found.
-   */
-  getUserById: async (id: number) => {
-    try {
-      const response = await fetch(`${SALES_SERVICE_BASE_URL}/users/${id}`);
-      if (!response.ok) {
-        throw new Error(`Error getting user by ID: ${response.statusText}`);
-      }
-      return await response.json();
-    } catch (e) {
-      console.error('Error getting user by ID:', e);
-      return null;
-    }
-  },
-
-  /**
-   * Retrieves all users from the sales service.
-   * @returns {Promise<Array>} An array of user objects, or an empty array if no users are found or an error occurs.
-   */
-  getAllUsers: async (): Promise<Array<any>> => {
-    try {
-      const response = await fetch(`${SALES_SERVICE_BASE_URL}/users`);
-      if (!response.ok) {
-        throw new Error(`Error getting all users: ${response.statusText}`);
-      }
-      return await response.json();
-    } catch (e) {
-      console.error('Error getting all users:', e);
-      return [];
-    }
-  },
 };
