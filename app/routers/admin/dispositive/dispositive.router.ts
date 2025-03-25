@@ -10,7 +10,7 @@ import {
   getDispositiveByProductIdHandler
 } from '../../../handlers/admin/dispositiveHandler';
 
-import { checkAdminRole } from '../../../middlewares/roleCheck';
+import { checkAdminOrMaintainerRole } from '../../../middlewares/roleCheck';
 
 import {
   createDispositiveSchema,
@@ -25,7 +25,7 @@ import {
 
 const adminDispositiveRouter = async (fastify: FastifyInstance) => {
   // Register preHandler hook for admin authorization
-  fastify.addHook('preHandler', checkAdminRole);
+  fastify.addHook('preHandler', checkAdminOrMaintainerRole);
 
   // Create a dispositive
   fastify.post('/', { schema: createDispositiveSchema }, createDispositiveHandler);
