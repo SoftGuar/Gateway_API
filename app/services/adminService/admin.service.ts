@@ -92,7 +92,7 @@ export class AdminService {
       return this.dispositiveService.toggleDispositiveBlock(id, data);
     }
   
-    async getDispositiveByProductId(id: string): Promise<DispositiveType> {
+    async getDispositiveByProductId(id: string): Promise<DispositiveType[]> {
       return this.dispositiveService.getDispositiveByProductId(id);
     }
   

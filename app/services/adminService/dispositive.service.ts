@@ -99,8 +99,9 @@ export class DispositiveService {
                 if (!response.ok) {
                   throw new Error('Failed to assign user');
                 }
-                return await response.json();
-              }
+                const payload = await response.json();
+                return payload.data;
+          }
               
                 // Block/unblock a dispositive
                 async toggleDispositiveBlock(id: string, data: BlockDispositiveInput): Promise<DispositiveType> {
@@ -112,11 +113,12 @@ export class DispositiveService {
                     if (!response.ok) {
                       throw new Error('Process failed');
                     }
-                    return await response.json();
+                    const payload = await response.json();
+                    return payload.data;
                   }
 
                   // GET /dispositives/product/:productId
-                  async getDispositiveByProductId(productId: string): Promise<DispositiveType> {
+                  async getDispositiveByProductId(productId: string): Promise<DispositiveType[]> {
                     const response = await fetch(`${this.baseUrl}/dispositives/product/${productId}`, {
                       method: 'GET'
                     });
