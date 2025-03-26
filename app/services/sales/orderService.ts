@@ -5,7 +5,8 @@ export interface OrderInput {
 }
 
 const SALES_SERVICE_BASE_URL = process.env.SALES_SERVICE_BASE_URL
-  ?`${process.env.SALES_SERVICE_BASE_URL}` : 'http://localhost:3003';
+  ? `${process.env.SALES_SERVICE_BASE_URL}`
+  : "http://localhost:3003";
 export const orderService = {
   /**
    * Places an order by sending a request to the sales service.
@@ -34,7 +35,9 @@ export const orderService = {
       // Verify the response from the sales service
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(`Sales service error: ${errorData.message || "Unknown error"}`);
+        throw new Error(
+          `Sales service error: ${errorData.message || "Unknown error"}`
+        );
       }
 
       const responseData = await response.json();

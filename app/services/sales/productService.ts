@@ -1,6 +1,6 @@
 const SALES_SERVICE_BASE_URL = process.env.SALES_SERVICE_BASE_URL
   ? `${process.env.SALES_SERVICE_BASE_URL}`
-  : 'http://localhost:3003';
+  : "http://localhost:3003";
 
 export const productService = {
   /**

@@ -1,6 +1,6 @@
 const SALES_SERVICE_BASE_URL = process.env.SALES_SERVICE_BASE_URL
   ? `${process.env.SALES_SERVICE_BASE_URL}`
-  : 'http://localhost:3003';
+  : "http://localhost:3003";
 
 export const QuotationService = {
   /**
@@ -12,8 +12,8 @@ export const QuotationService = {
   createQuotation: async (data: any) => {
     try {
       const response = await fetch(`${SALES_SERVICE_BASE_URL}/quotations`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
       if (!response.ok) {
@@ -21,8 +21,8 @@ export const QuotationService = {
       }
       return await response.json();
     } catch (error) {
-      console.error('Error creating quotation:', error);
-      throw new Error('Failed to create quotation');
+      console.error("Error creating quotation:", error);
+      throw new Error("Failed to create quotation");
     }
   },
 
@@ -34,14 +34,16 @@ export const QuotationService = {
    */
   getQuotationById: async (id: number) => {
     try {
-      const response = await fetch(`${SALES_SERVICE_BASE_URL}/quotations/${id}`);
+      const response = await fetch(
+        `${SALES_SERVICE_BASE_URL}/quotations/${id}`
+      );
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       return await response.json();
     } catch (error) {
-      console.error('Error fetching quotation by ID:', error);
-      throw new Error('Failed to fetch quotation by ID');
+      console.error("Error fetching quotation by ID:", error);
+      throw new Error("Failed to fetch quotation by ID");
     }
   },
 
@@ -58,8 +60,8 @@ export const QuotationService = {
       }
       return await response.json();
     } catch (error) {
-      console.error('Error fetching all quotations:', error);
-      throw new Error('Failed to fetch all quotations');
+      console.error("Error fetching all quotations:", error);
+      throw new Error("Failed to fetch all quotations");
     }
   },
 
@@ -72,18 +74,21 @@ export const QuotationService = {
    */
   updateQuotation: async (id: number, data: any) => {
     try {
-      const response = await fetch(`${SALES_SERVICE_BASE_URL}/quotations/${id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      });
+      const response = await fetch(
+        `${SALES_SERVICE_BASE_URL}/quotations/${id}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        }
+      );
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       return await response.json();
     } catch (error) {
-      console.error('Error updating quotation:', error);
-      throw new Error('Failed to update quotation');
+      console.error("Error updating quotation:", error);
+      throw new Error("Failed to update quotation");
     }
   },
 
@@ -95,16 +100,19 @@ export const QuotationService = {
    */
   deleteQuotation: async (id: number) => {
     try {
-      const response = await fetch(`${SALES_SERVICE_BASE_URL}/quotations/${id}`, {
-        method: 'DELETE',
-      });
+      const response = await fetch(
+        `${SALES_SERVICE_BASE_URL}/quotations/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       return await response.json();
     } catch (error) {
-      console.error('Error deleting quotation:', error);
-      throw new Error('Failed to delete quotation');
+      console.error("Error deleting quotation:", error);
+      throw new Error("Failed to delete quotation");
     }
   },
 
@@ -116,20 +124,27 @@ export const QuotationService = {
    * @returns {Promise<Object>} A promise that resolves to the association result.
    * @throws {Error} If the association fails.
    */
-  associateProduct: async (quotation_id: number, product_id: number, count: number) => {
+  associateProduct: async (
+    quotation_id: number,
+    product_id: number,
+    count: number
+  ) => {
     try {
-      const response = await fetch(`${SALES_SERVICE_BASE_URL}/quotations/ssociate/${quotation_id}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ product_id, count }),
-      });
+      const response = await fetch(
+        `${SALES_SERVICE_BASE_URL}/quotations/ssociate/${quotation_id}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ product_id, count }),
+        }
+      );
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       return await response.json();
     } catch (error) {
-      console.error('Error associating product with quotation:', error);
-      throw new Error('Failed to associate product with quotation');
+      console.error("Error associating product with quotation:", error);
+      throw new Error("Failed to associate product with quotation");
     }
   },
 
@@ -141,14 +156,16 @@ export const QuotationService = {
    */
   findByUserId: async (user_id: number) => {
     try {
-      const response = await fetch(`${SALES_SERVICE_BASE_URL}/quotations/user/${user_id}`);
+      const response = await fetch(
+        `${SALES_SERVICE_BASE_URL}/quotations/user/${user_id}`
+      );
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       return await response.json();
     } catch (error) {
-      console.error('Error finding quotations by user ID:', error);
-      throw new Error('Failed to find quotations by user ID');
+      console.error("Error finding quotations by user ID:", error);
+      throw new Error("Failed to find quotations by user ID");
     }
   },
 
@@ -161,28 +178,30 @@ export const QuotationService = {
    */
   demandeQuotation: async (
     user_id: number,
-    products: { productId: number, count: number }[]
+    products: { productId: number; count: number }[]
   ) => {
     try {
-      const response = await fetch(`${SALES_SERVICE_BASE_URL}/quotations/demande`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ user_id, products }),
-    });
-    
-    if (!response.ok) {
+      const response = await fetch(
+        `${SALES_SERVICE_BASE_URL}/quotations/demande`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ user_id, products }),
+        }
+      );
+
+      if (!response.ok) {
         throw new Error(`Erreur HTTP: ${response.status}`);
-    }
-    
-    const data = await response.json();
-    console.log("Message:", data.message);
-    console.log("Quotation:", data.quotation);
-    
-    return data.quotation; 
-    
+      }
+
+      const data = await response.json();
+      console.log("Message:", data.message);
+      console.log("Quotation:", data.quotation);
+
+      return data.quotation;
     } catch (error) {
-      console.error('Error creating quotation request:', error);
-      throw new Error('Failed to create quotation request');
+      console.error("Error creating quotation request:", error);
+      throw new Error("Failed to create quotation request");
     }
   },
 };
