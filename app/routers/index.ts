@@ -3,11 +3,11 @@ import adminAccountRouter from './admin/accountManagement/account.router';
 import adminDispositiveRouter from './admin/dispositive/dispositive.router';
 import adminProductRouter from './admin/product/product.router';
 
-import commercialDispositiveRouter from './commercial/dispositive/dispositive.router'
-import commercialProductRouter from './commercial/product/product.router'
+import commercialDispositiveRouter from './commercial/dispositive/dispositive.router';
+import commercialProductRouter from './commercial/product/product.router';
 import accountRouter from './account/account.router';
 
-
+import maintainerDispositiveRouter from'./maintainer/dispositive/dispositive.router';
 
 import registerSalesRoutes from './sales/index';
 
@@ -31,6 +31,10 @@ const registerRoutes = (fastify: FastifyInstance) => {
 
   // Register commercial dispositive routes with a prefix
   fastify.register(commercialDispositiveRouter, { prefix: '/commercial/dispositive' });
+
+    // Register maintainer dispositive routes with a prefix
+    fastify.register(maintainerDispositiveRouter, { prefix: '/maintainer/dispositive' });
+
 
   // Register admin product routes with a prefix
   fastify.register(commercialProductRouter, { prefix: '/commercial/product' });
