@@ -131,11 +131,13 @@ export const QuotationService = {
   ) => {
     try {
       const response = await fetch(
-        `${SALES_SERVICE_BASE_URL}/quotations/ssociate/${quotation_id}`,
+        `${SALES_SERVICE_BASE_URL}/quotations/associate/${quotation_id}`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ product_id, count }),
+          body: JSON.stringify({
+            "product_id": product_id, 
+            "count": count }),
         }
       );
       if (!response.ok) {
@@ -178,7 +180,7 @@ export const QuotationService = {
    */
   demandeQuotation: async (
     user_id: number,
-    products: { productId: number; count: number }[]
+    products: { product_id: number; count: number }[]
   ) => {
     try {
       const response = await fetch(

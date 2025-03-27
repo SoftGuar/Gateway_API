@@ -20,9 +20,8 @@ async function userRoutes(fastify: FastifyInstance) {
                 email: { type: 'string', description: 'The email address of the user.' },
                 password: { type: 'string', description: 'The password for the user account.' },
                 phone: { type: 'string', description: 'The phone number of the user.' },
-                role: { type: 'string', description: 'The role of the user.' },
               },
-              required: ['first_name', 'last_name', 'email', 'password', 'phone', 'role'],
+              required: ['first_name', 'last_name', 'email', 'password'],
             },
             helper: {
               type: 'object',
@@ -33,10 +32,10 @@ async function userRoutes(fastify: FastifyInstance) {
                 password: { type: 'string', description: 'The password for the helper account.' },
                 phone: { type: 'string', description: 'The phone number of the helper.' },
               },
-              required: ['first_name', 'last_name', 'email', 'password', 'phone'],
+              required: ['first_name', 'last_name', 'email', 'password'],
             },
           },
-          required: ['userData', 'helperData'],
+          required: ['user', 'helper'],
         },
         response: {
           200: {
@@ -44,8 +43,28 @@ async function userRoutes(fastify: FastifyInstance) {
             type: 'object',
             properties: {
               message: { type: 'string' },
-              userId: { type: 'string' },
-              helperId: { type: 'string' },
+              user: {
+                type: 'object',
+                properties: {
+                  id: { type: 'number', description: 'The id of the user.' },
+                  first_name: { type: 'string', description: 'The first name of the user.' },
+                  last_name: { type: 'string', description: 'The last name of the user.' },
+                  email: { type: 'string', description: 'The email address of the user.' },
+                  password: { type: 'string', description: 'The password for the user account.' },
+                  phone: { type: 'string', description: 'The phone number of the user.' },
+                },
+              },
+              helper: {
+                type: 'object',
+                properties: {
+                  id: { type: 'number', description: 'The id of the helper.' },
+                  first_name: { type: 'string', description: 'The first name of the helper.' },
+                  last_name: { type: 'string', description: 'The last name of the helper.' },
+                  email: { type: 'string', description: 'The email address of the helper.' },
+                  password: { type: 'string', description: 'The password for the helper account.' },
+                  phone: { type: 'string', description: 'The phone number of the helper.' },
+                },
+              },
             },
           },
         },

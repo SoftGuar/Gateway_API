@@ -3,31 +3,6 @@ import * as handler from '../../handlers/sales/dispositiveHandler';
 
 async function dispositiveRoutes(fastify: FastifyInstance) {
     fastify.get(
-        '/',
-        {
-            schema: {
-                description: 'Get all dispositives',
-                tags: ['Sales: Dispositive Management'],
-                summary: 'Fetch all available dispositives',
-                response: {
-                    200: {
-                        type: 'array',
-                        items: {
-                            type: 'object',
-                            properties: {
-                                id: { type: 'string' },
-                                name: { type: 'string' },
-                                status: { type: 'string' },
-                            },
-                        },
-                    },
-                },
-            },
-        },
-        handler.getAllDispositivesHandler
-    );
-
-    fastify.get(
         '/:product_id',
         {
             schema: {
@@ -45,9 +20,22 @@ async function dispositiveRoutes(fastify: FastifyInstance) {
                     200: {
                         type: 'object',
                         properties: {
-                            id: { type: 'string' },
-                            name: { type: 'string' },
-                            status: { type: 'string' },
+                        id: { type: 'number' },
+                        type: { type: 'string' },
+                        start_date: { type: 'string', format: 'date-time' },
+                        end_date: { type: 'string', format: 'date-time' },
+                        initial_state: { type: 'string' },
+                        MAC: { type: 'string' },
+                        state: { type: 'string' },
+                        product_id: { type: 'number' },
+                        user_id: { type: ['number', 'null'] },
+                        },
+                    },
+                    500: {
+                        type: 'object',
+                        properties: {
+                        success: { type: 'boolean' },
+                        message: { type: 'string' },
                         },
                     },
                 },

@@ -1,7 +1,6 @@
 import * as th from '../../handlers/sales/transactionHandler';
 import { FastifyInstance } from 'fastify';
 
-
 async function transactionRoutes(fastify: FastifyInstance) {
     fastify.post('/', { schema: createTransactionSchema }, th.createTransactionHandler);
     fastify.get('/', { schema: getTransactionsSchema }, th.getTransactionsHandler);
@@ -11,7 +10,6 @@ async function transactionRoutes(fastify: FastifyInstance) {
 }
 
 export default transactionRoutes;
-
 
 const createTransactionSchema = {
     description: 'Add Transaction',
@@ -31,11 +29,25 @@ const createTransactionSchema = {
             description: 'Transaction successfully created.',
             type: 'object',
             properties: {
-                id: { type: 'number', description: 'The ID of the created transaction.' },
-                user_id: { type: 'number', description: 'The ID of the user associated with the transaction.' },
-                commercial_id: { type: 'number', description: 'The ID of the commercial associated with the transaction.' },
-                processed: { type: 'boolean', description: 'Indicates whether the transaction has been processed.' },
-                date: { type: 'string', format: 'date-time', description: 'The date and time of the transaction in ISO 8601 format.' }
+                success: { type: 'boolean' },
+                data: {
+                    type: 'object',
+                    properties: {
+                        id: { type: 'number' },
+                        user_id: { type: 'number' },
+                        commercial_id: { type: 'number' },
+                        processed: { type: 'boolean' },
+                        date: { type: 'string', format: 'date-time' }
+                    }
+                }
+            }
+        },
+        500: {
+            description: 'Internal server error.',
+            type: 'object',
+            properties: {
+                success: { type: 'boolean' },
+                message: { type: 'string' }
             }
         }
     }
@@ -48,16 +60,30 @@ const getTransactionsSchema = {
     response: {
         200: {
             description: 'List of transactions.',
-            type: 'array',
-            items: {
-                type: 'object',
-                properties: {
-                    id: { type: 'number', description: 'The ID of the transaction.' },
-                    user_id: { type: 'number', description: 'The ID of the user associated with the transaction.' },
-                    commercial_id: { type: 'number', description: 'The ID of the commercial associated with the transaction.' },
-                    processed: { type: 'boolean', description: 'Indicates whether the transaction has been processed.' },
-                    date: { type: 'string', format: 'date-time', description: 'The date and time of the transaction in ISO 8601 format.' }
+            type: 'object',
+            properties: {
+                success: { type: 'boolean' },
+                data: {
+                    type: 'array',
+                    items: {
+                        type: 'object',
+                        properties: {
+                            id: { type: 'number' },
+                            user_id: { type: 'number' },
+                            commercial_id: { type: 'number' },
+                            processed: { type: 'boolean' },
+                            date: { type: 'string', format: 'date-time' }
+                        }
+                    }
                 }
+            }
+        },
+        500: {
+            description: 'Internal server error.',
+            type: 'object',
+            properties: {
+                success: { type: 'boolean' },
+                message: { type: 'string' }
             }
         }
     }
@@ -70,7 +96,7 @@ const getTransactionByIdSchema = {
     params: {
         type: 'object',
         properties: {
-            id: { type: 'number', description: 'The ID of the transaction.' }
+            id: { type: 'number' }
         },
         required: ['id']
     },
@@ -79,11 +105,33 @@ const getTransactionByIdSchema = {
             description: 'Transaction details.',
             type: 'object',
             properties: {
-                id: { type: 'number', description: 'The ID of the transaction.' },
-                user_id: { type: 'number', description: 'The ID of the user associated with the transaction.' },
-                commercial_id: { type: 'number', description: 'The ID of the commercial associated with the transaction.' },
-                processed: { type: 'boolean', description: 'Indicates whether the transaction has been processed.' },
-                date: { type: 'string', format: 'date-time', description: 'The date and time of the transaction in ISO 8601 format.' }
+                success: { type: 'boolean' },
+                data: {
+                    type: 'object',
+                    properties: {
+                        id: { type: 'number' },
+                        user_id: { type: 'number' },
+                        commercial_id: { type: 'number' },
+                        processed: { type: 'boolean' },
+                        date: { type: 'string', format: 'date-time' }
+                    }
+                }
+            }
+        },
+        404: {
+            description: 'Transaction not found.',
+            type: 'object',
+            properties: {
+                success: { type: 'boolean' },
+                message: { type: 'string' }
+            }
+        },
+        500: {
+            description: 'Internal server error.',
+            type: 'object',
+            properties: {
+                success: { type: 'boolean' },
+                message: { type: 'string' }
             }
         }
     }
@@ -96,17 +144,17 @@ const updateTransactionSchema = {
     params: {
         type: 'object',
         properties: {
-            id: { type: 'number', description: 'The ID of the transaction.' }
+            id: { type: 'number' }
         },
         required: ['id']
     },
     body: {
         type: 'object',
         properties: {
-            user_id: { type: 'number', description: 'The ID of the user associated with the transaction.' },
-            commercial_id: { type: 'number', description: 'The ID of the commercial associated with the transaction.' },
-            processed: { type: 'boolean', description: 'Indicates whether the transaction has been processed.' },
-            date: { type: 'string', format: 'date-time', description: 'The date and time of the transaction in ISO 8601 format.' }
+            user_id: { type: 'number' },
+            commercial_id: { type: 'number' },
+            processed: { type: 'boolean' },
+            date: { type: 'string', format: 'date-time' }
         }
     },
     response: {
@@ -114,11 +162,25 @@ const updateTransactionSchema = {
             description: 'Transaction successfully updated.',
             type: 'object',
             properties: {
-                id: { type: 'number', description: 'The ID of the transaction.' },
-                user_id: { type: 'number', description: 'The ID of the user associated with the transaction.' },
-                commercial_id: { type: 'number', description: 'The ID of the commercial associated with the transaction.' },
-                processed: { type: 'boolean', description: 'Indicates whether the transaction has been processed.' },
-                date: { type: 'string', format: 'date-time', description: 'The date and time of the transaction in ISO 8601 format.' }
+                success: { type: 'boolean' },
+                data: {
+                    type: 'object',
+                    properties: {
+                        id: { type: 'number' },
+                        user_id: { type: 'number' },
+                        commercial_id: { type: 'number' },
+                        processed: { type: 'boolean' },
+                        date: { type: 'string', format: 'date-time' }
+                    }
+                }
+            }
+        },
+        500: {
+            description: 'Internal server error.',
+            type: 'object',
+            properties: {
+                success: { type: 'boolean' },
+                message: { type: 'string' }
             }
         }
     }
@@ -131,7 +193,7 @@ const deleteTransactionSchema = {
     params: {
         type: 'object',
         properties: {
-            id: { type: 'number', description: 'The ID of the transaction.' }
+            id: { type: 'number' }
         },
         required: ['id']
     },
@@ -140,11 +202,16 @@ const deleteTransactionSchema = {
             description: 'Transaction successfully deleted.',
             type: 'object',
             properties: {
-                id: { type: 'number', description: 'The ID of the deleted transaction.' },
-                user_id: { type: 'number', description: 'The ID of the user associated with the transaction.' },
-                commercial_id: { type: 'number', description: 'The ID of the commercial associated with the transaction.' },
-                processed: { type: 'boolean', description: 'Indicates if the transaction has been processed.' },
-                date: { type: 'string', format: 'date-time', description: 'The date of the transaction.' }
+                success: { type: 'boolean' },
+                message: { type: 'string' }
+            }
+        },
+        500: {
+            description: 'Internal server error.',
+            type: 'object',
+            properties: {
+                success: { type: 'boolean' },
+                message: { type: 'string' }
             }
         }
     }
