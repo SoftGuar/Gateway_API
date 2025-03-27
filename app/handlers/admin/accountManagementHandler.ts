@@ -30,8 +30,159 @@ export async function createUserHandler(
     });
   }
 }
+// Get all users
+export async function getUsersHandler(
+  request: FastifyRequest,
+  reply: FastifyReply
+) {
+  try {
+    const result = await adminService.getUsers();
+    return reply.code(200).send({
+      success: true,
+      data: result
+    });
+  } catch (error) {
+    console.error('Error fetching users:', error);
+    return reply.code(500).send({
+      success: false,
+      message: 'Failed to fetch users'
+    });
+  }
+}
 
-// Handler for creating a helper
+// Get user by ID
+export async function getUserByIdHandler(
+  request: FastifyRequest<{ Params: { id: string } }>,
+  reply: FastifyReply
+) {
+  try {
+    const { id } = request.params;
+    const result = await adminService.getUserById(id);
+    return reply.code(200).send({
+      success: true,
+      data: result
+    });
+  } catch (error) {
+    console.error('Error fetching user:', error);
+    return reply.code(500).send({
+      success: false,
+      message: 'Failed to fetch user'
+    });
+  }
+}
+
+// Update user
+export async function updateUserHandler(
+  request: FastifyRequest<{ 
+    Params: { id: string }, 
+    Body: Partial<BaseAccountData> 
+  }>,
+  reply: FastifyReply
+) {
+  try {
+    const { id } = request.params;
+    const updateData = request.body;
+    const result = await adminService.updateUser(id, updateData);
+    return reply.code(200).send({
+      success: true,
+      data: result
+    });
+  } catch (error) {
+    console.error('Error updating user:', error);
+    return reply.code(500).send({
+      success: false,
+      message: 'Failed to update user'
+    });
+  }
+}
+
+// Delete user
+export async function deleteUserHandler(
+  request: FastifyRequest<{ Params: { id: string } }>,
+  reply: FastifyReply
+) {
+  try {
+    const { id } = request.params;
+    const result = await adminService.deleteUser(id);
+    return reply.code(200).send({
+      success: true,
+      message: result.message
+    });
+  } catch (error) {
+    console.error('Error deleting user:', error);
+    return reply.code(500).send({
+      success: false,
+      message: 'Failed to delete user'
+    });
+  }
+}
+
+// Handler for getting user's helpers
+export async function getUserHelpersHandler(
+  request: FastifyRequest<{ Params: { id: string } }>,
+  reply: FastifyReply
+) {
+  try {
+    const { id } = request.params;
+    const result = await adminService.getUserHelpers(id);
+    return reply.code(200).send({
+      success: true,
+      data: result
+    });
+  } catch (error) {
+    console.error(`Error fetching helpers for user with ID ${request.params.id}:`, error);
+    return reply.code(500).send({
+      success: false,
+      message: 'Failed to fetch user helpers'
+    });
+  }
+}
+
+// Handler for adding helper to user
+export async function addHelperToUserHandler(
+  request: FastifyRequest<{ Params: { id: string, helperId: string } }>,
+  reply: FastifyReply
+) {
+  try {
+    const { id, helperId } = request.params;
+    const result = await adminService.addHelperToUser(id, helperId);
+    return reply.code(200).send({
+      success: true,
+      data: result
+    });
+  } catch (error) {
+    console.error(`Error adding helper ${request.params.helperId} to user ${request.params.id}:`, error);
+    return reply.code(500).send({
+      success: false,
+      message: 'Failed to add helper to user'
+    });
+  }
+}
+
+// Handler for removing helper from user
+export async function removeHelperFromUserHandler(
+  request: FastifyRequest<{ Params: { id: string, helperId: string } }>,
+  reply: FastifyReply
+) {
+  try {
+    const { id, helperId } = request.params;
+    const result = await adminService.removeHelperFromUser(id, helperId);
+    return reply.code(200).send({
+      success: true,
+      data: result
+    });
+  } catch (error) {
+    console.error(`Error removing helper ${request.params.helperId} from user ${request.params.id}:`, error);
+    return reply.code(500).send({
+      success: false,
+      message: 'Failed to remove helper from user'
+    });
+  }
+}
+
+
+
+// Handler for creating a regular Helper
 export async function createHelperHandler(
   request: FastifyRequest<{ Body: BaseAccountData }>,
   reply: FastifyReply
@@ -50,8 +201,95 @@ export async function createHelperHandler(
     });
   }
 }
+// Get all helpers
+export async function getHelpersHandler(
+  request: FastifyRequest,
+  reply: FastifyReply
+) {
+  try {
+    const result = await adminService.getHelpers();
+    return reply.code(200).send({
+      success: true,
+      data: result
+    });
+  } catch (error) {
+    console.error('Error fetching helpers:', error);
+    return reply.code(500).send({
+      success: false,
+      message: 'Failed to fetch helpers'
+    });
+  }
+}
 
-// Handler for creating a decider
+// Get helper by ID
+export async function getHelperByIdHandler(
+  request: FastifyRequest<{ Params: { id: string } }>,
+  reply: FastifyReply
+) {
+  try {
+    const { id } = request.params;
+    const result = await adminService.getHelperById(id);
+    return reply.code(200).send({
+      success: true,
+      data: result
+    });
+  } catch (error) {
+    console.error('Error fetching helper:', error);
+    return reply.code(500).send({
+      success: false,
+      message: 'Failed to fetch helper'
+    });
+  }
+}
+
+// Update helper
+export async function updateHelperHandler(
+  request: FastifyRequest<{ 
+    Params: { id: string }, 
+    Body: Partial<BaseAccountData> 
+  }>,
+  reply: FastifyReply
+) {
+  try {
+    const { id } = request.params;
+    const updateData = request.body;
+    const result = await adminService.updateHelper(id, updateData);
+    return reply.code(200).send({
+      success: true,
+      data: result
+    });
+  } catch (error) {
+    console.error('Error updating helper:', error);
+    return reply.code(500).send({
+      success: false,
+      message: 'Failed to update helper'
+    });
+  }
+}
+
+// Delete helper
+export async function deleteHelperHandler(
+  request: FastifyRequest<{ Params: { id: string } }>,
+  reply: FastifyReply
+) {
+  try {
+    const { id } = request.params;
+    const result = await adminService.deleteHelper(id);
+    return reply.code(200).send({
+      success: true,
+      message: result.message
+    });
+  } catch (error) {
+    console.error('Error deleting helper:', error);
+    return reply.code(500).send({
+      success: false,
+      message: 'Failed to delete helper'
+    });
+  }
+}
+
+
+// Handler for creating a regular decider
 export async function createDeciderHandler(
   request: FastifyRequest<{ Body: BaseAccountData }>,
   reply: FastifyReply
@@ -70,8 +308,95 @@ export async function createDeciderHandler(
     });
   }
 }
+// Get all deciders
+export async function getDecidersHandler(
+  request: FastifyRequest,
+  reply: FastifyReply
+) {
+  try {
+    const result = await adminService.getDeciders();
+    return reply.code(200).send({
+      success: true,
+      data: result
+    });
+  } catch (error) {
+    console.error('Error fetching deciders:', error);
+    return reply.code(500).send({
+      success: false,
+      message: 'Failed to fetch deciders'
+    });
+  }
+}
 
-// Handler for creating a commercial
+// Get decider by ID
+export async function getDeciderByIdHandler(
+  request: FastifyRequest<{ Params: { id: string } }>,
+  reply: FastifyReply
+) {
+  try {
+    const { id } = request.params;
+    const result = await adminService.getDeciderById(id);
+    return reply.code(200).send({
+      success: true,
+      data: result
+    });
+  } catch (error) {
+    console.error('Error fetching decider:', error);
+    return reply.code(500).send({
+      success: false,
+      message: 'Failed to fetch decider'
+    });
+  }
+}
+
+// Update decider
+export async function updateDeciderHandler(
+  request: FastifyRequest<{ 
+    Params: { id: string }, 
+    Body: Partial<BaseAccountData> 
+  }>,
+  reply: FastifyReply
+) {
+  try {
+    const { id } = request.params;
+    const updateData = request.body;
+    const result = await adminService.updateDecider(id, updateData);
+    return reply.code(200).send({
+      success: true,
+      data: result
+    });
+  } catch (error) {
+    console.error('Error updating decider:', error);
+    return reply.code(500).send({
+      success: false,
+      message: 'Failed to update decider'
+    });
+  }
+}
+
+// Delete decider
+export async function deleteDeciderHandler(
+  request: FastifyRequest<{ Params: { id: string } }>,
+  reply: FastifyReply
+) {
+  try {
+    const { id } = request.params;
+    const result = await adminService.deleteDecider(id);
+    return reply.code(200).send({
+      success: true,
+      message: result.message
+    });
+  } catch (error) {
+    console.error('Error deleting decider:', error);
+    return reply.code(500).send({
+      success: false,
+      message: 'Failed to delete decider'
+    });
+  }
+}
+
+
+// Handler for creating a regular commercial
 export async function createCommercialHandler(
   request: FastifyRequest<{ Body: BaseAccountData }>,
   reply: FastifyReply
@@ -90,8 +415,94 @@ export async function createCommercialHandler(
     });
   }
 }
+// Get all commercials
+export async function getCommercialsHandler(
+  request: FastifyRequest,
+  reply: FastifyReply
+) {
+  try {
+    const result = await adminService.getCommercials();
+    return reply.code(200).send({
+      success: true,
+      data: result
+    });
+  } catch (error) {
+    console.error('Error fetching commercials:', error);
+    return reply.code(500).send({
+      success: false,
+      message: 'Failed to fetch commercials'
+    });
+  }
+}
 
-// Handler for creating a maintainer
+// Get commercial by ID
+export async function getCommercialByIdHandler(
+  request: FastifyRequest<{ Params: { id: string } }>,
+  reply: FastifyReply
+) {
+  try {
+    const { id } = request.params;
+    const result = await adminService.getCommercialById(id);
+    return reply.code(200).send({
+      success: true,
+      data: result
+    });
+  } catch (error) {
+    console.error('Error fetching commercial:', error);
+    return reply.code(500).send({
+      success: false,
+      message: 'Failed to fetch commercial'
+    });
+  }
+}
+
+// Update commercial
+export async function updateCommercialHandler(
+  request: FastifyRequest<{ 
+    Params: { id: string }, 
+    Body: Partial<BaseAccountData> 
+  }>,
+  reply: FastifyReply
+) {
+  try {
+    const { id } = request.params;
+    const updateData = request.body;
+    const result = await adminService.updateCommercial(id, updateData);
+    return reply.code(200).send({
+      success: true,
+      data: result
+    });
+  } catch (error) {
+    console.error('Error updating commercial:', error);
+    return reply.code(500).send({
+      success: false,
+      message: 'Failed to update commercial'
+    });
+  }
+}
+
+// Delete commercial
+export async function deleteCommercialHandler(
+  request: FastifyRequest<{ Params: { id: string } }>,
+  reply: FastifyReply
+) {
+  try {
+    const { id } = request.params;
+    const result = await adminService.deleteCommercial(id);
+    return reply.code(200).send({
+      success: true,
+      message: result.message
+    });
+  } catch (error) {
+    console.error('Error deleting commercial:', error);
+    return reply.code(500).send({
+      success: false,
+      message: 'Failed to delete commercial'
+    });
+  }
+}
+
+// Handler for creating a regular Maintainer
 export async function createMaintainerHandler(
   request: FastifyRequest<{ Body: BaseAccountData }>,
   reply: FastifyReply
@@ -107,6 +518,92 @@ export async function createMaintainerHandler(
     return reply.code(500).send({
       success: false,
       message: 'Failed to create maintainer'
+    });
+  }
+}
+// Get all maintainers
+export async function getMaintainersHandler(
+  request: FastifyRequest,
+  reply: FastifyReply
+) {
+  try {
+    const result = await adminService.getMaintainers();
+    return reply.code(200).send({
+      success: true,
+      data: result
+    });
+  } catch (error) {
+    console.error('Error fetching Maintainers:', error);
+    return reply.code(500).send({
+      success: false,
+      message: 'Failed to fetch maintainers'
+    });
+  }
+}
+
+// Get maintainer by ID
+export async function getMaintainerByIdHandler(
+  request: FastifyRequest<{ Params: { id: string } }>,
+  reply: FastifyReply
+) {
+  try {
+    const { id } = request.params;
+    const result = await adminService.getMaintainerById(id);
+    return reply.code(200).send({
+      success: true,
+      data: result
+    });
+  } catch (error) {
+    console.error('Error fetching maintainer:', error);
+    return reply.code(500).send({
+      success: false,
+      message: 'Failed to fetch maintainer'
+    });
+  }
+}
+
+// Update maintainer
+export async function updateMaintainerHandler(
+  request: FastifyRequest<{ 
+    Params: { id: string }, 
+    Body: Partial<BaseAccountData> 
+  }>,
+  reply: FastifyReply
+) {
+  try {
+    const { id } = request.params;
+    const updateData = request.body;
+    const result = await adminService.updateMaintainer(id, updateData);
+    return reply.code(200).send({
+      success: true,
+      data: result
+    });
+  } catch (error) {
+    console.error('Error updating maintainer:', error);
+    return reply.code(500).send({
+      success: false,
+      message: 'Failed to update maintainer'
+    });
+  }
+}
+
+// Delete maintainer
+export async function deleteMaintainerHandler(
+  request: FastifyRequest<{ Params: { id: string } }>,
+  reply: FastifyReply
+) {
+  try {
+    const { id } = request.params;
+    const result = await adminService.deleteMaintainer(id);
+    return reply.code(200).send({
+      success: true,
+      message: result.message
+    });
+  } catch (error) {
+    console.error('Error deleting maintainer:', error);
+    return reply.code(500).send({
+      success: false,
+      message: 'Failed to delete maintainer'
     });
   }
 }
