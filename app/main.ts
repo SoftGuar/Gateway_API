@@ -9,9 +9,12 @@ import { PrismaClient } from '@prisma/client';
 // Load environment variables from .env
 dotenv.config();
 
+const isProd = process.env.ENV ? (process.env.ENV === 'PROD') : false;
+
 const host = process.env.HOST || 'localhost';
 const port = process.env.PORT ? Number(process.env.PORT) : 3000;
 
+const domain = process.env.DOMAIN || host+':'+port;
 
 // Ensure DATABASE_URL is available
 // if (!process.env.DATABASE_URL) {
@@ -54,8 +57,8 @@ async function startServer() {
         url: 'https://swagger.io',
         description: 'Find more info here'
       },
-      host: 'localhost'+":"+port,
-      schemes: ['http'],
+      host: domain,
+      schemes: isProd ? ['https'] : ['http'],
       consumes: ['application/json'],
       produces: ['application/json']
     },
