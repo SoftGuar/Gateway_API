@@ -1,6 +1,16 @@
 import { FastifyRequest, FastifyReply } from "fastify";
 import { DeviceService } from "../../services/analytics/DeviceService";
 export class DeviceHandler {
+
+  static async getDeviceTotal(req: FastifyRequest, reply: FastifyReply) {
+    try {
+      const deviceTotal = await DeviceService.getDeviceTotal();
+      reply.status(200).send(deviceTotal);
+    } catch (error) {
+      console.error("Error in DeviceHandler.getDeviceTotal:", error);
+      reply.status(500).send({ error: "Failed to fetch device total" });
+    }
+  }
   static async getDeviceStatus(req: FastifyRequest, reply: FastifyReply) {
     try {
       const deviceStatus = await DeviceService.getDeviceStatus();

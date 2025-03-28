@@ -2,6 +2,7 @@ import { FastifyInstance } from "fastify";
 import { DeviceHandler } from "../../../handlers/analytics/DeviceHandler";
 import { deviceSchemas } from "./deviceRoutesSchemas";
 export async function DeviceRoutes(fastify: FastifyInstance) {
+    fastify.get("/device/total", deviceSchemas.DeviceTotalSchema, DeviceHandler.getDeviceTotal);
     fastify.get("/device/status",deviceSchemas.DeviceStatusSchema, DeviceHandler.getDeviceStatus);
     fastify.get("/device/issues",deviceSchemas.DeviceIssuesOverTimeSchema, DeviceHandler.getDeviceIssuesOverTime);
     fastify.get("/device/performance",deviceSchemas.DevicePerformanceSchema, DeviceHandler.getDevicePerformance);

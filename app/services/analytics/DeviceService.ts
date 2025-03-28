@@ -3,6 +3,28 @@ const ANALYTICS_SERVICE_BASE_URL = process.env.ANALYTICS_SERVICE_BASE_URL
   : "http://localhost:3004";
 
 export class DeviceService {
+  static async getDeviceTotal() {
+    try {
+      const response = await fetch(`${ANALYTICS_SERVICE_BASE_URL}/device/total`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(`Analytics service error: ${errorData.message || "Unknown error"}`);
+      }
+
+      const result = await response.json();
+      return result;
+    }
+    catch (error: any) {
+      console.error("Error fetching device total:", error);
+      throw new Error(`Failed to fetch device total: ${error.message}`);
+    }
+  }
   static async getDeviceStatus() {
     try {
       const response = await fetch(`${ANALYTICS_SERVICE_BASE_URL}/device/status`, {

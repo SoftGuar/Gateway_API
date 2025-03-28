@@ -1,9 +1,15 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { UserSessionsService } from "../../services/analytics/UserSessionsService";
-
-// filepath: c:\Users\KHALED\Documents\GitHub\Analytics_service\app\handlers\UserHandler.ts
-
 export class UserHandler {
+  static async getTotalUsers(req: FastifyRequest, reply: FastifyReply) {
+    try {
+      const userTotal = await UserSessionsService.getTotalUsers();
+      reply.status(200).send(userTotal);
+    } catch (error) {
+      console.error("Error in getUserTotal handler:", error);
+      reply.status(500).send({ error: "Failed to fetch user total" });
+    }
+  }
   static async getTopUsers(req: FastifyRequest, reply: FastifyReply) {
     try {
       const topUsers = await UserSessionsService.getTopUsers();

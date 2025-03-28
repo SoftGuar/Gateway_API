@@ -1,4 +1,19 @@
 export const userSchemas = {
+    UserTotalSchema:{
+        schema: {
+            description: 'Get the total number of users',
+            tags: ['Users'],
+            response: {
+                200: {
+                    type: 'object',
+                    properties: {
+                        total_users: { type: 'number' }
+                    },
+                    required: ['total_users']
+                }
+            }
+        }
+    },
     TopUsersSchema: {
         schema: {
             description: 'Get the top 10 users with the most sessions',

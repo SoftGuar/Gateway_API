@@ -4,7 +4,18 @@ const ANALYTICS_SERVICE_BASE_URL = process.env.ANALYTICS_SERVICE_BASE_URL
 
 export class UserSessionsService {
   private static analyticsBaseUrl = ANALYTICS_SERVICE_BASE_URL;
-
+  static async getTotalUsers() {
+    try {
+      const response = await fetch(`${this.analyticsBaseUrl}/users/total`);
+      if (!response.ok) {
+        throw new Error(`Error fetching total users: ${response.statusText}`);
+      }
+      return await response.json();
+    } catch (error) {
+      console.error("Error fetching total users:", error);
+      throw error;
+    }
+  }
   static async getTopUsers() {
     try {
       const response = await fetch(`${this.analyticsBaseUrl}/users/top`);

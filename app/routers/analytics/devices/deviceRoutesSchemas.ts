@@ -1,4 +1,17 @@
 export const deviceSchemas={ 
+    DeviceTotalSchema : { schema: {
+        description: 'Get the total number of devices',
+        tags: ['Devices'],
+        response: {
+            200: {
+                type: 'object',
+                properties: {
+                    total_devices: { type: 'number' }
+                },
+                required: ['total_devices']
+            }
+        }
+    }},
     DeviceStatusSchema : { schema: {
     description: 'Get the status of all devices',
     tags: ['Analytics: Devices'],

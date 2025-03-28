@@ -3,6 +3,9 @@ import { UserHandler } from "../../../handlers/analytics/UserHandler";
 import { userSchemas } from "./UserSchemas";
 
 export async function UserRoutes(fastify: FastifyInstance) {
+    fastify.get("/users/total", {
+        schema: userSchemas.UserTotalSchema.schema
+    }, UserHandler.getTotalUsers);
     fastify.get("/users/top", {
         schema: userSchemas.TopUsersSchema.schema
     }, UserHandler.getTopUsers);
