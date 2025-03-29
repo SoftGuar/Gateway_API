@@ -7,6 +7,7 @@ export class Config {
     private userManagementIP: string;
     private authenticationIP: string;
     private adminServiceIP: string;
+    private monitoringServiceIP :string;
 
     
     private constructor() {
@@ -14,6 +15,8 @@ export class Config {
       this.userManagementIP = process.env.USER_MANAGEMENT_IP || 'http://127.0.0.1:4000';
       this.authenticationIP = process.env.AUTHENTICATION_IP || 'http://127.0.0.1:5000';
       this.adminServiceIP=process.env.adminService_IP || 'http://127.0.0.1:8000';
+      this.monitoringServiceIP=process.env.monitoringServiceIP || 'http://127.0.0.1:2000';
+
     }
     
     public static getInstance(): Config {
@@ -42,6 +45,13 @@ export class Config {
     public getadminServiceIP(): string {
       return this.adminServiceIP;
     }
+    /**
+     * Get the IP address for the monitoring service.
+     */
+    public getmonitoringServiceIP(): string {
+      return this.monitoringServiceIP;
+    }
+
 
     
     public getPort(): number {
