@@ -5,6 +5,9 @@ import {
   getDispositiveByIdHandler,
   getDispositiveByProductIdHandler,
 } from '../../../handlers/commercial/dispositiveHandler';
+
+import { checkCommercialRole } from '../../../middlewares/roleCheck';
+
 import { 
   getDispositiveByIdSchema,
   getDispositivesSchema,
@@ -14,6 +17,10 @@ import {
 } from './dispositive.schema';
 
 const commercialDispositiveRouter = async (fastify: FastifyInstance) => {
+
+    // Register preHandler hook for all admin routes in this plugin.
+    fastify.addHook('preHandler', checkCommercialRole);
+  
 
     // Get all dispositives
     fastify.get('/',{schema : getDispositivesSchema}, getDispositivesHandler);

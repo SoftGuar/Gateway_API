@@ -27,6 +27,11 @@ describe('AdminService', () => {
   // Clean up test data after all tests
   afterAll(async () => {
     try {
+      if (userId) await service.deleteUser(userId);
+      if (helperId) await service.deleteHelper(helperId);
+      if (deciderId) await service.deleteDecider(deciderId);
+      if (commercialId) await service.deleteCommercial(commercialId);
+      if (maintainerId) await service.deleteMaintainer(maintainerId);
       if (dispositiveId) await service.deleteDispositive(dispositiveId);
       if (productId) await service.deleteProduct(productId);
     } catch (error) {
@@ -54,6 +59,36 @@ describe('AdminService', () => {
       expect(user.first_name).toBe(newUserData.first_name);
       expect(user.email).toBe(newUserData.email);
     });
+
+    test('should get all users',async()=>{
+      const users=await service.getUsers();
+      console.log('Users:' ,users)
+      expect(users).toBeDefined();
+      expect(Array.isArray(users)).toBe(true);
+      expect(users.some(user => user.id.toString() === userId)).toBe(true);
+
+    });
+
+    test('should get user by id', async () => {
+      const user = await service.getUserById(userId);
+
+      expect(user).toBeDefined();
+      expect(user.id.toString()).toBe(userId);
+    });
+
+    test('should update user', async () => {
+      const updateData = {
+        first_name: 'Updated',
+        phone: '0987654321'
+      };
+
+      const updatedUser = await service.updateUser(userId, updateData);
+
+      expect(updatedUser).toBeDefined();
+      expect(updatedUser.first_name).toBe('Updated');
+      expect(updatedUser.phone).toBe('0987654321');
+    });
+
   });
 
   describe('Helper Management', () => {
@@ -76,6 +111,73 @@ describe('AdminService', () => {
       expect(helper.first_name).toBe(newHelperData.first_name);
       expect(helper.email).toBe(newHelperData.email);
     });
+
+    test('should get all helpers',async()=>{
+      const helpers=await service.getUsers();
+      console.log('helpers:' ,helpers)
+      expect(helpers).toBeDefined();
+      expect(Array.isArray(helpers)).toBe(true);
+      expect(helpers.some(helper => helper.id.toString() === helperId)).toBe(true);
+
+    });
+
+    test('should get helper by id', async () => {
+      const helper = await service.getHelperById(helperId);
+
+      expect(helper).toBeDefined();
+      expect(helper.id.toString()).toBe(helperId);
+    });
+
+    test('should update helper', async () => {
+      const updateData = {
+        first_name: 'Updated Helper',
+        phone: '0987654321'
+      };
+
+      const updatedHelper = await service.updateHelper(helperId, updateData);
+
+      expect(updatedHelper).toBeDefined();
+      expect(updatedHelper.first_name).toBe('Updated Helper');
+      expect(updatedHelper.phone).toBe('0987654321');
+    });
+
+  });
+
+  describe('Helper Assignment and Management', () => {
+    test('should add helper to user', async () => {
+      // Add helper to user
+      const userWithHelper = await service.addHelperToUser(userId, helperId);
+      
+      // Verify helper was added
+
+      expect(userWithHelper).toBeDefined();
+      expect(userWithHelper.helpers).toBeDefined();
+      const assignedHelpers = userWithHelper.helpers ?? [];
+      expect(assignedHelpers.some(h => h.id.toString() === helperId)).toBe(true);
+    });
+
+    test('should retrieve user helpers', async () => {
+      // Get user helpers
+      const userHelpers = await service.getUserHelpers(userId);
+      
+      // Verify helpers can be retrieved
+      expect(userHelpers).toBeDefined();
+      expect(Array.isArray(userHelpers)).toBe(true);
+
+      expect(userHelpers.some(h => h.id.toString() === helperId)).toBe(true);
+    });
+
+    test('should remove helper from user', async () => {
+      // Remove helper from user
+      const userWithoutHelper = await service.removeHelperFromUser(userId, helperId);
+      
+      // Verify helper was removed
+      expect(userWithoutHelper).toBeDefined();
+      expect(userWithoutHelper.helpers).toBeDefined();
+      const assignedHelpers = userWithoutHelper.helpers ?? [];
+      expect(assignedHelpers.some(h => h.id.toString() === helperId)).toBe(false);
+    });
+
   });
 
   describe('Decider Management', () => {
@@ -98,6 +200,37 @@ describe('AdminService', () => {
       expect(decider.first_name).toBe(newDeciderData.first_name);
       expect(decider.email).toBe(newDeciderData.email);
     });
+
+    test('should get all deciders',async()=>{
+      const deciders=await service.getDeciders();
+      console.log('Users:' ,deciders)
+      expect(deciders).toBeDefined();
+      expect(Array.isArray(deciders)).toBe(true);
+      expect(deciders.some(decider => decider.id.toString() === deciderId)).toBe(true);
+
+    });
+
+    test('should get decider by id', async () => {
+      const decider = await service.getDeciderById(deciderId);
+
+      expect(decider).toBeDefined();
+      expect(decider.id.toString()).toBe(deciderId);
+    });
+
+    test('should update decider', async () => {
+      const updateData = {
+        first_name: 'Updated Decider',
+        phone: '0987654321'
+      };
+
+      const updatedDecider = await service.updateDecider(deciderId, updateData);
+
+      expect(updatedDecider).toBeDefined();
+      expect(updatedDecider.first_name).toBe('Updated Decider');
+      expect(updatedDecider.phone).toBe('0987654321');
+    });
+
+    
   });
 
   describe('Commercial Management', () => {
@@ -120,6 +253,35 @@ describe('AdminService', () => {
       expect(commercial.first_name).toBe(newCommercialData.first_name);
       expect(commercial.email).toBe(newCommercialData.email);
     });
+
+    test('should get all commercials',async()=>{
+      const commercials=await service.getCommercials();
+      console.log('Commercials:' ,commercials)
+      expect(commercials).toBeDefined();
+      expect(Array.isArray(commercials)).toBe(true);
+      expect(commercials.some(commercial => commercial.id.toString() === commercialId)).toBe(true);
+
+    });
+
+    test('should get commercial by id', async () => {
+      const commercial = await service.getCommercialById(commercialId);
+
+      expect(commercial).toBeDefined();
+      expect(commercial.id.toString()).toBe(commercialId);
+    });
+
+    test('should update commercial', async () => {
+      const updateData = {
+        first_name: 'Updated Commercial',
+        phone: '0987654321'
+      };
+
+      const updatedCommercial = await service.updateCommercial(commercialId, updateData);
+
+      expect(updatedCommercial).toBeDefined();
+      expect(updatedCommercial.first_name).toBe('Updated Commercial');
+      expect(updatedCommercial.phone).toBe('0987654321');
+    });
   });
 
   describe('Maintainer Management', () => {
@@ -141,6 +303,34 @@ describe('AdminService', () => {
       expect(maintainer.id).toBeDefined();
       expect(maintainer.first_name).toBe(newMaintainerData.first_name);
       expect(maintainer.email).toBe(newMaintainerData.email);
+    });
+
+    test('should get all maintainers',async()=>{
+      const maintainers=await service.getMaintainers();
+      console.log('Maintainers:' ,maintainers)
+      expect(maintainers).toBeDefined();
+      expect(Array.isArray(maintainers)).toBe(true);
+      expect(maintainers.some(maintainer => maintainer.id.toString() === maintainerId)).toBe(true);
+    });
+
+    test('should get maintainer by id', async () => {
+      const maintainer = await service.getMaintainerById(maintainerId);
+
+      expect(maintainer).toBeDefined();
+      expect(maintainer.id.toString()).toBe(maintainerId);
+    });
+
+    test('should update maintainer', async () => {
+      const updateData = {
+        first_name: 'Updated Maintainer',
+        phone: '0987654321'
+      };
+
+      const updatedMaintainer = await service.updateMaintainer(maintainerId, updateData);
+
+      expect(updatedMaintainer).toBeDefined();
+      expect(updatedMaintainer.first_name).toBe('Updated Maintainer');
+      expect(updatedMaintainer.phone).toBe('0987654321');
     });
   });
 

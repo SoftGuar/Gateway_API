@@ -35,6 +35,14 @@ export async function checkAdminRole(req: FastifyRequest, reply: FastifyReply) {
   return checkRole(req, reply, ['admin']);
 }
 
+export async function checkCommercialRole(req: FastifyRequest, reply: FastifyReply) {
+  return checkRole(req, reply, ['commercial']);
+}
+
+export async function checkMaintainerRole(req: FastifyRequest, reply: FastifyReply) {
+  return checkRole(req, reply, ['maintainer']);
+}
+
 export async function checkAdminOrMaintainerRole(req: FastifyRequest, reply: FastifyReply) {
   return checkRole(req, reply, ['admin','maintainer']);
 }
