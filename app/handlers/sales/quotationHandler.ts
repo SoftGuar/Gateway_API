@@ -112,13 +112,13 @@ export async function deleteQuotationHandler(
 
 // Handler for associating a product with a quotation
 export async function associateProductHandler(
-    request: FastifyRequest<{ Params: { id: string }; Body: { productId: number; count: number } }>,
+    request: FastifyRequest<{ Params: { id: string }; Body: { product_id: number; count: number } }>,
     reply: FastifyReply
 ) {
     try {
         const { id } = request.params;
-        const { productId, count } = request.body;
-        const result = await QuotationService.associateProduct(Number(id), productId, count);
+        const { product_id, count } = request.body;
+        const result = await QuotationService.associateProduct(Number(id), product_id, count);
         return reply.code(200).send({
             success: true,
             data: result,
@@ -134,18 +134,18 @@ export async function associateProductHandler(
 
 // Handler for retrieving quotations by user ID
 export async function findQuotationsByUserIdHandler(
-    request: FastifyRequest<{ Params: { userId: string } }>,
+    request: FastifyRequest<{ Params: { user_id: number } }>,
     reply: FastifyReply
 ) {
     try {
-        const { userId } = request.params;
-        const quotations = await QuotationService.findByUserId(Number(userId));
+        const { user_id } = request.params;
+        const quotations = await QuotationService.findByUserId(Number(user_id));
         return reply.code(200).send({
             success: true,
             data: quotations,
         });
     } catch (error) {
-        console.error(`Error fetching quotations for user ID ${request.params.userId}:`, error);
+        console.error(`Error fetching quotations for user ID ${request.params.user_id}:`, error);
         return reply.code(500).send({
             success: false,
             message: 'Failed to fetch quotations for user',
@@ -155,7 +155,7 @@ export async function findQuotationsByUserIdHandler(
 
 // Handler for creating a quotation request with associated products
 export async function demandeQuotationHandler(
-    request: FastifyRequest<{ Body: { user_id: number; products: { productId: number; count: number }[] } }>,
+    request: FastifyRequest<{ Body: { user_id: number; products: { product_id: number; count: number }[] } }>,
     reply: FastifyReply
 ) {
     try {

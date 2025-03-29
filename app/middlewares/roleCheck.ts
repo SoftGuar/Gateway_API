@@ -1,7 +1,7 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { AuthenticationService } from '../services/authentication/authenticationService';
 
-async function checkRole(req: FastifyRequest, reply: FastifyReply, role: string) {
+async function checkRole(req: FastifyRequest, reply: FastifyReply, roles: string[]) {
   const authHeader = req.headers['authorization'];
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
     return reply.code(401).send({
@@ -17,7 +17,7 @@ async function checkRole(req: FastifyRequest, reply: FastifyReply, role: string)
     const decoded = await authService.verifyToken(token);
 
 
-    if (decoded.role !== role) {
+    if (!roles.includes(decoded.role)) {
       return reply.code(403).send({
         success: false,
         message: 'Access denied. Only admins can perform this action.'
@@ -32,13 +32,17 @@ async function checkRole(req: FastifyRequest, reply: FastifyReply, role: string)
 }
 
 export async function checkAdminRole(req: FastifyRequest, reply: FastifyReply) {
-  return checkRole(req, reply, 'admin');
+  return checkRole(req, reply, ['admin']);
 }
 
 export async function checkCommercialRole(req: FastifyRequest, reply: FastifyReply) {
-  return checkRole(req, reply, 'commercial');
+  return checkRole(req, reply, ['commercial']);
 }
 
 export async function checkMaintainerRole(req: FastifyRequest, reply: FastifyReply) {
-  return checkRole(req, reply, 'maintainer');
+  return checkRole(req, reply, ['maintainer']);
+}
+
+export async function checkAdminOrMaintainerRole(req: FastifyRequest, reply: FastifyReply) {
+  return checkRole(req, reply, ['admin','maintainer']);
 }

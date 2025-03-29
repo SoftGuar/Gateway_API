@@ -12,7 +12,7 @@ export async function createTransactionHandler(
         const transaction = await TransactionService.createTransaction(transactionData);
         return reply.code(201).send({
             success: true,
-            data: transaction,
+            data: transaction.transaction,
         });
     } catch (error) {
         console.error('Error creating transaction:', error);

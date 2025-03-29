@@ -15,17 +15,21 @@ export default async function quotationRoutes(fastify: FastifyInstance) {
         },
         required: ['user_id', 'date']
       },
-      response: {
-        201: {
-          description: 'Quotation created successfully',
-          type: 'object',
-          properties: {
-            id: { type: 'string' },
-            user_id: { type: 'number' },
-            date: { type: 'string', format: 'date-time' }
-          }
-        }
-      }
+      201: {
+        description: "Quotation created successfully",
+        type: "object",
+        properties: {
+          message: { type: "string" },
+          quotation: {
+            type: "object",
+            properties: {
+              id: { type: "number" },
+              user_id: { type: "number" },
+              date: { type: "string", format: "date-time" },
+            },
+          },
+        },
+      },
     }
   }, qh.createQuotationHandler);
 
@@ -37,13 +41,19 @@ export default async function quotationRoutes(fastify: FastifyInstance) {
       response: {
         200: {
           description: 'A list of quotations',
-          type: 'array',
-          items: {
-            type: 'object',
-            properties: {
-              id: { type: 'number' },
-              user_id: { type: 'number' },
-              date: { type: 'string', format: 'date-time' }
+          type: 'object',
+          properties: {
+            success: { type: 'boolean' },
+            data: {
+              type: 'array',
+              items: {
+                type: 'object',
+                properties: {
+                  id: { type: 'number' },
+                  user_id: { type: 'number' },
+                  date: { type: 'string', format: 'date-time' }
+                }
+              }
             }
           }
         }
@@ -68,16 +78,22 @@ export default async function quotationRoutes(fastify: FastifyInstance) {
         properties: {
           date: { type: 'string', format: 'date-time' },
           user_id: { type: 'number' }
-        }
+        },
       },
       response: {
         200: {
           description: 'Quotation updated successfully',
           type: 'object',
           properties: {
-            id: { type: 'integer' },
-            user_id: { type: 'integer' },
-            date: { type: 'string' }
+            success: { type: 'boolean' },
+            data: {
+              type: 'object',
+              properties: {
+                id: { type: 'number' },
+                user_id: { type: 'number' },
+                date: { type: 'string', format: 'date-time' }
+              }
+            }
           }
         }
       }
@@ -98,11 +114,26 @@ export default async function quotationRoutes(fastify: FastifyInstance) {
       },
       response: {
         200: {
+          description: 'Quotation retrieved successfully',
           type: 'object',
           properties: {
-            id: { type: 'integer' },
-            user_id: { type: 'integer' },
-            date: { type: 'string' }
+            success: { type: 'boolean' },
+            data: {
+              type: 'object',
+              properties: {
+                id: { type: 'number' },
+                user_id: { type: 'number' },
+                date: { type: 'string', format: 'date-time' }
+              }
+            }
+          }
+        },
+        404: {
+          description: 'Quotation not found',
+          type: 'object',
+          properties: {
+            success: { type: 'boolean' },
+            message: { type: 'string' }
           }
         }
       }
@@ -126,9 +157,16 @@ export default async function quotationRoutes(fastify: FastifyInstance) {
           description: 'Quotation deleted successfully',
           type: 'object',
           properties: {
-            id: { type: 'integer' },
-            user_id: { type: 'integer' },
-            date: { type: 'string' }
+            success: { type: 'boolean' },
+            message: { type: 'string' }
+          }
+        },
+        404: {
+          description: 'Quotation not found',
+          type: 'object',
+          properties: {
+            success: { type: 'boolean' },
+            message: { type: 'string' }
           }
         }
       }
@@ -160,9 +198,15 @@ export default async function quotationRoutes(fastify: FastifyInstance) {
           description: 'Product associated successfully',
           type: 'object',
           properties: {
-            quotation_id: { type: 'number' },
-            product_id: { type: 'number' },
-            count: { type: 'number' }
+            success: { type: 'boolean' },
+            data: {
+              type: 'object',
+              properties: {
+                quotation_id: { type: 'number' },
+                product_id: { type: 'number' },
+                count: { type: 'number' }
+              }
+            }
           }
         }
       }
@@ -175,22 +219,28 @@ export default async function quotationRoutes(fastify: FastifyInstance) {
       summary: 'Retrieve quotations by user ID',
       description: 'Retrieves all quotations associated with a specific user ID',
       params: {
-        type: 'object',
+        type: "object",
         properties: {
-          user_id: { type: 'number' }
+          user_id: { type: "number" },
         },
-        required: ['user_id']
+        required: ["user_id"],
       },
       response: {
         200: {
           description: 'A list of quotations associated with the user',
-          type: 'array',
-          items: {
-            type: 'object',
-            properties: {
-              id: { type: 'number' },
-              user_id: { type: 'number' },
-              date: { type: 'string', format: 'date-time' }
+          type: 'object',
+          properties: {
+            success: { type: 'boolean' },
+            data: {
+              type: 'array',
+              items: {
+                type: 'object',
+                properties: {
+                  id: { type: 'number' },
+                  user_id: { type: 'number' },
+                  date: { type: 'string', format: 'date-time' }
+                }
+              }
             }
           }
         }
@@ -237,13 +287,21 @@ export default async function quotationRoutes(fastify: FastifyInstance) {
                   items: {
                     type: 'object',
                     properties: {
-                      productId: { type: 'number' },
+                      product_id: { type: 'number' },
                       count: { type: 'number' }
                     }
                   }
                 }
               }
             }
+          }
+        },
+        500: {
+          description: 'Failed to create quotation demand',
+          type: 'object',
+          properties: {
+            success: { type: 'boolean' },
+            message: { type: 'string' }
           }
         }
       }

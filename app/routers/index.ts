@@ -10,7 +10,7 @@ import accountRouter from './account/account.router';
 import maintainerDispositiveRouter from'./maintainer/dispositive/dispositive.router';
 
 import registerSalesRoutes from './sales/index';
-
+import registerAnalyticsRoutes from './analytics/index';
 
 
 import loginRouter from './login/login.router';
@@ -47,6 +47,9 @@ const registerRoutes = (fastify: FastifyInstance) => {
 
   // Register account routes
   fastify.register(accountRouter, { prefix: '/account' });
+
+  //register analytics routes form index.ts in analytics folder
+  fastify.register(registerAnalyticsRoutes, { prefix: '/analytics' });
 
   
 };

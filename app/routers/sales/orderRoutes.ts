@@ -11,12 +11,21 @@ async function orderRoutes(fastify: FastifyInstance) {
                 summary: 'Place an order for a product',
                 body: {
                     type: 'object',
-                    required: ['product_id', 'commercial_id', 'user_id'],
                     properties: {
-                        product_id: { type: 'integer' },
-                        commercial_id: { type: 'integer' },
-                        user_id: { type: 'integer' },
+                        user_id: { 
+                            type: 'number', 
+                            description: 'The ID of the user placing the order' 
+                        },
+                        product_id: { 
+                            type: 'number', 
+                            description: 'The ID of the product to be ordered' 
+                        },
+                        commercial_id: { 
+                            type: 'number', 
+                            description: 'The ID of the commercial entity associated with the order' 
+                        }
                     },
+                    required: ['user_id', 'product_id', 'commercial_id']
                 },
                 response: {
                     200: {
