@@ -19,7 +19,7 @@ async function testCreateUser(): Promise<UserType | undefined> {
   const newUserData = {
     first_name: 'Test',
     last_name: 'User',
-    email: `test.user${Date.now()}@example.com`, // Use timestamp to avoid email conflicts
+    email: `amine@example.com`, // Use timestamp to avoid email conflicts
     password: 'test1234',
     phone: '1234567890'
   };

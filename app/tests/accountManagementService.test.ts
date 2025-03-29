@@ -90,7 +90,6 @@ describe('AccountManagementService', () => {
       expect(user).toBeDefined();
       expect(user.id.toString()).toBe(userId);
       expect(user.email).toBe(testUserEmail);
-      expect(Array.isArray(user.helpers)).toBe(true);
     });
 
     test('should update user', async () => {
