@@ -5,6 +5,8 @@ import adminProductRouter from './admin/product/product.router';
 
 import commercialDispositiveRouter from './commercial/dispositive/dispositive.router';
 import commercialProductRouter from './commercial/product/product.router';
+import commercialAccountRouter from './commercial/account/account.router';
+
 import accountRouter from './account/account.router';
 
 import maintainerDispositiveRouter from'./maintainer/dispositive/dispositive.router';
@@ -33,6 +35,11 @@ const registerRoutes = (fastify: FastifyInstance) => {
 
   // Register commercial dispositive routes with a prefix
   fastify.register(commercialDispositiveRouter, { prefix: '/commercial/dispositive' });
+
+    // Register commercial account routes with a prefix
+    fastify.register(commercialAccountRouter, { prefix: '/commercial/account' });
+
+
 
     // Register maintainer dispositive routes with a prefix
     fastify.register(maintainerDispositiveRouter, { prefix: '/maintainer/dispositive' });
