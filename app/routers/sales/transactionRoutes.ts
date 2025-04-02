@@ -7,10 +7,45 @@ async function transactionRoutes(fastify: FastifyInstance) {
     fastify.put('/:id', { schema: updateTransactionSchema }, th.updateTransactionHandler);
     fastify.get('/:id', { schema: getTransactionByIdSchema }, th.getTransactionByIdHandler);
     fastify.delete('/:id', { schema: deleteTransactionSchema }, th.deleteTransactionHandler);
+    fastify.get('/sales', { schema: getSalesSchema }, th.fetchSalesHandler);
 }
 
 export default transactionRoutes;
-
+const getSalesSchema = {
+    description: 'Get All Sales',
+    tags: ['Sales: Transactions Management'],
+    summary: 'This endpoint retrieves all sales.',
+    response: {
+        200: {
+            description: 'List of sales.',
+            type: 'object',
+            properties: {
+                success: { type: 'boolean' },
+                data: {
+                    type: 'array',
+                    items: {
+                        type: 'object',
+                        properties: {
+                            userName: { type: 'string' },
+                            commercialName: { type: 'string' },
+                            date: { type: 'string', format: 'date-time' },
+                            dispositiveId: { type: 'number' },
+                            Status: { type: 'boolean' }
+                        }
+                    }
+                }
+            }
+        },
+        500: {
+            description: 'Internal server error.',
+            type: 'object',
+            properties: {
+                success: { type: 'boolean' },
+                message: { type: 'string' }
+            }
+        }
+    }
+};
 const createTransactionSchema = {
     description: 'Add Transaction',
     tags: ['Sales: Transactions Management'],
