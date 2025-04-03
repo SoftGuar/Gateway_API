@@ -3,6 +3,18 @@ const SALES_SERVICE_BASE_URL = process.env.SALES_SERVICE_BASE_URL
   : "http://localhost:3003";
 
 export const TransactionService = {
+  fetchSales: async () => {
+    try {
+      const response = await fetch(`${SALES_SERVICE_BASE_URL}/transactions/sales`);
+      if (!response.ok) {
+        throw new Error(`Error fetching sales: ${response.statusText}`);
+      }
+      return await response.json();
+    } catch (error: any) {
+      console.error("Error fetching sales:", error);
+      throw error;
+    }
+  },
   createTransaction: async (data: any) => {
     try {
       const response = await fetch(`${SALES_SERVICE_BASE_URL}/transactions`, {

@@ -112,3 +112,23 @@ export async function deleteTransactionHandler(
         });
     }
 }
+
+// Handler for fetching sales
+export async function fetchSalesHandler(
+    request: FastifyRequest,
+    reply: FastifyReply
+) {
+    try {
+        const sales = await TransactionService.fetchSales();
+        return reply.code(200).send({
+            success: true,
+            data: sales,
+        });
+    } catch (error) {
+        console.error('Error fetching sales:', error);
+        return reply.code(500).send({
+            success: false,
+            message: 'Internal server error',
+        });
+    }
+}
