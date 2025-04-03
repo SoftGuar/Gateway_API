@@ -35,8 +35,20 @@ export type DispositiveType = {
     type : string
     status      : InterventionStatus 
     end_date    : string
-    start_date   :string   
+    start_date   :string 
+    report       : ReportType  
   }
+
+  export type ReportType = {
+    id  :number;
+    interventionId: number;
+    title: string;
+    description: string;
+    created_at: string
+  };
+  
+
+
   export type DispoIssueWithMaintainerAndDispositiveType ={
     id :number;
     idMaintainer :number

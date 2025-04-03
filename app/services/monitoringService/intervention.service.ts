@@ -1,5 +1,5 @@
 import { Config } from '../../services.config';
-import { InterventionStatus,InterventionType } from './types';
+import { InterventionStatus,InterventionType, ReportType } from './types';
 
 
 export interface CreateInterventionData {
@@ -21,6 +21,12 @@ export interface UpdateInterventionData {
   end_date?: string;
   start_date?: string;
 }
+
+export interface UpdateReportData {
+  title: string;
+  description: string;
+}
+
 
 export class InterventionService {
   private baseUrl: string;
@@ -106,6 +112,20 @@ export class InterventionService {
     const payload = await response.json();
     return payload.data;
   }
+    // PUT /intervention/:id/report
+    async updateInterventionReport(id: string, data: UpdateReportData): Promise<ReportType> {
+      const response = await fetch(`${this.baseUrl}/intervention/${id}/report`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify( data )
+      });
+      if (!response.ok) {
+        throw new Error('Failed to update intervention report');
+      }
+      const payload = await response.json();
+      return payload.data;
+    }
+  
 
   // DELETE /intervention/:id
   async deleteIntervention(id: string): Promise<{ message: string }> {

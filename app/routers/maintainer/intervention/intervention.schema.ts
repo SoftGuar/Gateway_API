@@ -5,8 +5,16 @@ const authHeader = Type.Object({
   authorization: Type.String({ description: "Bearer token" })
 });
 
+// Schema for intervention report
+const reportProperties = {
+  id: Type.Number(),
+  interventionId: Type.Number(),
+  title: Type.String(),
+  description: Type.String(),
+  created_at: Type.String({ format: 'date-time' })
+};
 
-// Propriétés communes pour une intervention
+// Common properties for an intervention
 const interventionProperties = {
   id: Type.String(),
   description: Type.String(),
@@ -15,11 +23,12 @@ const interventionProperties = {
   end_date: Type.Union([Type.String({ format: 'date-time' }), Type.Null()]),
   status: Type.Enum(InterventionStatus),
   idMaintainer: Type.String(),
-  idDispositive: Type.String()
+  idDispositive: Type.String(),
+  // Include the report in the response
+  report: Type.Object(reportProperties)
 };
 
-
-// Schémas pour les Interventions
+// Schemas for Interventions
 export const getAllInterventionsSchema = {
   tags: ['Maintainer : Interventions management'],
   headers: authHeader,
@@ -74,7 +83,7 @@ export const createInterventionSchema = {
     status: Type.Enum(InterventionStatus, { default: 'pending' }),
     idMaintainer: Type.String(),
     idDispositive: Type.String()
-    }),
+  }),
   response: {
     201: Type.Object({
       success: Type.Literal(true),
@@ -116,6 +125,29 @@ export const updateInterventionStatusSchema = {
     200: Type.Object({
       success: Type.Literal(true),
       data: Type.Object(interventionProperties)
+    })
+  }
+};
+
+// New schema for updating intervention reports
+export const updateInterventionReportSchema = {
+  tags: ['Maintainer : Interventions management'],
+  headers: authHeader,
+  params: Type.Object({
+    id: Type.String()
+  }),
+  body: Type.Object({
+    title: Type.String(),
+    description: Type.String()
+  }),
+  response: {
+    200: Type.Object({
+      success: Type.Literal(true),
+      data: Type.Object(reportProperties)
+    }),
+    404: Type.Object({
+      success: Type.Literal(false),
+      message: Type.String()
     })
   }
 };

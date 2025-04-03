@@ -7,12 +7,14 @@ import {
 import { 
   InterventionService, 
   CreateInterventionData, 
-  UpdateInterventionData 
+  UpdateInterventionData, 
+  UpdateReportData
 } from './intervention.service';
 import { 
   DispoIssueType, 
   InterventionType, 
-  InterventionStatus 
+  InterventionStatus, 
+  ReportType
 } from './types';
 
 export class MonitoringService {
@@ -77,6 +79,11 @@ export class MonitoringService {
   async updateInterventionStatus(id: string, status: InterventionStatus): Promise<InterventionType> {
     return this.interventionService.updateInterventionStatus(id, status);
   }
+
+  async updateInterventionReport(id: string, reportData: UpdateReportData): Promise<ReportType> {
+    return this.interventionService.updateInterventionReport(id, reportData);
+  }
+
 
   async deleteIntervention(id: string): Promise<{ message: string }> {
     return this.interventionService.deleteIntervention(id);

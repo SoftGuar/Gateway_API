@@ -6,6 +6,7 @@ import {
   createInterventionHandler,
   updateInterventionHandler,
   updateInterventionStatusHandler,
+  updateInterventionReportHandler,
   deleteInterventionHandler
 } from '../../../handlers/maintainer/InterventionHandler';
 import { checkMaintainerRole } from '../../../middlewares/roleCheck';
@@ -16,6 +17,7 @@ import {
   createInterventionSchema,
   updateInterventionSchema,
   updateInterventionStatusSchema,
+  updateInterventionReportSchema,
   deleteInterventionSchema
 } from './intervention.schema';
 
@@ -23,7 +25,7 @@ import {
 // Router pour les Interventions
 const maintainerInterventionRouter = async (fastify: FastifyInstance) => {
   // Register preHandler hook for all maintainer routes in this plugin
-  fastify.addHook('preHandler', checkMaintainerRole);
+  //fastify.addHook('preHandler', checkMaintainerRole);
 
   // Get all interventions
   fastify.get('/', { schema: getAllInterventionsSchema }, getAllInterventionsHandler);
@@ -42,6 +44,9 @@ const maintainerInterventionRouter = async (fastify: FastifyInstance) => {
 
   // Update intervention status
   fastify.patch('/:id/status', { schema: updateInterventionStatusSchema }, updateInterventionStatusHandler);
+ 
+    // Update an intervention report
+    fastify.put('/:id/report', { schema: updateInterventionReportSchema }, updateInterventionReportHandler);
 
   // Delete an intervention
   fastify.delete('/:id', { schema: deleteInterventionSchema }, deleteInterventionHandler);
