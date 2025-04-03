@@ -51,8 +51,8 @@ export type DispositiveType = {
 
   export type DispoIssueWithMaintainerAndDispositiveType ={
     id :number;
-    idMaintainer :number
-    idDispositive :      number  
+    maintainerId :number
+    dispositiveId :      number  
     description  :String
     status      : string 
     date    : string
@@ -62,8 +62,8 @@ export type DispositiveType = {
 
   export type DispoIssueType ={
     id :number;
-    idMaintainer :number
-    idDispositive :      number  
+    maintainerId :number
+    dispositiveId :      number  
     description  :String
     status      : string 
     date    : string

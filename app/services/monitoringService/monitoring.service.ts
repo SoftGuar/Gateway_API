@@ -11,7 +11,8 @@ import {
   UpdateReportData
 } from './intervention.service';
 import { 
-  DispoIssueType, 
+  DispoIssueWithMaintainerAndDispositiveType, 
+  DispoIssueType,
   InterventionType, 
   InterventionStatus, 
   ReportType
@@ -31,23 +32,23 @@ export class MonitoringService {
     return this.dispoIssueService.createDispoIssue(dispoIssueData);
   }
 
-  async getAllDispoIssues(): Promise<DispoIssueType[]> {
+  async getAllDispoIssues(): Promise<DispoIssueWithMaintainerAndDispositiveType[]> {
     return this.dispoIssueService.getDispoIssues();
   }
 
-  async getDispoIssueById(id: string): Promise<DispoIssueType> {
+  async getDispoIssueById(id: string): Promise<DispoIssueWithMaintainerAndDispositiveType> {
     return this.dispoIssueService.getDispoIssueById(id);
   }
 
-  async getDispoIssuesByDispositiveId(dispositiveId: string): Promise<DispoIssueType[]> {
+  async getDispoIssuesByDispositiveId(dispositiveId: string): Promise<DispoIssueWithMaintainerAndDispositiveType[]> {
     return this.dispoIssueService.getDispoIssuesByDispositiveId(dispositiveId);
   }
 
-  async assignMaintainerToDispoIssue(id: string, maintainerId: number): Promise<DispoIssueType> {
+  async assignMaintainerToDispoIssue(id: string, maintainerId: number): Promise<DispoIssueWithMaintainerAndDispositiveType> {
     return this.dispoIssueService.assignMaintainer(id, maintainerId);
   }
 
-  async updateDispoIssue(id: string, updateData: UpdateDispoIssueData): Promise<DispoIssueType> {
+  async updateDispoIssue(id: string, updateData: UpdateDispoIssueData): Promise<DispoIssueWithMaintainerAndDispositiveType> {
     return this.dispoIssueService.updateDispoIssue(id, updateData);
   }
 
