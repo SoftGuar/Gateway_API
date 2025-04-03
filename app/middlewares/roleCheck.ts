@@ -20,9 +20,10 @@ async function checkRole(req: FastifyRequest, reply: FastifyReply, roles: string
     if (!roles.includes(decoded.role)) {
       return reply.code(403).send({
         success: false,
-        message: 'Access denied. Only admins can perform this action.'
+        message: 'Access denied. Only ${role}s can perform this action.'
       });
     }
+    
   } catch (error) {
     return reply.code(401).send({
       success: false,
@@ -45,4 +46,8 @@ export async function checkMaintainerRole(req: FastifyRequest, reply: FastifyRep
 
 export async function checkAdminOrMaintainerRole(req: FastifyRequest, reply: FastifyReply) {
   return checkRole(req, reply, ['admin','maintainer']);
+}
+
+export async function checkUserRole(req: FastifyRequest, reply: FastifyReply) {
+  return checkRole(req, reply, 'user');
 }

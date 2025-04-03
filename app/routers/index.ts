@@ -5,9 +5,14 @@ import adminProductRouter from './admin/product/product.router';
 
 import commercialDispositiveRouter from './commercial/dispositive/dispositive.router';
 import commercialProductRouter from './commercial/product/product.router';
+import commercialAccountRouter from './commercial/account/account.router';
+
 import accountRouter from './account/account.router';
+import userHelperRouter from './user/user.router'
 
 import maintainerDispositiveRouter from'./maintainer/dispositive/dispositive.router';
+import maintainerDispoIssueRouter from'./maintainer/dispoIssue/dispoIssue.router';
+import maintainerInterventionRouter from'./maintainer/intervention/intervention.router';
 
 import registerSalesRoutes from './sales/index';
 import registerAnalyticsRoutes from './analytics/index';
@@ -32,12 +37,27 @@ const registerRoutes = (fastify: FastifyInstance) => {
   // Register commercial dispositive routes with a prefix
   fastify.register(commercialDispositiveRouter, { prefix: '/commercial/dispositive' });
 
+    // Register commercial account routes with a prefix
+    fastify.register(commercialAccountRouter, { prefix: '/commercial/account' });
+
+      // Register comemrcial product routes with a prefix
+  fastify.register(commercialProductRouter, { prefix: '/commercial/product' });
+
+
+
+
     // Register maintainer dispositive routes with a prefix
     fastify.register(maintainerDispositiveRouter, { prefix: '/maintainer/dispositive' });
 
+    // Register maintainer dispoIssue routes with a prefix
+    fastify.register(maintainerDispoIssueRouter, { prefix: '/maintainer/dispoIssue' });
 
-  // Register admin product routes with a prefix
-  fastify.register(commercialProductRouter, { prefix: '/commercial/product' });
+     // Register maintainer intervention routes with a prefix
+    fastify.register(maintainerInterventionRouter, { prefix: '/maintainer/intervention' });
+
+    //register user  routes with a prefix 
+    fastify.register(userHelperRouter, { prefix: '/user' });
+
 
   // Register login routes
   fastify.register(loginRouter, { prefix: '/login' });
