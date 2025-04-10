@@ -3,6 +3,26 @@ const SALES_SERVICE_BASE_URL = process.env.SALES_SERVICE_BASE_URL
   : "http://localhost:3003";
 
 export const TransactionService = {
+  confirmTransaction: async (
+    transaction_id: number,
+    dispositive_id: number
+  ) => {
+    try {
+      const response = await fetch(
+        `${SALES_SERVICE_BASE_URL}/sales/${transaction_id}/${dispositive_id}`,
+        {
+          method: "PUT",
+        }
+      );
+      if (!response.ok) {
+        throw new Error(`Error confirming transaction: ${response.statusText}`);
+      }
+      return await response.json();
+    } catch (error: any) {
+      console.error("Error confirming transaction:", error);
+      throw error;
+    }
+  },
   fetchSales: async () => {
     try {
       const response = await fetch(`${SALES_SERVICE_BASE_URL}/transactions/sales`);
