@@ -2,6 +2,8 @@ const SALES_SERVICE_BASE_URL = process.env.SALES_SERVICE_BASE_URL
   ? `${process.env.SALES_SERVICE_BASE_URL}`
   : "http://localhost:3003";
 
+
+  
 export const TransactionService = {
   confirmTransaction: async (
     transaction_id: number,
@@ -9,7 +11,7 @@ export const TransactionService = {
   ) => {
     try {
       const response = await fetch(
-        `${SALES_SERVICE_BASE_URL}/sales/${transaction_id}/${dispositive_id}`,
+        `${SALES_SERVICE_BASE_URL}/transactions/sales/${transaction_id}/${dispositive_id}`,
         {
           method: "PUT",
         }

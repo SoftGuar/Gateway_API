@@ -25,6 +25,7 @@ describe('AdminService', () => {
   });
 
   // Clean up test data after all tests
+  
   afterAll(async () => {
     try {
       if (userId) await service.deleteUser(userId);
@@ -38,6 +39,7 @@ describe('AdminService', () => {
       // Ignore cleanup errors
     }
   });
+  
 
   describe('User Management', () => {
     test('should create a new user', async () => {
