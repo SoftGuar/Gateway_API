@@ -51,3 +51,7 @@ export async function checkAdminOrMaintainerRole(req: FastifyRequest, reply: Fas
 export async function checkUserRole(req: FastifyRequest, reply: FastifyReply) {
   return checkRole(req, reply, ['user']);
 }
+
+export async function checkHelperRole(req: FastifyRequest, reply: FastifyReply) {
+  return checkRole(req, reply, ['helepr']);
+}

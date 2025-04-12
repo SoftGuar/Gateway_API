@@ -4,7 +4,7 @@ import commercialRoutes from './commercial';
 
 import accountRouter from './account/account.router';
 import userHelperRouter from './user/user.router'
-
+import helperRouter from './helper/helper.router'
 import maintainerRoutes from'./maintainer';
 
 import registerSalesRoutes from './sales/index';
@@ -27,6 +27,9 @@ const registerRoutes = (fastify: FastifyInstance) => {
 
   // Register maintainer  routes with a prefix
   fastify.register(maintainerRoutes, { prefix: '/maintainer' });
+
+  //Register helper routes with a prefix 
+  fastify.register(helperRouter,{prefix: '/helepr'})
 
 
   //register user  routes with a prefix 
