@@ -66,7 +66,7 @@ async function testAccountCreation(): Promise<UserType | undefined> {
   const newUserData = {
     first_name: 'Test',
     last_name: 'User',
-    email: `test.user@example.com`, // unique email with timestamp
+    email: `test.usersuperadmin@example.com`, // unique email with timestamp
     password: 'testPassword123',
     phone: '1234567890'
   };
