@@ -19,7 +19,7 @@ async function dispositiveRoutes(fastify: FastifyInstance) {
                 response: {
                     200: {
                         type: 'object',
-                        properties: {
+                        psuperAdminRouterroperties: {
                         id: { type: 'number' },
                         type: { type: 'string' },
                         start_date: { type: 'string', format: 'date-time' },
