@@ -8,9 +8,50 @@ async function transactionRoutes(fastify: FastifyInstance) {
     fastify.get('/:id', { schema: getTransactionByIdSchema }, th.getTransactionByIdHandler);
     fastify.delete('/:id', { schema: deleteTransactionSchema }, th.deleteTransactionHandler);
     fastify.get('/sales', { schema: getSalesSchema }, th.fetchSalesHandler);
+    fastify.put('/sales/:transaction_id/:dispositive_id', { schema: confirmProductTransactionSchema }, th.confirmProductTransactionHandler);
 }
 
 export default transactionRoutes;
+const confirmProductTransactionSchema = {
+    description: 'Confirm Product Transaction',
+    tags: ['Sales: Transactions Management'],
+    summary: 'This endpoint confirms a product transaction by its ID.',
+    params: {
+        type: 'object',
+        properties: {
+            transaction_id: { type: 'number' },
+            dispositive_id: { type: 'number' }
+        },
+        required: ['transaction_id', 'dispositive_id']
+    },
+    response: {
+        200: {
+            description: 'Product transaction confirmed.',
+            type: 'object',
+            properties: {
+                success: { type: 'boolean' },
+                data: {
+                    type: 'object',
+                    properties: {
+                        dispositive_id: { type: 'number' },
+                        transaction_id: { type: 'number' },
+                        isConfirmed: { type: 'boolean' },
+                        created_at: { type: 'string', format: 'date-time' },
+                        updated_at: { type: 'string', format: 'date-time' }
+                    }
+                }
+            }
+        },
+        500: {
+            description: 'Internal server error.',
+            type: 'object',
+            properties: {
+                success: { type: 'boolean' },
+                message: { type: 'string' }
+            }
+        }
+    }
+};
 const getSalesSchema = {
     description: 'Get All Sales',
     tags: ['Sales: Transactions Management'],
@@ -26,6 +67,7 @@ const getSalesSchema = {
                     items: {
                         type: 'object',
                         properties: {
+                            transactionId: { type: 'number' },
                             userName: { type: 'string' },
                             commercialName: { type: 'string' },
                             date: { type: 'string', format: 'date-time' },

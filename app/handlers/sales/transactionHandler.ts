@@ -132,3 +132,27 @@ export async function fetchSalesHandler(
         });
     }
 }
+
+export async function confirmProductTransactionHandler(
+    request: FastifyRequest<{ Params: {
+        transaction_id: string;
+        dispositive_id: string;
+    } }>,
+    reply: FastifyReply
+) {
+    try {
+        const transaction_id = Number(request.params.transaction_id);
+        const dispositive_id = Number(request.params.dispositive_id);
+        const transaction = await TransactionService.confirmTransaction(transaction_id, dispositive_id);
+        return reply.code(200).send({
+            success: true,
+            data: transaction,
+        });
+    } catch (error) {
+        console.error('Error confirming product transaction:', error);
+        return reply.code(500).send({
+            success: false,
+            message: 'Internal server error',
+        });
+    }
+}
