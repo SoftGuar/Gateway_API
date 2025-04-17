@@ -2,14 +2,19 @@ import { FastifyInstance } from 'fastify';
 import { 
   getUserHelpersHandler,
   addHelperToUserHandler,
-  removeHelperFromUserHandler
+  removeHelperFromUserHandler,
 } from '../../handlers/user/contactHandler';
+
+import{
+  createHelperRecommendaation
+}from'../../handlers/user/helperRecommendationHandler';
 
 import { checkUserRole } from '../../middlewares/roleCheck';
 import { 
   getUserHelpersSchema,
   addHelperSchema,
-  removeHelperSchema
+  removeHelperSchema,
+  createHelperRecommendationSchema
 } from './user.schema';
 
 const userHelperRouter = async (fastify: FastifyInstance) => {
@@ -24,6 +29,10 @@ const userHelperRouter = async (fastify: FastifyInstance) => {
   
   // DELETE /user/helpers/:helperId - Remove a helper from current user
   fastify.delete('/helpers/:helperId', { schema: removeHelperSchema }, removeHelperFromUserHandler);
+
+  //Post/user/helperRecommendations/
+  fastify.post('/helperRecommendations/', { schema: createHelperRecommendationSchema }, createHelperRecommendaation);
+
 };
 
 export default userHelperRouter;

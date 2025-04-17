@@ -5,6 +5,7 @@ import { DeciderService } from './decider.service';
 import { CommercialService } from './commercial.service';
 import { MaintainerService } from './maintainer.service';
 import { AdminService } from './admin.service';
+import { HelperRecommendationService } from './helperRecommendation.service';
 
 import { CreateUserData } from './user.service';
 import { CreateDeciderData } from './decider.service';
@@ -12,6 +13,7 @@ import { CreateHelperData } from './helper.service';
 import { CreateCommercialData } from './commercial.service';
 import { CreateMaintainerData } from './maintainer.service';
 import { CreateAdminData } from './admin.service';
+import { CreateHelperRecommendationData } from './helperRecommendation.service';
 
 
 
@@ -22,7 +24,8 @@ import {
   DeciderType, 
   CommercialType, 
   MaintainerType, 
-  AdminType 
+  AdminType ,
+  HelperRecommendationType
 } from './types';
 
 
@@ -43,6 +46,7 @@ export class AccountManagementService {
   private CommercialService: CommercialService;
   private maintainerService: MaintainerService;
   private adminService: AdminService;
+  private helperRecommendationService : HelperRecommendationService;
 
   constructor() {
     this.userService = new UserService();
@@ -51,6 +55,7 @@ export class AccountManagementService {
     this.CommercialService = new CommercialService();
     this.maintainerService = new MaintainerService();
     this.adminService = new AdminService();
+    this.helperRecommendationService=new HelperRecommendationService;
   }
 
   // User methods
@@ -190,4 +195,33 @@ export class AccountManagementService {
   async deleteAdmin(id: string): Promise<{ message: string }> {
     return this.adminService.deleteAdmin(id);
   }
+
+  //helper Recommendation methods
+
+  async createHelperRecommendation(helperRecommendationData: CreateHelperRecommendationData): Promise<HelperRecommendationType> {
+    return this.helperRecommendationService.createHelperRecommendation(helperRecommendationData);
+  }
+
+  async getHelperRecommendations(): Promise<HelperRecommendationType[]> {
+    return this.helperRecommendationService.getHelperRecommendations();
+  }
+
+  async getHelperRecommendationById(id: string): Promise<HelperRecommendationType> {
+    return this.helperRecommendationService.getHelperRecommendationById(id);
+  }
+
+  async deleteHelperRecommendation(id: string): Promise<{ message: string }> {
+    return this.helperRecommendationService.deleteHelperRecommendation(id);
+  }
+  
+  async approveRecommendation(id: string,password:string): Promise<HelperRecommendationType> {
+    return this.helperRecommendationService.approveRecommendation(id,password);
+  }
+
+  async rejectRecommendation(id: string,notes:string): Promise<{ message: string }> {
+    return this.helperRecommendationService.rejectRecommendation(id,notes);
+  }
+
+
+
 }

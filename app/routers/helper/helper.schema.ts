@@ -11,7 +11,8 @@ const UserType = Type.Object({
   last_name: Type.String(),
   email: Type.String({ format: 'email' }),
   phone: Type.Optional(Type.String()),
-  created_at: Type.String({ format: 'date-time' })
+  created_at: Type.String({ format: 'date-time' }),
+  updated_at: Type.String({ format: 'date-time' })
 });
 
 

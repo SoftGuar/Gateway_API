@@ -10,6 +10,9 @@ const HelperType = Type.Object({
   last_name: Type.String(),
   email: Type.String({ format: 'email' }),
   phone: Type.Optional(Type.String()),
+  created_at: Type.String({ format: 'date-time' }),
+  updated_at: Type.String({ format: 'date-time' })
+
 });
 
 const UserType = Type.Object({
@@ -18,6 +21,10 @@ const UserType = Type.Object({
   last_name: Type.String(),
   email: Type.String({ format: 'email' }),
   phone: Type.Optional(Type.String()),
+  created_at: Type.String({ format: 'date-time' }),
+  updated_at: Type.String({ format: 'date-time' })
+
+
 });
 
 const UserWithHelpersType = Type.Object({
@@ -26,7 +33,10 @@ const UserWithHelpersType = Type.Object({
   last_name: Type.String(),
   email: Type.String({ format: 'email' }),
   phone: Type.Optional(Type.String()),
+  created_at: Type.String({ format: 'date-time' }),
+  updated_at: Type.String({ format: 'date-time' }),
   helpers: Type.Optional(Type.Array(HelperType))
+  
 });
 
 export const createUserSchema = {
@@ -177,6 +187,9 @@ export const createHelperSchema = {
         last_name: Type.String(),
         email: Type.String({ format: 'email' }),
         phone: Type.Optional(Type.String()),
+        created_at: Type.String({ format: 'date-time' }),
+        updated_at: Type.String({ format: 'date-time' })
+      
       })
     })
   }
@@ -195,6 +208,9 @@ export const getHelpersSchema = {
           last_name: Type.String(),
           email: Type.String({ format: 'email' }),
           phone: Type.Optional(Type.String()),
+          created_at: Type.String({ format: 'date-time' }),
+          updated_at: Type.String({ format: 'date-time' })
+        
         })
       )
     })
@@ -216,6 +232,9 @@ export const getHelperByIdSchema = {
         last_name: Type.String(),
         email: Type.String({ format: 'email' }),
         phone: Type.Optional(Type.String()),
+        created_at: Type.String({ format: 'date-time' }),
+        updated_at: Type.String({ format: 'date-time' })
+      
       })
     }),
     404: Type.Object({
@@ -249,6 +268,9 @@ export const updateHelperSchema = {
         last_name: Type.String(),
         email: Type.String({ format: 'email' }),
         phone: Type.Optional(Type.String()),
+        created_at: Type.String({ format: 'date-time' }),
+        updated_at: Type.String({ format: 'date-time' })
+      
       })
     })
   }

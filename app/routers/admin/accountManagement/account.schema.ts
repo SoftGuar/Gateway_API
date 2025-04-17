@@ -10,6 +10,8 @@ const HelperType = Type.Object({
   last_name: Type.String(),
   email: Type.String({ format: 'email' }),
   phone: Type.Optional(Type.String()),
+  created_at: Type.String({ format: 'date-time' }),
+  updated_at: Type.String({ format: 'date-time' })
 });
 
 const UserType = Type.Object({
@@ -18,6 +20,9 @@ const UserType = Type.Object({
   last_name: Type.String(),
   email: Type.String({ format: 'email' }),
   phone: Type.Optional(Type.String()),
+  created_at: Type.String({ format: 'date-time' }),
+  updated_at: Type.String({ format: 'date-time' })
+
 });
 
 const UserWithHelpersType = Type.Object({
@@ -26,6 +31,8 @@ const UserWithHelpersType = Type.Object({
   last_name: Type.String(),
   email: Type.String({ format: 'email' }),
   phone: Type.Optional(Type.String()),
+  created_at: Type.String({ format: 'date-time' }),
+  updated_at: Type.String({ format: 'date-time' }),
   helpers: Type.Optional(Type.Array(HelperType))
 });
 
@@ -39,6 +46,7 @@ export const createUserSchema = {
     password: Type.String(),
     phone: Type.Optional(Type.String()),
   }),
+
   response: {
     201: Type.Object({
       success: Type.Literal(true),
@@ -176,6 +184,9 @@ export const createDeciderSchema = {
         last_name: Type.String(),
         email: Type.String({ format: 'email' }),
         phone: Type.Optional(Type.String()),
+        created_at: Type.String({ format: 'date-time' }),
+        updated_at: Type.String({ format: 'date-time' })
+
       })
     })
   }
@@ -194,6 +205,9 @@ export const getDecidersSchema = {
           last_name: Type.String(),
           email: Type.String({ format: 'email' }),
           phone: Type.Optional(Type.String()),
+          created_at: Type.String({ format: 'date-time' }),
+          updated_at: Type.String({ format: 'date-time' })
+  
         })
       )
     })
@@ -215,6 +229,9 @@ export const getDeciderByIdSchema = {
         last_name: Type.String(),
         email: Type.String({ format: 'email' }),
         phone: Type.Optional(Type.String()),
+        created_at: Type.String({ format: 'date-time' }),
+        updated_at: Type.String({ format: 'date-time' })
+
       })
     }),
     404: Type.Object({
@@ -237,6 +254,7 @@ export const updateDeciderSchema = {
       email: Type.String({ format: 'email' }),
       password: Type.String(),
       phone: Type.Optional(Type.String()),
+      
     })
   ),
   response: {
@@ -248,6 +266,9 @@ export const updateDeciderSchema = {
         last_name: Type.String(),
         email: Type.String({ format: 'email' }),
         phone: Type.Optional(Type.String()),
+        created_at: Type.String({ format: 'date-time' }),
+        updated_at: Type.String({ format: 'date-time' })
+
       })
     })
   }
@@ -286,6 +307,9 @@ export const createHelperSchema = {
         last_name: Type.String(),
         email: Type.String({ format: 'email' }),
         phone: Type.Optional(Type.String()),
+        created_at: Type.String({ format: 'date-time' }),
+        updated_at: Type.String({ format: 'date-time' })
+
       })
     })
   }
@@ -304,6 +328,9 @@ export const getHelpersSchema = {
           last_name: Type.String(),
           email: Type.String({ format: 'email' }),
           phone: Type.Optional(Type.String()),
+          created_at: Type.String({ format: 'date-time' }),
+          updated_at: Type.String({ format: 'date-time' })
+  
         })
       )
     })
@@ -325,6 +352,9 @@ export const getHelperByIdSchema = {
         last_name: Type.String(),
         email: Type.String({ format: 'email' }),
         phone: Type.Optional(Type.String()),
+        created_at: Type.String({ format: 'date-time' }),
+        updated_at: Type.String({ format: 'date-time' })
+
       })
     }),
     404: Type.Object({
@@ -347,6 +377,7 @@ export const updateHelperSchema = {
       email: Type.String({ format: 'email' }),
       password: Type.String(),
       phone: Type.Optional(Type.String()),
+      
     })
   ),
   response: {
@@ -358,6 +389,9 @@ export const updateHelperSchema = {
         last_name: Type.String(),
         email: Type.String({ format: 'email' }),
         phone: Type.Optional(Type.String()),
+        created_at: Type.String({ format: 'date-time' }),
+        updated_at: Type.String({ format: 'date-time' })
+
       })
     })
   }
@@ -395,6 +429,9 @@ export const createMaintainerSchema = {
         last_name: Type.String(),
         email: Type.String({ format: 'email' }),
         phone: Type.Optional(Type.String()),
+        created_at: Type.String({ format: 'date-time' }),
+        updated_at: Type.String({ format: 'date-time' })
+
       })
     })
   }
@@ -413,6 +450,9 @@ export const getMaintainersSchema = {
           last_name: Type.String(),
           email: Type.String({ format: 'email' }),
           phone: Type.Optional(Type.String()),
+          created_at: Type.String({ format: 'date-time' }),
+          updated_at: Type.String({ format: 'date-time' })
+        
         })
       )
     })
@@ -434,6 +474,9 @@ export const getMaintainerByIdSchema = {
         last_name: Type.String(),
         email: Type.String({ format: 'email' }),
         phone: Type.Optional(Type.String()),
+        created_at: Type.String({ format: 'date-time' }),
+        updated_at: Type.String({ format: 'date-time' })
+      
       })
     }),
     404: Type.Object({
@@ -467,6 +510,9 @@ export const updateMaintainerSchema = {
         last_name: Type.String(),
         email: Type.String({ format: 'email' }),
         phone: Type.Optional(Type.String()),
+        created_at: Type.String({ format: 'date-time' }),
+        updated_at: Type.String({ format: 'date-time' })
+      
       })
     })
   }
@@ -505,6 +551,9 @@ export const createCommercialSchema = {
         last_name: Type.String(),
         email: Type.String({ format: 'email' }),
         phone: Type.Optional(Type.String()),
+        created_at: Type.String({ format: 'date-time' }),
+        updated_at: Type.String({ format: 'date-time' })
+      
       })
     })
   }
@@ -523,6 +572,8 @@ export const getCommercialsSchema = {
           last_name: Type.String(),
           email: Type.String({ format: 'email' }),
           phone: Type.Optional(Type.String()),
+          created_at: Type.String({ format: 'date-time' }),
+          updated_at: Type.String({ format: 'date-time' })        
         })
       )
     })
@@ -544,6 +595,9 @@ export const getCommercialByIdSchema = {
         last_name: Type.String(),
         email: Type.String({ format: 'email' }),
         phone: Type.Optional(Type.String()),
+        created_at: Type.String({ format: 'date-time' }),
+        updated_at: Type.String({ format: 'date-time' })
+      
       })
     }),
     404: Type.Object({
@@ -577,6 +631,8 @@ export const updateCommercialSchema = {
         last_name: Type.String(),
         email: Type.String({ format: 'email' }),
         phone: Type.Optional(Type.String()),
+        created_at: Type.String({ format: 'date-time' }),
+        updated_at: Type.String({ format: 'date-time' })
       })
     })
   }
