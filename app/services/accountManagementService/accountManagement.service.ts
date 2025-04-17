@@ -218,7 +218,7 @@ export class AccountManagementService {
     return this.helperRecommendationService.approveRecommendation(id,password);
   }
 
-  async rejectRecommendation(id: string,notes:string): Promise<{ message: string }> {
+  async rejectRecommendation(id: string,notes?:string): Promise<{ message: string }> {
     return this.helperRecommendationService.rejectRecommendation(id,notes);
   }
 

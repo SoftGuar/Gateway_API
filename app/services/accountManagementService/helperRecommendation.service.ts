@@ -74,8 +74,8 @@ export class HelperRecommendationService {
   
     // DELETE /helperRecommendations/:id
     async deleteHelperRecommendation(id: string): Promise<{ message: string }> {
-      const response = await fetch(`${this.baseUrl}/HelperRecommendations/${id}`, {
-        method: 'DELETE'
+      const response = await fetch(`${this.baseUrl}/helperRecommendations/${id}`, {
+        method: 'DELETE',
       });
       if (!response.ok) {
         throw new Error('Failed to delete helperRecommendation');
@@ -85,10 +85,10 @@ export class HelperRecommendationService {
 
 
     async approveRecommendation (id:string,password:string){
-        const response = await fetch(`${this.baseUrl}/HelperRecommendations/${id}/approve`, {
-            method: 'Post',
+        const response = await fetch(`${this.baseUrl}/helperRecommendations/${id}/approve`, {
+            method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(password)
+            body: JSON.stringify({ password })
     
           });
           if (!response.ok) {
@@ -101,14 +101,14 @@ export class HelperRecommendationService {
     }
 
     async rejectRecommendation (id:string,notes?:string){
-        const response = await fetch(`${this.baseUrl}/HelperRecommendations/${id}/reject`, {
-            method: 'Post',
+        const response = await fetch(`${this.baseUrl}/helperRecommendations/${id}/reject`, {
+            method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(notes)
+            body: JSON.stringify({ notes })
     
           });
           if (!response.ok) {
-            throw new Error('Failed to approve helperRecommendation');
+            throw new Error('Failed to reject helperRecommendation');
           }
 
       const payload = await response.json();
