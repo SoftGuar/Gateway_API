@@ -1,5 +1,19 @@
 import { Type } from '@sinclair/typebox';
 
+const HelperRecommendationObject = Type.Object({
+  id: Type.Number(),
+  first_name: Type.String(),
+  last_name: Type.String(),
+  email: Type.String({ format: 'email' }),
+  phone: Type.Optional(Type.String()),
+  status: Type.String(),
+  notes: Type.Optional(Type.String()),
+  user_id: Type.Number(),
+  created_at: Type.String({ format: 'date-time' }),
+  updated_at: Type.String({ format: 'date-time' })
+});
+
+
 const authHeader = Type.Object({
   authorization: Type.String({ description: "Bearer token" })
 });
@@ -10,6 +24,9 @@ const HelperType = Type.Object({
   last_name: Type.String(),
   email: Type.String({ format: 'email' }),
   phone: Type.Optional(Type.String()),
+  created_at: Type.String({ format: 'date-time' }),
+  updated_at: Type.String({ format: 'date-time' })
+
 });
 
 export const getUserHelpersSchema = {
@@ -46,6 +63,9 @@ export const addHelperSchema = {
         last_name: Type.String(),
         email: Type.String({ format: 'email' }),
         phone: Type.Optional(Type.String()),
+        created_at: Type.String({ format: 'date-time' }),
+        updated_at: Type.String({ format: 'date-time' }),
+      
         helpers: Type.Array(HelperType)
       })
     }),
@@ -79,6 +99,8 @@ export const removeHelperSchema = {
         last_name: Type.String(),
         email: Type.String({ format: 'email' }),
         phone: Type.Optional(Type.String()),
+        created_at: Type.String({ format: 'date-time' }),
+        updated_at: Type.String({ format: 'date-time' }),      
         helpers: Type.Array(HelperType)
       })
     }),
@@ -96,3 +118,33 @@ export const removeHelperSchema = {
     })
   }
 };
+
+export const createHelperRecommendationSchema = {
+  tags: ['User : Helper Recommendations'],
+  headers: authHeader,
+  body: Type.Object({
+    first_name: Type.String(),
+    last_name: Type.String(),
+    email: Type.String({ format: 'email' }),
+    phone: Type.Optional(Type.String()),
+  }),
+  response: {
+    201: Type.Object({
+      success: Type.Literal(true),
+      data: HelperRecommendationObject
+    }),
+    403: Type.Object({
+      success: Type.Literal(false),
+      message: Type.String()
+    }),
+    404: Type.Object({
+      success: Type.Literal(false),
+      message: Type.String()
+    }),
+    500: Type.Object({
+      success: Type.Literal(false),
+      message: Type.String()
+    })
+  }
+};
+

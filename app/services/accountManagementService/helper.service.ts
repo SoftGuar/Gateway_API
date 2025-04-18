@@ -84,4 +84,17 @@ export class HelperService {
       }
       return await response.json();
     }
+
+      // GET /helpers/:id/users
+  async getHelperUsers(id: string): Promise<HelperType[]> {
+    const response = await fetch(`${this.baseUrl}/helpers/${id}/users`, {
+      method: 'GET'
+    });
+    if (!response.ok) {
+      throw new Error('Failed to get helper users');
+    }
+    const payload = await response.json();
+    return payload.data;
+  }
+
 }

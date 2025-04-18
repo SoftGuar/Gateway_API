@@ -22,6 +22,7 @@ describe('MonitoringService', () => {
     service = new MonitoringService();
   });
 
+  
   // Clean up any test data that wasn't properly removed
   afterAll(async () => {
     try {
@@ -31,11 +32,12 @@ describe('MonitoringService', () => {
       // Ignore cleanup errors
     }
   });
+  
 
   describe('DispoIssue Management', () => {
     test('should create a new dispositif issue', async () => {
       const newDispoIssueData = {
-        maintainerId: 52,
+        maintainerId: 3,
         dispositiveId: 1,
         description: testDescription,
         status: 'pending',
@@ -86,13 +88,13 @@ describe('MonitoringService', () => {
     });
 
     test('should assign maintainer to dispo issue', async () => {
-      const updatedDispoIssue = await service.assignMaintainerToDispoIssue(dispoIssueId, 52);
+      const updatedDispoIssue = await service.assignMaintainerToDispoIssue(dispoIssueId, 3);
 
       console.log('Updated DispoIssue:', updatedDispoIssue);
       
       expect(updatedDispoIssue).toBeDefined();
       expect(updatedDispoIssue.id.toString()).toBe(dispoIssueId);
-      expect(updatedDispoIssue.maintainerId).toBe(52);
+      expect(updatedDispoIssue.maintainerId).toBe(3);
     });
 
     test('should update dispo issue', async () => {
@@ -115,7 +117,7 @@ describe('MonitoringService', () => {
   describe('Intervention Management', () => {
     test('should create a new intervention', async () => {
       const newInterventionData = {
-        idMaintainer: 52,
+        idMaintainer: 3,
         idDispositive: 1,
         description: testDescription,
         type: 'curative',
@@ -160,7 +162,7 @@ describe('MonitoringService', () => {
     });
     
     test('should get interventions by maintainer id', async () => {
-      const interventions = await service.getInterventionsByMaintainerId('52');
+      const interventions = await service.getInterventionsByMaintainerId('3');
 
       console.log('Interventions by Maintainer:', interventions);
       
@@ -211,6 +213,7 @@ describe('MonitoringService', () => {
       expect(updatedReport.description).toBe(reportData.description);
     });
   });
+  
 
   describe('Delete operations', () => {
     test('should delete intervention', async () => {
@@ -247,4 +250,5 @@ describe('MonitoringService', () => {
       }
     });
   });
+  
 });

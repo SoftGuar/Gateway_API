@@ -9,7 +9,10 @@ const profileSchema = Type.Object({
   first_name: Type.String(),
   last_name: Type.String(),
   email: Type.String({ format: 'email' }),
-  phone: Type.Optional(Type.String())
+  phone: Type.Optional(Type.String()),
+  created_at: Type.String({ format: 'date-time' }),
+  updated_at: Type.String({ format: 'date-time' })
+
 });
 
 export const getProfileSchema = {
