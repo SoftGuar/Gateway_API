@@ -27,7 +27,7 @@ export class QuotationService {
 
     async countConvertedQuotations(): Promise<{ ConvertedQuotations: number; taux_conversion: number }> {
         return this.fetchFromAnalyticsService<{ ConvertedQuotations: number; taux_conversion: number }>(
-            "/quotations/converted"
+            "/quotations/count-converted"
         );
     }
 
