@@ -25,26 +25,10 @@ import { FastifyInstance, FastifyPluginOptions } from 'fastify';
   // Register admin routes  with a prefix
   fastify.register(adminRoutes, { prefix: '/admin' });
 
-  // Register admin account routes with a prefix
-  fastify.register(adminAccountRouter, { prefix: '/admin/account' });
-
-  // Register admin dispositive routes with a prefix
-  fastify.register(adminDispositiveRouter, { prefix: '/admin/dispositive' });
-
-  // Register admin product routes with a prefix
-  fastify.register(adminProductRouter, { prefix: '/admin/product' });
 
   // Register super admin routes with a prefix
   fastify.register(superAdminRouter, { prefix: '/superAdmin' });
 
-  // Register commercial dispositive routes with a prefix
-  fastify.register(commercialDispositiveRouter, { prefix: '/commercial/dispositive' });
-
-  // Register commercial account routes with a prefix
-  fastify.register(commercialAccountRouter, { prefix: '/commercial/account' });
-
-  // Register comemrcial product routes with a prefix
-  fastify.register(commercialProductRouter, { prefix: '/commercial/product' });
 
 
   // Register commercial routes with a prefix
@@ -56,17 +40,6 @@ import { FastifyInstance, FastifyPluginOptions } from 'fastify';
 
   //Register helper routes with a prefix 
   fastify.register(helperRouter,{prefix: '/helepr'})
-
-
-  // Register maintainer dispositive routes with a prefix
-  fastify.register(maintainerDispositiveRouter, { prefix: '/maintainer/dispositive' });
-
-  // Register maintainer dispoIssue routes with a prefix
-  fastify.register(maintainerDispoIssueRouter, { prefix: '/maintainer/dispoIssue' });
-
-  // Register maintainer intervention routes with a prefix
-  fastify.register(maintainerInterventionRouter, { prefix: '/maintainer/intervention' });
-
 
   //register user  routes with a prefix 
   fastify.register(userHelperRouter, { prefix: '/user' });
