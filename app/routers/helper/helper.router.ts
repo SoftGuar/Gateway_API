@@ -16,7 +16,7 @@ const helperRouter = async (fastify: FastifyInstance) => {
   fastify.addHook('preHandler', checkHelperRole);
 
     
-    fastify.get('/user/:id/helpers', { schema: getHelperUsersSchema }, getHelperUsersHandler);
+    fastify.get('/users', { schema: getHelperUsersSchema }, getHelperUsersHandler);
     
   
 };

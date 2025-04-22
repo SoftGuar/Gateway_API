@@ -20,9 +20,6 @@ const UserType = Type.Object({
 export const getHelperUsersSchema = {
   tags: ['helper : get users'],
   headers: authHeader,
-  params: Type.Object({
-    id: Type.String()
-  }),
   response: {
     200: Type.Object({
       success: Type.Literal(true),
