@@ -2,6 +2,7 @@ import { FastifyInstance } from 'fastify';
 import { 
   createUserHandler, getUsersHandler, getUserByIdHandler,updateUserHandler,deleteUserHandler,getUserHelpersHandler,addHelperToUserHandler,removeHelperFromUserHandler,
   createHelperHandler, getHelpersHandler, getHelperByIdHandler,updateHelperHandler,deleteHelperHandler,
+  createAssistanceHandler,
   createDeciderHandler, getDecidersHandler, getDeciderByIdHandler,updateDeciderHandler,deleteDeciderHandler,
   createCommercialHandler, getCommercialsHandler, getCommercialByIdHandler,updateCommercialHandler,deleteCommercialHandler,
   createMaintainerHandler, getMaintainersHandler, getMaintainerByIdHandler,updateMaintainerHandler,deleteMaintainerHandler,
@@ -14,6 +15,7 @@ import {
   createCommercialSchema,getCommercialsSchema,getCommercialByIdSchema,updateCommercialSchema,deleteCommercialSchema,
   createDeciderSchema ,getDecidersSchema,getDeciderByIdSchema,updateDeciderSchema,deleteDeciderSchema,
   createHelperSchema ,getHelpersSchema,getHelperByIdSchema,updateHelperSchema,deleteHelperSchema,
+  createAssistanceSchema,
   createMaintainerSchema ,getMaintainersSchema,getMaintainerByIdSchema,updateMaintainerSchema,deleteMaintainerSchema,
 
 } from './account.schema';
@@ -57,6 +59,9 @@ const adminAccountRouter = async (fastify: FastifyInstance) => {
   
   // DELETE /Helpers/:id - Delete a Helper by ID
   fastify.delete('/helper/:id', { schema: deleteHelperSchema}, deleteHelperHandler);
+
+  // Create an assistance account
+  fastify.post('/assistance', {schema: createAssistanceSchema }, createAssistanceHandler);
   
   // Create a decider account
   fastify.post('/decider', {schema: createDeciderSchema }, createDeciderHandler);
