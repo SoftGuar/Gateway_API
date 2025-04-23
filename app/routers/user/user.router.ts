@@ -26,8 +26,8 @@ const userHelperRouter = async (fastify: FastifyInstance) => {
   // GET /user/helpers - Get current user's helpers
   fastify.get('/helpers', { schema: getUserHelpersSchema }, getUserHelpersHandler);
   
-    // GET /user/assistances - Get current user's helpers
-    fastify.get('/assistances', { schema: getAssistancesSchema }, getAssistancesHandler);
+  // GET /user/assistances - Get current user's helpers
+  fastify.get('/assistances', { schema: getAssistancesSchema }, getAssistancesHandler);
 
   // POST /user/helpers/:helperId - Add a helper to current user
   fastify.post('/helpers/:helperId', { schema: addHelperSchema }, addHelperToUserHandler);

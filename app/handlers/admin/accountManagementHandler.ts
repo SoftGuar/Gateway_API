@@ -1,7 +1,9 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { AdminService } from '../../services/adminService/admin.service';
+import { AccountManagementService } from '../../services/accountManagementService/accountManagement.service';
 
 const adminService = new AdminService();
+const accountManagementService=new AccountManagementService();
 
 interface BaseAccountData {
   first_name: string;
@@ -179,6 +181,26 @@ export async function removeHelperFromUserHandler(
     });
   }
 }
+
+export async function createAssistanceHandler(
+  request: FastifyRequest<{ Body: BaseAccountData }>,
+  reply: FastifyReply
+) {
+  try {
+    const result = await accountManagementService.createAssistance(request.body);
+    return reply.code(201).send({
+      success: true,
+      data: result
+    });
+  } catch (error) {
+    console.error('Error creating assistance:', error);
+    return reply.code(500).send({
+      success: false,
+      message: 'Failed to create assistance'
+    });
+  }
+}
+
 
 
 
