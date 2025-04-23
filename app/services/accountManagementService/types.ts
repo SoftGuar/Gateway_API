@@ -25,6 +25,18 @@ export type UserType = {
     updated_at:Date;
 
   };
+  export type AssistanceType = {
+    id: number;
+    first_name: string;
+    last_name: string;
+    email: string;
+    password: string;
+    phone: string;
+    created_at:Date;
+    updated_at:Date;
+
+  };
+
 
   export type HelperRecommendationType = {
     id: number;

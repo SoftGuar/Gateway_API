@@ -29,6 +29,18 @@ const HelperType = Type.Object({
 
 });
 
+const AssistanceType = Type.Object({
+  id: Type.Number(),
+  first_name: Type.String(),
+  last_name: Type.String(),
+  email: Type.String({ format: 'email' }),
+  phone: Type.Optional(Type.String()),
+  created_at: Type.String({ format: 'date-time' }),
+  updated_at: Type.String({ format: 'date-time' })
+
+});
+
+
 export const getUserHelpersSchema = {
   tags: ['User : Helper Management'],
   headers: authHeader,
@@ -47,6 +59,25 @@ export const getUserHelpersSchema = {
     })
   }
 };
+export const getAssistancesSchema = {
+  tags: ['User :  get Assistances'],
+  headers: authHeader,
+  response: {
+    200: Type.Object({
+      success: Type.Literal(true),
+      data: Type.Array(AssistanceType)
+    }),
+    403: Type.Object({
+      success: Type.Literal(false),
+      message: Type.String()
+    }),
+    500: Type.Object({
+      success: Type.Literal(false),
+      message: Type.String()
+    })
+  }
+};
+
 
 export const addHelperSchema = {
   tags: ['User : Helper Management'],

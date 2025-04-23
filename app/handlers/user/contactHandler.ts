@@ -38,6 +38,25 @@ export async function getUserHelpersHandler(request: FastifyRequest, reply: Fast
       });
     }
 }
+export async function getAssistancesHandler(request: FastifyRequest, reply: FastifyReply) {
+  try {
+
+    // Get assitances 
+    const result = await accountManagementService.getAssistances();
+
+    return reply.code(200).send({
+      success: true,
+      data: result
+    });
+  } catch (error) {
+    console.error(`Error fetching assistances `, error);
+    return reply.code(500).send({
+      success: false,
+      message: 'Failed to fetch assistances'
+    });
+  }
+}
+
 
 // Add a helper to the current user
 export async function addHelperToUserHandler(

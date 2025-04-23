@@ -12,7 +12,7 @@ interface HelperRecommendationData {
   }
   
 
-export async function createHelperRecommendaation(
+export async function createHelperRecommendation(
     request: FastifyRequest<{ Body: HelperRecommendationData }>,
      reply: FastifyReply) {
     try {
