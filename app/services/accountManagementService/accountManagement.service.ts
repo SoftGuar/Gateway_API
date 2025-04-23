@@ -1,6 +1,7 @@
 import { Config } from '../../services.config';
 import { UserService } from './user.service';
 import { HelperService } from './helper.service';
+import { AssistanceService } from './assistance.service';
 import { DeciderService } from './decider.service';
 import { CommercialService } from './commercial.service';
 import { MaintainerService } from './maintainer.service';
@@ -10,6 +11,7 @@ import { HelperRecommendationService } from './helperRecommendation.service';
 import { CreateUserData } from './user.service';
 import { CreateDeciderData } from './decider.service';
 import { CreateHelperData } from './helper.service';
+import { CreateAssistanceData } from './assistance.service';
 import { CreateCommercialData } from './commercial.service';
 import { CreateMaintainerData } from './maintainer.service';
 import { CreateAdminData } from './admin.service';
@@ -21,6 +23,7 @@ import {
   UserType, 
   UserWithHelpersType, 
   HelperType, 
+  AssistanceType,
   DeciderType, 
   CommercialType, 
   MaintainerType, 
@@ -29,19 +32,10 @@ import {
 } from './types';
 
 
-
-
-
-
-
-
-
-
-
-
 export class AccountManagementService {
   private userService: UserService;
   private helperService: HelperService;
+  private assistanceService : AssistanceService;
   private deciderService: DeciderService;
   private CommercialService: CommercialService;
   private maintainerService: MaintainerService;
@@ -51,6 +45,7 @@ export class AccountManagementService {
   constructor() {
     this.userService = new UserService();
     this.helperService = new HelperService();
+    this.assistanceService=new AssistanceService();
     this.deciderService = new DeciderService();
     this.CommercialService = new CommercialService();
     this.maintainerService = new MaintainerService();
@@ -111,6 +106,17 @@ export class AccountManagementService {
   async deleteHelper(id: string): Promise<{ message: string }> {
     return this.helperService.deleteHelper(id);
   }
+
+  //Assistance methods
+
+  async createAssistance(assistanceData: CreateAssistanceData): Promise<AssistanceType> {
+    return this.assistanceService.createAssistance(assistanceData);
+  }
+
+  async getAssistances(): Promise<AssistanceType[]> {
+    return this.assistanceService.getAssistances();
+  }
+
 
   // Decider methods
   async createDecider(deciderData: CreateDeciderData): Promise<DeciderType> {
