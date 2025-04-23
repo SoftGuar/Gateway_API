@@ -4,7 +4,10 @@ const productProperties = {
   id: Type.Number(),
   name: Type.String(),
   description: Type.Union([Type.String(), Type.Null()]),
-  price: Type.Number()
+  price: Type.Number(),
+  created_at: Type.String({ format: 'date-time' }),
+  updated_at: Type.String({ format: 'date-time' })
+
 };
 
 

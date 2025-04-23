@@ -8,10 +8,12 @@ const authHeader = Type.Object({
 const dispoIssueProperties = {
   id: Type.String(),
   description: Type.String(),
-  date: Type.String({ format: 'date-time' }),
   dispositiveId: Type.String(),
   maintainerId: Type.Union([Type.Number(), Type.Null()]),
-  status: Type.String()
+  status: Type.String(),
+  created_at: Type.String({ format: 'date-time' }),
+  updated_at: Type.String({ format: 'date-time' })
+
 };
 
 

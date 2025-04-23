@@ -11,7 +11,8 @@ const reportProperties = {
   interventionId: Type.Number(),
   title: Type.String(),
   description: Type.String(),
-  created_at: Type.String({ format: 'date-time' })
+  created_at: Type.String({ format: 'date-time' }),
+  updated_at: Type.String({ format: 'date-time' })
 };
 
 // Common properties for an intervention
@@ -24,6 +25,9 @@ const interventionProperties = {
   status: Type.Enum(InterventionStatus),
   idMaintainer: Type.String(),
   idDispositive: Type.String(),
+  created_at: Type.String({ format: 'date-time' }),
+  updated_at: Type.String({ format: 'date-time' }),
+
   // Include the report in the response
   report: Type.Object(reportProperties)
 };
