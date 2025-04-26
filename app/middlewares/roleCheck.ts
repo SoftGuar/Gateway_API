@@ -52,7 +52,7 @@ export async function checkUserRole(req: FastifyRequest, reply: FastifyReply) {
   return checkRole(req, reply, ['user']);
 }
 export async function checkHelperRole(req: FastifyRequest, reply: FastifyReply) {
-  return checkRole(req, reply, ['helepr']);
+  return checkRole(req, reply, ['helper']);
 }
 export async function checkSuperAdminRole(req: FastifyRequest, reply: FastifyReply) {
   return checkRole(req, reply, ['superAdmin']);
