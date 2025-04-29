@@ -1,4 +1,5 @@
 import { Config } from '../../services.config';
+import { appEmitter } from '../notifications/event';
 import { DispositiveType,ProductType} from './types';
 
 
@@ -36,6 +37,7 @@ export class DispositiveService {
                   throw new Error('Failed to create dispositive');
                 }
                 const payload = await response.json();
+                appEmitter.emit("device.registered",payload)
                 return payload.data;
               }
             
@@ -100,6 +102,10 @@ export class DispositiveService {
                   throw new Error('Failed to assign user');
                 }
                 const payload = await response.json();
+                appEmitter.emit("device.assigned",{
+                  userId: userId,
+                  deviceId:id
+                })
                 return payload.data;
           }
               
@@ -114,6 +120,9 @@ export class DispositiveService {
                       throw new Error('Process failed');
                     }
                     const payload = await response.json();
+                    appEmitter.emit("device.blocked",{
+                      deviceId:id
+                    })
                     return payload.data;
                   }
 
