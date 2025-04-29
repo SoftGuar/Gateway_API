@@ -6,6 +6,7 @@ const notificationIP = "http://localhost:3002";
 export const notificationsService = {
     async notify(notification: NotificationPayload) {
         if(notification.channels.includes("in-app")){
+            console.log("Sending in-app notification:");
             await inAppChannelService.sendNotification(notification);
         }
         const response = await fetch(`${notificationIP}/notify`, {
@@ -18,8 +19,8 @@ export const notificationsService = {
         });
         return response.json();
     },
-    async getNotifications(userId: number) {
-        const response = await fetch(`${notificationIP}/notifications/${userId}`);
+    async getNotifications(userId: number, userType: string) {
+        const response = await fetch(`${notificationIP}/notifications/${userId}/${userType}`);
         return response.json();
     },
     async createNotification(notification: NotificationPayload) {

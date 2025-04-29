@@ -11,6 +11,7 @@ export default function setupNotificationListenersSales(){
         const commercialTeam = await commercialService.getCommercials()
         const commercialRecipients: NotificationRecipient[] = commercialTeam.map(member => ({
           userId: member.id,
+          userType:'COMMERCIAL',
           email: member.email,
         }));
     

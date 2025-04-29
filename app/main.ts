@@ -6,7 +6,6 @@ import fastifySwaggerUi from '@fastify/swagger-ui';
 import registerRoutes from './routers';
 import { PrismaClient } from '@prisma/client';
 import setupNotificationListeners from './services/notifications/notificationListener';
-
 // Load environment variables from .env
 dotenv.config();
 

@@ -6,8 +6,8 @@ import {websocketRouteHandler} from "../../handlers/notifications/websocketRoute
 
 export default async function websocketRoute(fastify: FastifyInstance) {
     await fastify.register(fastifyWebsocket);
-    fastify.get("/ws/:user_id", { websocket: true }, (connection, req:FastifyRequest<{
-        Params: { user_id: number }
+    fastify.get("/ws/:user_id/:user_type", { websocket: true }, (connection, req:FastifyRequest<{
+        Params: { user_id: number , user_type:string}
     }>) => {
         websocketRouteHandler(req, connection);
     });

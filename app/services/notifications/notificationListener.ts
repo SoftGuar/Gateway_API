@@ -8,6 +8,7 @@ import setupNotificationListenersAnalytics from "./notificationsListners.ts/anal
 // Recipient interface for consistency
 export interface NotificationRecipient {
   userId: number;
+  userType?: "USER" | "COMMERCIAL" | "ADMIN" | "SUPERADMIN" | "MAINTAINER" | "DECIDER" | "HELPER";
   email: string;
 }
 

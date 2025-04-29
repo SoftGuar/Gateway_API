@@ -8,6 +8,7 @@ export const routesSchemas = {
             type: 'object',
             properties: {
                 userId: { type: 'number' },
+                userType: { type: 'string' },
             },
             required: ['userId'],
         },
