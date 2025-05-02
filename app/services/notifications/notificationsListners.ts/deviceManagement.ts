@@ -1,7 +1,7 @@
 
 import { appEmitter } from "../event";
 import { NotificationPayload } from "../types/payload";
-import { randomUUID } from "crypto";
+import { randomInt } from "crypto";
 import { notificationsService } from "../notificationsService";
 import { AdminService } from "../../accountManagementService/admin.service";
 import { DispositiveService } from "../../adminService/dispositive.service";
@@ -19,7 +19,7 @@ export default function setupNotificationListenersDevices() {
         }));
     
         const notification: NotificationPayload = {
-          requestId: randomUUID(),
+          requestId: randomInt(1, 999999),
           timestamp: new Date().toISOString(),
           notificationType: "device.registered",
           channels: ["email", "in-app"],
@@ -55,7 +55,7 @@ export default function setupNotificationListenersDevices() {
     
         // Notification to user
         const userNotification: NotificationPayload = {
-          requestId: randomUUID(),
+          requestId: randomInt(1, 999999),
           timestamp: new Date().toISOString(),
           notificationType: "device.battery.low",
           channels: ["in-app"],
@@ -88,7 +88,7 @@ export default function setupNotificationListenersDevices() {
           }));
     
           const criticalNotification: NotificationPayload = {
-            requestId: randomUUID(),
+            requestId: randomInt(1, 999999),
             timestamp: new Date().toISOString(),
             notificationType: "device.battery.critical",
             channels: ["in-app"],
@@ -121,7 +121,7 @@ export default function setupNotificationListenersDevices() {
         if (!user) return;
 
         const notification: NotificationPayload = {
-            requestId: randomUUID(),
+            requestId: randomInt(1, 999999),
             timestamp: new Date().toISOString(),
             notificationType: "device.assigned",
             channels: ["in-app", "email"],
@@ -160,7 +160,7 @@ export default function setupNotificationListenersDevices() {
         if (!user) return;
 
         const notification: NotificationPayload = {
-            requestId: randomUUID(),
+            requestId: randomInt(1, 999999),
             timestamp: new Date().toISOString(),
             notificationType: "device.blocked",
             channels: ["in-app", "email"],

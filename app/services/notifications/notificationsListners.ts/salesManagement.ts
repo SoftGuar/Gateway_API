@@ -2,7 +2,7 @@ import { appEmitter } from "../event";
 import { CommercialService } from "../../accountManagementService/commercial.service";
 import { NotificationPayload } from "../types/payload";
 import { NotificationRecipient } from "../notificationListener";
-import { randomUUID } from "crypto";
+import { randomInt } from "crypto";
 import { notificationsService } from "../notificationsService";
 export default function setupNotificationListenersSales(){
     appEmitter.on("sale.completed", async (data) => {
@@ -16,7 +16,7 @@ export default function setupNotificationListenersSales(){
         }));
     
         const notification: NotificationPayload = {
-          requestId: randomUUID(),
+          requestId: randomInt(1, 999999),
           timestamp: new Date().toISOString(),
           notificationType: "sale.completed",
           channels: ["in-app", "email"],

@@ -1,6 +1,6 @@
 import { appEmitter } from "../event";
 import { NotificationPayload } from "../types/payload";
-import { randomUUID } from "crypto";
+import { randomInt } from "crypto";
 import { notificationsService } from "../notificationsService";
 import { DispositiveService } from "../../adminService/dispositive.service";
 import { UserService } from "../../accountManagementService/user.service";
@@ -25,7 +25,7 @@ export default function setupNotificationListenersAssistance() {
     
         // Notify all aidants about the emergency
         const notification: NotificationPayload = {
-          requestId: randomUUID(),
+          requestId: randomInt(1, 999999),
           timestamp: new Date().toISOString(),
           notificationType: "assistance.emergency",
           channels: ["in-app", "email"],
@@ -60,7 +60,7 @@ export default function setupNotificationListenersAssistance() {
           if (!aidant) return;
           
           const notification: NotificationPayload = {
-            requestId: randomUUID(),
+            requestId: randomInt(1, 999999),
             timestamp: new Date().toISOString(),
             notificationType: "assistance.request",
             channels: ["in-app", "email"],
@@ -92,7 +92,7 @@ export default function setupNotificationListenersAssistance() {
           }));
     
           const notification: NotificationPayload = {
-            requestId: randomUUID(),
+            requestId: randomInt(1, 999999),
             timestamp: new Date().toISOString(),
             notificationType: "assistance.request.broadcast",
             channels: ["in-app"],
@@ -115,7 +115,7 @@ export default function setupNotificationListenersAssistance() {
     
         // Confirmation to user
         const confirmationNotification: NotificationPayload = {
-          requestId: randomUUID(),
+          requestId: randomInt(1, 999999),
           timestamp: new Date().toISOString(),
           notificationType: "assistance.request.confirmation",
           channels: ["in-app"],
@@ -150,7 +150,7 @@ export default function setupNotificationListenersAssistance() {
         }));
     
         const notification: NotificationPayload = {
-          requestId: randomUUID(),
+          requestId: randomInt(1, 999999),
           timestamp: new Date().toISOString(),
           notificationType: "maintenance.scheduled",
           channels: ["in-app", "email"],
@@ -180,7 +180,7 @@ export default function setupNotificationListenersAssistance() {
           
           if (user) {
             const userNotification: NotificationPayload = {
-              requestId: randomUUID(),
+              requestId: randomInt(1, 999999),
               timestamp: new Date().toISOString(),
               notificationType: "maintenance.scheduled.user",
               channels: ["in-app", "email"],

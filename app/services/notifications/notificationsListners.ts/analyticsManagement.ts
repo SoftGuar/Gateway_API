@@ -1,7 +1,7 @@
 import { appEmitter } from "../event";
 import { NotificationPayload } from "../types/payload";
 import { NotificationRecipient } from "../notificationListener";
-import { randomUUID } from "crypto";
+import { randomInt } from "crypto";
 import { notificationsService } from "../notificationsService";
 import { DeciderService } from "../../accountManagementService/decider.service";
 
@@ -15,7 +15,7 @@ export default function setupNotificationListenersAnalytics(){
         }));
     
         const notification: NotificationPayload = {
-          requestId: randomUUID(),
+          requestId: randomInt(1, 999999),
           timestamp: new Date().toISOString(),
           notificationType: "analytics.threshold",
           channels: ["in-app", "email"],
@@ -46,7 +46,7 @@ export default function setupNotificationListenersAnalytics(){
         }));
     
         const notification: NotificationPayload = {
-          requestId: randomUUID(),
+          requestId: randomInt(1, 999999),
           timestamp: new Date().toISOString(),
           notificationType: "report.generated",
           channels: ["in-app", "email"],

@@ -1,6 +1,6 @@
 import { appEmitter } from "../event";
 import { NotificationPayload } from "../types/payload";
-import { randomUUID } from "crypto";
+import { randomInt, randomUUID } from "crypto";
 import { notificationsService } from "../notificationsService";
 import { AdminService } from "../../accountManagementService/admin.service";
 import { NotificationRecipient } from "../notificationListener";
@@ -10,7 +10,7 @@ export default function setupNotificationListenersEnvironment() {
         if (!data.userId) return;
     
         const notification: NotificationPayload = {
-          requestId: randomUUID(),
+          requestId: randomInt(1, 999999),
           timestamp: new Date().toISOString(),
           notificationType: "navigation.obstacle",
           channels: ["in-app"],
@@ -36,7 +36,7 @@ export default function setupNotificationListenersEnvironment() {
     
       appEmitter.on("navigation.destination.reached", async (data) => {
         const notification: NotificationPayload = {
-          requestId: randomUUID(),
+          requestId: randomInt(1, 999999),
           timestamp: new Date().toISOString(),
           notificationType: "navigation.destination",
           channels: ["in-app"],
@@ -63,7 +63,7 @@ export default function setupNotificationListenersEnvironment() {
       appEmitter.on("navigation.zone.entered", async (data) => {
         // Notification for user entering a zone
         const notification: NotificationPayload = {
-          requestId: randomUUID(),
+          requestId: randomInt(1, 999999),
           timestamp: new Date().toISOString(),
           notificationType: "navigation.zone",
           channels: ["in-app"],
@@ -89,7 +89,7 @@ export default function setupNotificationListenersEnvironment() {
         // Special notification for danger zones
         if (data.zoneType === "DANGER") {
           const dangerNotification: NotificationPayload = {
-            requestId: randomUUID(),
+            requestId: randomInt(1, 999999),
             timestamp: new Date().toISOString(),
             notificationType: "navigation.zone.danger",
             channels: ["in-app"],
@@ -123,7 +123,7 @@ export default function setupNotificationListenersEnvironment() {
           }));
       
           const notification: NotificationPayload = {
-            requestId: randomUUID(),
+            requestId: randomInt(1, 999999),
             timestamp: new Date().toISOString(),
             notificationType: "environment.updated",
             channels: ["in-app", "email"],
@@ -154,7 +154,7 @@ export default function setupNotificationListenersEnvironment() {
           }));
       
           const notification: NotificationPayload = {
-            requestId: randomUUID(),
+            requestId: randomInt(1, 999999),
             timestamp: new Date().toISOString(),
             notificationType: "poi.created",
             channels: ["in-app"],

@@ -1,5 +1,5 @@
 export interface NotificationPayload {
-    requestId: string;
+    requestId: number;
     timestamp: string;
     notificationType: string;
     channels: Array<"email" | "push" | "in-app">;

@@ -1,6 +1,6 @@
 import { appEmitter } from "../event";
 import { NotificationPayload } from "../types/payload";
-import { randomUUID } from "crypto";
+import { randomInt } from "crypto";
 import { notificationsService } from "../notificationsService";
 import { AdminService } from "../../accountManagementService/admin.service";
 import { NotificationRecipient } from "../notificationListener";
@@ -13,7 +13,7 @@ export default function setupNotificationListenersUsers(){
     appEmitter.on("user.created", async (user:Receiver) => {
         // Send email to the user
         const notification1: NotificationPayload = {
-          requestId: randomUUID(),
+          requestId: randomInt(1, 999999),
           timestamp: new Date().toISOString(),
           notificationType: "user.created",
           channels: ["email"],
@@ -46,7 +46,7 @@ export default function setupNotificationListenersUsers(){
         }));
     
         const notification2: NotificationPayload = {
-          requestId: randomUUID(),
+          requestId: randomInt(1, 999999),
           timestamp: new Date().toISOString(),
           notificationType: "user.created",
           channels: ["email", "in-app"],

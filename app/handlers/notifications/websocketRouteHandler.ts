@@ -47,10 +47,5 @@ export const websocketRouteHandler=(
                 activeConnections.delete(connectionId);
             });
     
-            // Send welcome message
-            connection.send(JSON.stringify({
-                type: "welcome",
-                message: "Connected to notification service",
-                timestamp: new Date().toISOString()
-            }));
+            
         }
