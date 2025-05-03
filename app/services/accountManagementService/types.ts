@@ -101,12 +101,13 @@ export type UserType = {
     privilege: number;
     add_by: number;
   };
-  
-  export type SuperAdminType = {
+
+  export interface SuperAdminType {
     id: number;
     first_name: string;
     last_name: string;
     email: string;
-    password: string;
-    phone: string;
-  };
+    phone?: string;
+    created_at: string;
+    updated_at: string;
+  }
