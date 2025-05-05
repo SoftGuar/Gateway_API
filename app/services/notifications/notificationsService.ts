@@ -1,4 +1,5 @@
 
+import { register } from "module";
 import { inAppChannelService } from "./inAppChannelService";
 import { updateNotificationInput } from "./types/Notifications.types";
 import { NotificationPayload } from "./types/payload";
@@ -70,7 +71,23 @@ export const notificationsService = {
             method: "DELETE",
         });
         return response.json();
-    }
+    },
 
+    async registerToken(userId: number, userType: string, token: string, deviceInfo?: object) {
+        const response = await fetch(`${notificationIP}/push/register-token`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify({
+                userId,
+                userType,
+                token,
+                deviceInfo
+            }),
+        });
+        return response.json();
+    },
 }
 
