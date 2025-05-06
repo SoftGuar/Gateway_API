@@ -38,7 +38,7 @@ export class AccountService {
         commercial: this.accountManagementService.getCommercialById.bind(this.accountManagementService),
         maintainer: this.accountManagementService.getMaintainerById.bind(this.accountManagementService),
         admin: this.accountManagementService.getAdminById.bind(this.accountManagementService),
-        superAdmin: this.accountManagementService.getAdminById.bind(this.accountManagementService)
+        superAdmin: this.accountManagementService.getSuperAdminById.bind(this.accountManagementService)
       };
 
       const getter = getters[role];

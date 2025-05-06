@@ -7,6 +7,7 @@ export interface CreateUserData {
   last_name: string;
   email: string;
   password: string;
+  MAC: string;
   phone?: string;
 }
 
