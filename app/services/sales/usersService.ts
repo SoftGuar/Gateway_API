@@ -8,6 +8,7 @@ interface UserData {
   last_name: string;
   email: string;
   password: string;
+  MAC: string;
   phone?: string;
 }
 const accountManagementService = new AccountManagementService();

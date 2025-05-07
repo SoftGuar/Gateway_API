@@ -16,6 +16,7 @@ import { CreateCommercialData } from './commercial.service';
 import { CreateMaintainerData } from './maintainer.service';
 import { CreateAdminData } from './admin.service';
 import { CreateHelperRecommendationData } from './helperRecommendation.service';
+import { SuperAdminService } from './superAdmin.service';
 
 
 
@@ -28,7 +29,8 @@ import {
   CommercialType, 
   MaintainerType, 
   AdminType ,
-  HelperRecommendationType
+  HelperRecommendationType,
+  SuperAdminType
 } from './types';
 
 
@@ -41,6 +43,8 @@ export class AccountManagementService {
   private maintainerService: MaintainerService;
   private adminService: AdminService;
   private helperRecommendationService : HelperRecommendationService;
+  private superAdminService: SuperAdminService;
+
 
   constructor() {
     this.userService = new UserService();
@@ -51,6 +55,7 @@ export class AccountManagementService {
     this.maintainerService = new MaintainerService();
     this.adminService = new AdminService();
     this.helperRecommendationService=new HelperRecommendationService;
+    this.superAdminService = new SuperAdminService();
   }
 
   // User methods
@@ -226,6 +231,11 @@ export class AccountManagementService {
 
   async rejectRecommendation(id: string,notes?:string): Promise<{ message: string }> {
     return this.helperRecommendationService.rejectRecommendation(id,notes);
+  }
+
+  // SuperAdmin methods
+  async getSuperAdminById(id: string): Promise<SuperAdminType> {
+    return this.superAdminService.getSuperAdminById(id);
   }
 
 

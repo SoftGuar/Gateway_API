@@ -1,23 +1,20 @@
 export const userSchemas = {
-    UserTotalSchema:{
+    UserTotalSchema: {
         schema: {
             description: 'Get the total number of users',
             tags: ['Users'],
             response: {
                 200: {
-                    type: 'object',
-                    properties: {
-                        total_users: { type: 'number' }
-                    },
-                    required: ['total_users']
+                    type: 'number',
+                    description: 'Total number of users'
                 }
             }
         }
     },
     TopUsersSchema: {
         schema: {
-            description: 'Get the top 10 users with the most sessions',
-            tags: ['Analytics: Users'],
+            description: 'Get the top 10 users with the most sessions and their names',
+            tags: ['Users'],
             response: {
                 200: {
                     type: 'array',
@@ -25,7 +22,8 @@ export const userSchemas = {
                         type: 'object',
                         properties: {
                             user_id: { type: 'number' },
-                            session_count: { type: 'number' }
+                            session_count: { type: 'number' },
+                            name: { type: 'string', nullable: true }
                         },
                         required: ['user_id', 'session_count']
                     }
@@ -36,7 +34,7 @@ export const userSchemas = {
     UserRatingsSchema: {
         schema: {
             description: 'Get the overall average user rating',
-            tags: ['Analytics: Users'],
+            tags: ['Users'],
             response: {
                 200: {
                     type: 'object',
@@ -51,7 +49,7 @@ export const userSchemas = {
     UserFeedbackSchema: {
         schema: {
             description: 'Get all user feedback',
-            tags: ['Analytics: Users'],
+            tags: ['Users'],
             response: {
                 200: {
                     type: 'array',
@@ -71,8 +69,8 @@ export const userSchemas = {
     },
     UserSessionDurationSchema: {
         schema: {
-            description: 'Get the average session duration for each user',
-            tags: ['Analytics: Users'],
+            description: 'Get the average session duration for each user with their names',
+            tags: ['Users'],
             response: {
                 200: {
                     type: 'array',
@@ -80,7 +78,8 @@ export const userSchemas = {
                         type: 'object',
                         properties: {
                             user_id: { type: 'number' },
-                            avg_session_duration_seconds: { type: 'number' }
+                            avg_session_duration_seconds: { type: 'number' },
+                            name: { type: 'string', nullable: true }
                         },
                         required: ['user_id', 'avg_session_duration_seconds']
                     }
@@ -91,7 +90,7 @@ export const userSchemas = {
     DAUsSchema: {
         schema: {
             description: 'Get the daily active users (DAUs)',
-            tags: ['Analytics: Users'],
+            tags: ['Users'],
             response: {
                 200: {
                     type: 'array',
@@ -110,7 +109,7 @@ export const userSchemas = {
     MAUsSchema: {
         schema: {
             description: 'Get the monthly active users (MAUs)',
-            tags: ['Analytics: Users'],
+            tags: ['Users'],
             response: {
                 200: {
                     type: 'array',
@@ -129,7 +128,7 @@ export const userSchemas = {
     WAUsSchema: {
         schema: {
             description: 'Get the weekly active users (WAUs)',
-            tags: ['Analytics: Users'],
+            tags: ['Users'],
             response: {
                 200: {
                     type: 'array',
