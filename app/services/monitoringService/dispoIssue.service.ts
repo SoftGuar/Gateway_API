@@ -4,7 +4,6 @@ import { DispoIssueWithMaintainerAndDispositiveType,DispoIssueType } from './typ
 export interface CreateDispoIssueData {
   dispositiveId: number;
   description: string;
-  date: string;
   status?: string;
   maintainerId?: number | null;
 }
