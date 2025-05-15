@@ -54,7 +54,8 @@ describe('AccountManagementService', () => {
         last_name: 'User',
         email: testUserEmail,
         password: 'test1234',
-        phone: '1234567890'
+        phone: '1234567890',
+        MAC:'0000000000000'
       };
 
       const user = await service.createUser(newUserData);

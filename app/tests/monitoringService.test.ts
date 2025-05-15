@@ -40,9 +40,8 @@ describe('MonitoringService', () => {
         maintainerId: 3,
         dispositiveId: 1,
         description: testDescription,
-        status: 'pending',
-        date: new Date().toISOString()
-      };
+        status: 'pending'
+            };
 
       const dispoIssue = await service.createDispoIssue(newDispoIssueData);
       dispoIssueId = dispoIssue.id.toString();

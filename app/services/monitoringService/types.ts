@@ -66,6 +66,5 @@ export type DispositiveType = {
     dispositiveId :      number  
     description  :String
     status      : string 
-    date    : string
   }
 
