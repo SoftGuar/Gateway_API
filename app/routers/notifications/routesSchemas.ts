@@ -3,7 +3,7 @@ export const routesSchemas = {
         schema:{
         summary: 'Get notifications for a user',
         description: 'Get notifications for a user',
-        tags: ['notifications'],
+        tags: ['Notifications'],
         params: {
             type: 'object',
             properties: {
@@ -18,7 +18,7 @@ export const routesSchemas = {
         schema:{
         summary: 'Get a notification by ID',
         description: 'Get a notification by ID',
-        tags: ['notifications'],
+        tags: ['Notifications'],
         params: {
             type: 'object',
             properties: {
@@ -32,7 +32,7 @@ export const routesSchemas = {
         schema:{
         summary: 'Update a notification',
         description: 'Update a notification',
-        tags: ['notifications'],
+        tags: ['Notifications'],
         params: {
             type: 'object',
             properties: {
@@ -46,7 +46,7 @@ export const routesSchemas = {
         schema:{
         summary: 'Mark a notification as read',
         description: 'Mark a notification as read',
-        tags: ['notifications'],
+        tags: ['Notifications'],
         params: {
             type: 'object',
             properties: {
@@ -60,7 +60,7 @@ export const routesSchemas = {
         schema:{
         summary: 'Mark a notification as unread',
         description: 'Mark a notification as unread',
-        tags: ['notifications'],
+        tags: ['Notifications'],
         params: {
             type: 'object',
             properties: {
@@ -74,7 +74,7 @@ export const routesSchemas = {
         schema:{
         summary: 'Delete a notification',
         description: 'Delete a notification',
-        tags: ['notifications'],
+        tags: ['Notifications'],
         params: {
             type: 'object',
             properties: {
@@ -88,7 +88,7 @@ export const routesSchemas = {
         schema: {
           summary: 'Create a notification',
           description: 'Create a notification to be sent through specified channels',
-          tags: ['notifications'],
+          tags: ['Notifications'],
           body: {
             type: 'object',
             required: ['requestId', 'timestamp', 'notificationType', 'channels', 'broadcast', 'recipient', 'message'],

@@ -1,5 +1,6 @@
 export const quotationsSchemas = {
     countConvertedQuotations: {
+        tags: ['Analytics : Quotations'],
         description: "Get the total count of converted quotations and conversion rate",
         response: {
             200: {
@@ -12,6 +13,7 @@ export const quotationsSchemas = {
         }
     },
     averageTimeToConversion: {
+        tags: ['Analytics : Quotations'],
         description: "Get the average time taken to convert quotations",
         response: {
             200: {
@@ -23,6 +25,7 @@ export const quotationsSchemas = {
         }
     },
     mostFrequentlyQuotedProducts: {
+        tags: ['Analytics : Quotations'],
         description: "Get the most frequently quoted products",
         response: {
             200: {
@@ -39,6 +42,7 @@ export const quotationsSchemas = {
         }
     },
     productConversionRate: {
+        tags: ['Analytics : Quotations'],
         description: "Get the conversion rate for each product",
         response: {
             200: {
@@ -54,6 +58,7 @@ export const quotationsSchemas = {
         }
     },
     totalQuotationValueByProduct: {
+        tags: ['Analytics : Quotations'],
         description: "Get the total quotation value grouped by product",
         response: {
             200: {
@@ -69,6 +74,7 @@ export const quotationsSchemas = {
         }
     },
     clientsWithMostUnconvertedQuotations: {
+        tags: ['Analytics : Quotations'],
         description: "Get the clients with the most unconverted quotations",
         response: {
             200: {
@@ -85,6 +91,7 @@ export const quotationsSchemas = {
         }
     },
     totalQuotationsCreated: {
+        tags: ['Analytics : Quotations'],
         description: "Get the total number of quotations created",
         response: {
             200: {
@@ -96,6 +103,7 @@ export const quotationsSchemas = {
         }
     },
     averageProductsPerQuotation: {
+        tags: ['Analytics : Quotations'],
         description: "Get the average number of products per quotation",
         response: {
             200: {
@@ -107,6 +115,7 @@ export const quotationsSchemas = {
         }
     },
     averageQuotationValue: {
+        tags: ['Analytics : Quotations'],
         description: "Get the average value of quotations",
         response: {
             200: {

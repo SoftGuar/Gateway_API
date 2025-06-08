@@ -8,7 +8,10 @@ import { MaintainerService } from "../../accountManagementService/maintainer.ser
 import { NotificationRecipient } from "../notificationListener";
 
 export default function setupNotificationListenersAssistance() {
-    appEmitter.on("assistance.emergency", async (data) => {
+    appEmitter.on("assistance.emergency", async (data:{
+        userId: string;
+        location: string;
+    }) => {
         // Get user info
         const userService = new UserService();
         const user = await userService.getUserById(data.userId);
