@@ -1,4 +1,5 @@
 import { Config } from '../../services.config';
+import { appEmitter } from '../notifications/event';
 
 import { UserType, UserWithHelpersType,HelperType } from './types';
 
@@ -28,6 +29,13 @@ export class UserService {
     if (!response.ok) {
       throw new Error('Failed to create user');
     }
+    // send notification
+    appEmitter.emit("user.created",{
+      type: 'User',
+      email: userData.email,
+      name: userData.first_name + ' ' + userData.last_name
+    });
+    // return the created user data
     const payload = await response.json();
     return payload.data;
   }

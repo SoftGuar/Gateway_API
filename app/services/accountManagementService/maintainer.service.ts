@@ -1,4 +1,5 @@
 import { Config } from '../../services.config';
+import { appEmitter } from '../notifications/event';
 
 import { MaintainerType } from './types';
 
@@ -29,6 +30,12 @@ export class MaintainerService {
             if (!response.ok) {
               throw new Error('Failed to create maintainer');
             }
+            // send notification
+            appEmitter.emit("user.created", {
+              type: 'Maintainer',
+              email: maintainerData.email,
+              name: maintainerData.first_name + ' ' + maintainerData.last_name
+            });
             const payload = await response.json();
             return payload.data;
           }

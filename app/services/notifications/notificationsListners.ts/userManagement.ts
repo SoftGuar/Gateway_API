@@ -6,9 +6,10 @@ import { AdminService } from "../../accountManagementService/admin.service";
 import { NotificationRecipient } from "../notificationListener";
 
 export interface Receiver {
-    id: number;
+    id?: number;
     email: string;
     name: string;
+    type?: string;
 }
 
 export default function setupNotificationListenersUsers() {
@@ -23,7 +24,7 @@ export default function setupNotificationListenersUsers() {
             broadcast: false,
             recipient: [
                 {
-                    userId: user.id,
+                    userId: NaN,
                     email: user.email,
                 },
             ],
@@ -50,15 +51,15 @@ export default function setupNotificationListenersUsers() {
             requestId: randomInt(1, 999999),
             timestamp: new Date().toISOString(),
             notificationType: "user.created",
-            channels: ["email", "in-app"],
+            channels: ["push", "in-app"],
             broadcast: false,
             recipient: adminRecipients,
             message: {
-                subject: `New User Registration`,
+                subject: `New ${user.type} Registration`,
                 body: `User ${user.name} (${user.email}) has been successfully registered.\n\nPlease review their account and take necessary actions if required.`,
                 attachments: [],
                 pushNotification: {
-                    title: "New User Registration",
+                    title: `New ${user.type} Registration`,
                     body: `${user.name} has joined the platform`,
                 },
             },
@@ -78,7 +79,7 @@ export default function setupNotificationListenersUsers() {
             broadcast: false,
             recipient: [
                 {
-                    userId: data.user.id,
+                    userId: data.user.id ? data.user.id : NaN,
                     email: data.user.email,
                 },
             ],
@@ -107,7 +108,7 @@ export default function setupNotificationListenersUsers() {
             broadcast: false,
             recipient: [
                 {
-                    userId: user.id,
+                    userId: user.id ? user.id : NaN,
                     email: user.email,
                 },
             ],
@@ -133,7 +134,7 @@ export default function setupNotificationListenersUsers() {
             broadcast: false,
             recipient: [
                 {
-                    userId: data.user.id,
+                    userId: data.user.id ? data.user.id : NaN,
                     email: data.user.email,
                 },
             ],
@@ -163,7 +164,7 @@ export default function setupNotificationListenersUsers() {
                 broadcast: false,
                 recipient: [
                     {
-                        userId: data.user.id,
+                        userId: data.user.id ? data.user.id : NaN,
                         email: data.user.email,
                     },
                 ],

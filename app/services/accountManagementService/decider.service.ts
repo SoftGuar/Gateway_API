@@ -1,4 +1,5 @@
 import { Config } from '../../services.config';
+import { appEmitter } from '../notifications/event';
 
 import { DeciderType } from './types';
 
@@ -30,6 +31,12 @@ export class DeciderService {
           if (!response.ok) {
             throw new Error('Failed to create Decider');
           }
+          // send notification
+          appEmitter.emit("user.created", {
+            type: 'Decider',
+            email: DeciderData.email,
+            name: DeciderData.first_name + ' ' + DeciderData.last_name
+          });
           const payload = await response.json();
           return payload.data;
         }
