@@ -2,17 +2,19 @@ import { FastifyInstance } from 'fastify';
 import {
   getAllInterventionsHandler,
   getInterventionByIdHandler,
+  getInterventionsByMaintainerIdHandler,
   createInterventionHandler,
   updateInterventionHandler,
   updateInterventionStatusHandler,
   updateInterventionReportHandler,
   getInterventionsByDispositiveIdHandler,
   deleteInterventionHandler
-} from '../../../handlers/maintainer/InterventionHandler';
-import { checkMaintainerRole } from '../../../middlewares/roleCheck';
+} from '../../../handlers/admin/InterventionHandler';
+import { checkAdminRole } from '../../../middlewares/roleCheck';
 import {
   getAllInterventionsSchema,
   getInterventionByIdSchema,
+  getInterventionsByMaintainerIdSchema,
   getInterventionsByDeviceIdSchema,
   createInterventionSchema,
   updateInterventionSchema,
@@ -23,9 +25,9 @@ import {
 
 
 // Router pour les Interventions
-const maintainerInterventionRouter = async (fastify: FastifyInstance) => {
-  // Register preHandler hook for all maintainer routes in this plugin
-  //fastify.addHook('preHandler', checkMaintainerRole);
+const adminInterventionRouter = async (fastify: FastifyInstance) => {
+  // Register preHandler hook for all admin routes in this plugin
+ // fastify.addHook('preHandler', checkAdminRole);
 
   // Get all interventions
   fastify.get('/', { schema: getAllInterventionsSchema }, getAllInterventionsHandler);
@@ -33,6 +35,8 @@ const maintainerInterventionRouter = async (fastify: FastifyInstance) => {
   // Get an intervention by ID
   fastify.get('/:id', { schema: getInterventionByIdSchema }, getInterventionByIdHandler);
 
+  // Get interventions by Admin ID
+  fastify.get('/maintainer/:maintainerId', { schema: getInterventionsByMaintainerIdSchema }, getInterventionsByMaintainerIdHandler);
   // Get interventions by Device ID
   fastify.get('/device/:dispositiveId', { schema: getInterventionsByDeviceIdSchema }, getInterventionsByDispositiveIdHandler);
 
@@ -53,4 +57,4 @@ const maintainerInterventionRouter = async (fastify: FastifyInstance) => {
 };
 
 
-export default maintainerInterventionRouter ;
+export default adminInterventionRouter ;

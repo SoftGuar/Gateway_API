@@ -85,6 +85,20 @@ export class InterventionService {
     return payload.data;
   }
 
+  // GET /intervention/device/:idDispositive
+
+  async getInterventionsByDispositiveId(dispositiveId: string): Promise<InterventionType[]> {
+    const response = await fetch(`${this.baseUrl}/intervention/device/${dispositiveId}`, {
+      method: 'GET'
+    });
+    if (!response.ok) {
+      throw new Error('Failed to fetch device interventions');
+    }
+    const payload = await response.json();
+    return payload.data;
+  }
+
+
   // PUT /intervention/:id
   async updateIntervention(id: string, updateData: UpdateInterventionData): Promise<InterventionType> {
     const response = await fetch(`${this.baseUrl}/intervention/${id}`, {

@@ -46,6 +46,26 @@ export async function getInterventionByIdHandler(
   }
 }
 
+// Handler pour obtenir les interventions par ID de mainteneur
+export async function getInterventionsByMaintainerIdHandler(
+  request: FastifyRequest<{ Params: { maintainerId: string } }>,
+  reply: FastifyReply
+) {
+  try {
+    const { maintainerId } = request.params;
+    const result = await monitoringService.getInterventionsByMaintainerId(maintainerId);
+    return reply.code(200).send({
+      success: true,
+      data: result
+    });
+  } catch (error) {
+    console.error('Error fetching interventions by maintainer ID:', error);
+    return reply.code(500).send({
+      success: false,
+      message: 'Failed to fetch interventions by maintainer ID'
+    });
+  }
+}
 
 export async function getInterventionsByDispositiveIdHandler(
   request: FastifyRequest<{ Params: { dispositiveId: string } }>,
