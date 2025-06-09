@@ -75,6 +75,11 @@ export class UserService {
     if (!response.ok) {
       throw new Error('Failed to update user');
     }
+    // send notification
+    appEmitter.emit("user.updated",{
+      type: 'User',
+      id: id,
+    });
     const payload = await response.json();
     return payload.data;
   }
@@ -110,6 +115,17 @@ export class UserService {
     if (!response.ok) {
       throw new Error('Failed to add helper to user');
     }
+    // send notification
+    appEmitter.emit("user.helper.added",{
+      user:{
+        id: id,
+        type: "'USER'"
+      },
+      helper: {
+        id: helperId,
+        type: 'HELPER'
+      }
+    });
     const payload = await response.json();
     return payload.data;
   }
