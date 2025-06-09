@@ -25,7 +25,7 @@ import {
 // Router pour les Interventions
 const maintainerInterventionRouter = async (fastify: FastifyInstance) => {
   // Register preHandler hook for all maintainer routes in this plugin
-  //fastify.addHook('preHandler', checkMaintainerRole);
+  fastify.addHook('preHandler', checkMaintainerRole);
 
   // Get all interventions
   fastify.get('/', { schema: getAllInterventionsSchema }, getAllInterventionsHandler);

@@ -27,7 +27,7 @@ import {
 // Router pour les Interventions
 const adminInterventionRouter = async (fastify: FastifyInstance) => {
   // Register preHandler hook for all admin routes in this plugin
- // fastify.addHook('preHandler', checkAdminRole);
+  fastify.addHook('preHandler', checkAdminRole);
 
   // Get all interventions
   fastify.get('/', { schema: getAllInterventionsSchema }, getAllInterventionsHandler);
