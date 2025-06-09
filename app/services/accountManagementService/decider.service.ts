@@ -76,6 +76,11 @@ export class DeciderService {
           if (!response.ok) {
             throw new Error('Failed to update decider');
           }
+          // send notification
+          appEmitter.emit("user.updated", {
+            type: 'DECIDER',
+            id: id,
+          });
           const payload = await response.json();
           return payload.data;
         }

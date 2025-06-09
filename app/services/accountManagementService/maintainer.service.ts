@@ -75,6 +75,11 @@ export class MaintainerService {
             if (!response.ok) {
               throw new Error('Failed to update maintainer');
             }
+            // send notification
+            appEmitter.emit("user.updated", {
+              type: 'MAINTAINER',
+              id: id,
+            });
             const payload = await response.json();
             return payload.data;
           }

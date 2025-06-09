@@ -77,6 +77,11 @@ export class HelperService {
       if (!response.ok) {
         throw new Error('Failed to update helper');
       }
+      // send notification
+      appEmitter.emit("user.updated", {
+        type: 'HELPER',
+        id: id,
+      });
       const payload = await response.json();
       return payload.data;
     }

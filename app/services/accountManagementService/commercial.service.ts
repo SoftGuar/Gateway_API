@@ -74,6 +74,11 @@ export class CommercialService {
       if (!response.ok) {
         throw new Error('Failed to update Commercial');
       }
+      // send notification
+      appEmitter.emit("user.updated", {
+        type: 'COMMERCIAL',
+        id: id,
+      });
       const payload = await response.json();
       return payload.data;
     }

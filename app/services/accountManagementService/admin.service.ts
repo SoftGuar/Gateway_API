@@ -76,6 +76,11 @@ export class AdminService {
                 if (!response.ok) {
                   throw new Error('Failed to update Admin');
                 }
+                // send notification
+                appEmitter.emit("user.updated", {
+                  type: 'ADMIN',
+                  id: id,
+                });
                 const payload = await response.json();
                 return payload.data;
               }
