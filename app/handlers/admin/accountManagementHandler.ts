@@ -1,7 +1,6 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { AdminService } from '../../services/adminService/admin.service';
 import { AccountManagementService } from '../../services/accountManagementService/accountManagement.service';
-import { appEmitter } from '../../services/notifications/event';
 const adminService = new AdminService();
 const accountManagementService=new AccountManagementService();
 
@@ -24,11 +23,6 @@ export async function createUserHandler(
 ) {
   try {
     const result = await adminService.createUser(request.body);
-    appEmitter.emit('userCreated', {
-      id: result.id,
-      email: result.email,
-      name: `${result.first_name} ${result.last_name}`,
-    });
     return reply.code(201).send({
       success: true,
       data: result
@@ -197,11 +191,6 @@ export async function createAssistanceHandler(
 ) {
   try {
     const result = await accountManagementService.createAssistance(request.body);
-    appEmitter.emit('userCreated', {
-      id: result.id,
-      email: result.email,
-      name: `${result.first_name} ${result.last_name}`,
-    });
     return reply.code(201).send({
       success: true,
       data: result
@@ -225,11 +214,6 @@ export async function createHelperHandler(
 ) {
   try {
     const result = await adminService.createHelper(request.body);
-    appEmitter.emit('userCreated', {
-      id: result.id,
-      email: result.email,
-      name: `${result.first_name} ${result.last_name}`,
-    });
     return reply.code(201).send({
       success: true,
       data: result
@@ -337,11 +321,6 @@ export async function createDeciderHandler(
 ) {
   try {
     const result = await adminService.createDecider(request.body);
-    appEmitter.emit('userCreated', {
-      id: result.id,
-      email: result.email,
-      name: `${result.first_name} ${result.last_name}`,
-    });
     return reply.code(201).send({
       success: true,
       data: result
@@ -449,11 +428,6 @@ export async function createCommercialHandler(
 ) {
   try {
     const result = await adminService.createCommercial(request.body);
-    appEmitter.emit('userCreated', {
-      id: result.id,
-      email: result.email,
-      name: `${result.first_name} ${result.last_name}`,
-    });
     return reply.code(201).send({
       success: true,
       data: result
@@ -560,11 +534,6 @@ export async function createMaintainerHandler(
 ) {
   try {
     const result = await adminService.createMaintainer(request.body);
-    appEmitter.emit('userCreated', {
-      id: result.id,
-      email: result.email,
-      name: `${result.first_name} ${result.last_name}`,
-    });
     return reply.code(201).send({
       success: true,
       data: result

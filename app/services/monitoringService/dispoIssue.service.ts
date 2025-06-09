@@ -1,4 +1,5 @@
 import { Config } from '../../services.config';
+import { appEmitter } from '../notifications/event';
 import { DispoIssueWithMaintainerAndDispositiveType,DispoIssueType } from './types';
 
 export interface CreateDispoIssueData {
@@ -34,6 +35,8 @@ export class DispoIssueService {
       throw new Error('Failed to create DispoIssue');
     }
     const payload = await response.json();
+    //send notification
+    appEmitter.emit("Issue.created",dispoIssueData);
     return payload.data;
   }
 
@@ -84,6 +87,8 @@ export class DispoIssueService {
       throw new Error('Failed to assign maintainer');
     }
     const payload = await response.json();
+    //send notification
+    appEmitter.emit("Maintenance.created", { id, maintainerId });
     return payload.data;
   }
 
