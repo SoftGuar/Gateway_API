@@ -1,4 +1,3 @@
-
 import { appEmitter } from "../event";
 import { NotificationPayload } from "../types/payload";
 import { randomInt } from "crypto";
@@ -15,6 +14,7 @@ export default function setupNotificationListenersDevices() {
         const admins = await adminService.getAdmins();
         const adminRecipients: NotificationRecipient[] = admins.map(admin => ({
           userId: admin.id,
+          userType: "ADMIN",
           email: admin.email,
         }));
     
@@ -22,16 +22,16 @@ export default function setupNotificationListenersDevices() {
           requestId: randomInt(1, 999999),
           timestamp: new Date().toISOString(),
           notificationType: "device.registered",
-          channels: ["email", "in-app"],
+          channels: ["in-app"],
           broadcast: false,
           recipient: adminRecipients,
           message: {
             subject: "New Device Registered",
-            body: `A new device (ID: ${device.id}, Type: ${device.type}) has been registered in the system.`,
+            body: `A new device (ID: ${device.MAC}, Type: ${device.type}) has been registered in the system.`,
             attachments: [],
             pushNotification: {
               title: "New Device",
-              body: `Device ${device.id} registered successfully`,
+              body: `Device ${device.MAC} registered successfully`,
             },
           },
           schedule: undefined,
@@ -41,112 +41,7 @@ export default function setupNotificationListenersDevices() {
       });
       
       //********************************************************************************* */
-    
-      appEmitter.on("device.battery.low", async (data) => {
-        const deviceService = new DispositiveService();
-        const device = await deviceService.getDispositiveById(data.deviceId);
-        
-        if (!device || !device.user_id) return;
-    
-        const userService = new UserService();
-        const user = await userService.getUserById(`${device.user_id}`);
-        
-        if (!user) return;
-    
-        // Notification to user
-        const userNotification: NotificationPayload = {
-          requestId: randomInt(1, 999999),
-          timestamp: new Date().toISOString(),
-          notificationType: "device.battery.low",
-          channels: ["in-app"],
-          broadcast: false,
-          recipient: [{
-            userId: user.id,
-            email: user.email
-          }],
-          message: {
-            subject: "Low Battery Warning",
-            body: `Your device battery is at ${data.batteryLevel}%. Please charge your device soon.`,
-            attachments: [],
-            pushNotification: {
-              title: "Low Battery",
-              body: `Battery at ${data.batteryLevel}%. Please charge soon.`,
-            },
-          },
-          schedule: undefined,
-          metadata: undefined,
-        };
-        notificationsService.notify(userNotification);
-    
-        // If battery critically low, also notify maintenance staff
-        if (data.batteryLevel <= 10) {
-          const maintenanceService = new MaintainerService()
-          const maintenanceStaff = await maintenanceService.getMaintainers();
-          const maintenanceRecipients: NotificationRecipient[] = maintenanceStaff.map(staff => ({
-            userId: staff.id,
-            email: staff.email,
-          }));
-    
-          const criticalNotification: NotificationPayload = {
-            requestId: randomInt(1, 999999),
-            timestamp: new Date().toISOString(),
-            notificationType: "device.battery.critical",
-            channels: ["in-app"],
-            broadcast: false,
-            recipient: maintenanceRecipients,
-            message: {
-              subject: "Critical Battery Level",
-              body: `Device ${data.deviceId} (User: ${user.first_name} ${user.last_name}) battery critically low at ${data.batteryLevel}%.`,
-              attachments: [],
-              pushNotification: {
-                title: "Critical Battery Alert",
-                body: `Device ${data.deviceId} battery at ${data.batteryLevel}%`,
-              },
-            },
-            schedule: undefined,
-            metadata:undefined,
-          };
-          notificationsService.notify(criticalNotification);
-        }
-      });
-    appEmitter.on("device.assigned", async (data) => {
-        const deviceService = new DispositiveService();
-        const device = await deviceService.getDispositiveById(data.deviceId);
-
-        if (!device) return;
-
-        const userService = new UserService();
-        const user = await userService.getUserById(data.userId);
-
-        if (!user) return;
-
-        const notification: NotificationPayload = {
-            requestId: randomInt(1, 999999),
-            timestamp: new Date().toISOString(),
-            notificationType: "device.assigned",
-            channels: ["in-app", "email"],
-            broadcast: false,
-            recipient: [
-                {
-                    userId: user.id,
-                    email: user.email,
-                },
-            ],
-            message: {
-                subject: "Device Assigned",
-                body: `Device ${device.id} has been assigned to you.`,
-                attachments: [],
-                pushNotification: {
-                    title: "Device Assigned",
-                    body: `Device ${device.id} is now assigned to you.`,
-                },
-            },
-            schedule: undefined,
-            metadata: undefined,
-        };
-
-        notificationsService.notify(notification);
-    });
+  
 
     appEmitter.on("device.blocked", async (data) => {
         const deviceService = new DispositiveService();
@@ -163,11 +58,12 @@ export default function setupNotificationListenersDevices() {
             requestId: randomInt(1, 999999),
             timestamp: new Date().toISOString(),
             notificationType: "device.blocked",
-            channels: ["in-app", "email"],
+            channels: ["in-app", "push", "email"],
             broadcast: false,
             recipient: [
                 {
                     userId: user.id,
+                    userType: "USER",
                     email: user.email,
                 },
             ],

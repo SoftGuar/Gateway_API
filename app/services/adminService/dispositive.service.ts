@@ -37,7 +37,7 @@ export class DispositiveService {
                   throw new Error('Failed to create dispositive');
                 }
                 const payload = await response.json();
-                appEmitter.emit("device.registered",payload)
+                appEmitter.emit("device.registered",DispositiveData)
                 return payload.data;
               }
             
@@ -102,9 +102,9 @@ export class DispositiveService {
                   throw new Error('Failed to assign user');
                 }
                 const payload = await response.json();
-                appEmitter.emit("device.assigned",{
+                appEmitter.emit("sale.completed",{
+                  deviceId: id,
                   userId: userId,
-                  deviceId:id
                 })
                 return payload.data;
           }
