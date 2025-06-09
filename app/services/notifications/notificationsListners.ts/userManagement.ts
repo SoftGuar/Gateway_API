@@ -25,6 +25,7 @@ export default function setupNotificationListenersUsers() {
             recipient: [
                 {
                     userId: NaN,
+                    userType: "USER",
                     email: user.email,
                 },
             ],
@@ -44,6 +45,7 @@ export default function setupNotificationListenersUsers() {
         const admins = await adminService.getAdmins();
         const adminRecipients: NotificationRecipient[] = admins.map(admin => ({
             userId: admin.id,
+            userType: "ADMIN",
             email: admin.email,
         }));
     

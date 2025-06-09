@@ -6,8 +6,8 @@ import { NotificationPayload } from "./types/payload";
 const notificationIP = "http://localhost:3002";
 export const notificationsService = {
     async notify(notification: NotificationPayload) {
+        console.log("Sending notification:", notification);
         if(notification.channels.includes("in-app")){
-            console.log("Sending in-app notification:");
             await inAppChannelService.sendNotification(notification);
         }
         const response = await fetch(`${notificationIP}/notify`, {
