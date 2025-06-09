@@ -24,6 +24,7 @@ const interventionProperties = {
   end_date: Type.Union([Type.String({ format: 'date-time' }), Type.Null()]),
   status: Type.Enum(InterventionStatus),
   idDispositive: Type.String(),
+  idMaintainer: Type.String(),
   created_at: Type.String({ format: 'date-time' }),
   updated_at: Type.String({ format: 'date-time' }),
 
@@ -33,7 +34,7 @@ const interventionProperties = {
 
 // Schemas for Interventions
 export const getAllInterventionsSchema = {
-  tags: ['Maintainer : Interventions management'],
+  tags: ['Admin : Interventions management'],
   headers: authHeader,
   response: {
     200: Type.Object({
@@ -44,7 +45,7 @@ export const getAllInterventionsSchema = {
 };
 
 export const getInterventionByIdSchema = {
-  tags: ['Maintainer : Interventions management'],
+  tags: ['Admin : Interventions management'],
   headers: authHeader,
   params: Type.Object({
     id: Type.String()
@@ -61,8 +62,21 @@ export const getInterventionByIdSchema = {
   }
 };
 
+export const getInterventionsByMaintainerIdSchema = {
+  tags: ['Admin : Interventions management'],
+  headers: authHeader,
+  params: Type.Object({
+    maintainerId: Type.String()
+  }),
+  response: {
+    200: Type.Object({
+      success: Type.Literal(true),
+      data: Type.Array(Type.Object(interventionProperties))
+    })
+  }
+};
 export const getInterventionsByDeviceIdSchema = {
-  tags: ['Maintainer : Interventions management'],
+  tags: ['Admin : Interventions management'],
   headers: authHeader,
   params: Type.Object({
     dispositiveId: Type.String()
@@ -77,7 +91,7 @@ export const getInterventionsByDeviceIdSchema = {
 
 
 export const createInterventionSchema = {
-  tags: ['Maintainer : Interventions management'],
+  tags: ['Admin : Interventions management'],
   headers: authHeader,
   body: Type.Object({
     description: Type.String(),
@@ -97,7 +111,7 @@ export const createInterventionSchema = {
 };
 
 export const updateInterventionSchema = {
-  tags: ['Maintainer : Interventions management'],
+  tags: ['Admin : Interventions management'],
   headers: authHeader,
   params: Type.Object({
     id: Type.String()
@@ -117,7 +131,7 @@ export const updateInterventionSchema = {
 };
 
 export const updateInterventionStatusSchema = {
-  tags: ['Maintainer : Interventions management'],
+  tags: ['Admin : Interventions management'],
   headers: authHeader,
   params: Type.Object({
     id: Type.String()
@@ -135,7 +149,7 @@ export const updateInterventionStatusSchema = {
 
 // schema for updating intervention reports
 export const updateInterventionReportSchema = {
-  tags: ['Maintainer : Interventions management'],
+  tags: ['Admin : Interventions management'],
   headers: authHeader,
   params: Type.Object({
     id: Type.String()
@@ -157,7 +171,7 @@ export const updateInterventionReportSchema = {
 };
 
 export const deleteInterventionSchema = {
-  tags: ['Maintainer : Interventions management'],
+  tags: ['Admin : Interventions management'],
   headers: authHeader,
   params: Type.Object({
     id: Type.String()
