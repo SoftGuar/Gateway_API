@@ -102,10 +102,17 @@ export class DispositiveService {
                   throw new Error('Failed to assign user');
                 }
                 const payload = await response.json();
-                appEmitter.emit("sale.completed",{
-                  deviceId: id,
-                  userId: userId,
-                })
+                // Run the event emission in a separate microtask (non-blocking)
+                Promise.resolve().then(() => {
+                  try {
+                    appEmitter.emit("sale.completed", {
+                      deviceId: id,
+                      userId: userId,
+                    });
+                  } catch (error) {
+                    console.error("Error emitting sale.completed event:", error);
+                  }
+                });
                 return payload.data;
           }
               

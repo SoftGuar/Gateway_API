@@ -1,9 +1,8 @@
 import setupNotificationListenersUsers from "./notificationsListners.ts/userManagement";
 import setupNotificationListenersDevices from "./notificationsListners.ts/deviceManagement";
 import setupNotificationListenersEnvironment from "./notificationsListners.ts/environmentManagement";
-import setupNotificationListenersAssistance from "./notificationsListners.ts/assistanceManagement";
 import setupNotificationListenersSales from "./notificationsListners.ts/salesManagement";
-import setupNotificationListenersAnalytics from "./notificationsListners.ts/analyticsManagement";
+import setupNotificationListenersMonitoring from "./notificationsListners.ts/monitoringManagement";
 
 // Recipient interface for consistency
 export interface NotificationRecipient {
@@ -22,14 +21,12 @@ function setupNotificationListeners() {
   // 3. NAVIGATION NOTIFICATIONS
   setupNotificationListenersEnvironment();
   
-  // 4. ASSISTANCE NOTIFICATIONS
-  setupNotificationListenersAssistance();
+  // 4. MONITORING NOTIFICATIONS
+  setupNotificationListenersMonitoring();
 
-  // 7. COMMERCIAL NOTIFICATIONS
+  // 5. COMMERCIAL NOTIFICATIONS
   setupNotificationListenersSales();
 
-  // 8. ANALYTICS NOTIFICATIONS
-  setupNotificationListenersAnalytics();
 }
 
 export default setupNotificationListeners;
