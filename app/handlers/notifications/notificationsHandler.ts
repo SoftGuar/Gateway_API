@@ -14,10 +14,11 @@ export const notificationsHandler = {
             res.status(500).send({ error: 'Failed to notify' });
         }
     },
-    async getNotifications(req: FastifyRequest<{ Params: { userId: number } }>, res: FastifyReply) {
+    async getNotifications(req: FastifyRequest<{ Params: { userId: number , userType: string } }>, res: FastifyReply) {
         try {
-            const userId = Number(req.params.userId); // Assuming userId is passed as a URL parameter
-            const notifications = await notificationsService.getNotifications(userId);
+            const userId = Number(req.params.userId);
+            const userType = req.params.userType;
+            const notifications = await notificationsService.getNotifications(userId,userType);
             res.status(201).send(notifications);
         } catch (error) {
             console.error('Error fetching notifications:', error);

@@ -5,7 +5,7 @@ import fastifySwagger from '@fastify/swagger';
 import fastifySwaggerUi from '@fastify/swagger-ui';
 import registerRoutes from './routers';
 import { PrismaClient } from '@prisma/client';
-
+import setupNotificationListeners from './services/notifications/notificationListener';
 // Load environment variables from .env
 dotenv.config();
 
@@ -41,7 +41,7 @@ const fastify = Fastify({ logger: true });
 async function startServer() {
   // Check database connection first
   // await checkDatabaseConnection();
-  
+  setupNotificationListeners();
   // 1. Register middlewares
   registerMiddlewares(fastify);
 

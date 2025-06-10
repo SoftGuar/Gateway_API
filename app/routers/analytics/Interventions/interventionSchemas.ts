@@ -2,7 +2,7 @@ export const interventionSchemas = {
     InterventionAverageDurationSchema: {
         schema: {
             description: 'Get the average duration of interventions',
-            tags: ['Analytics: Interventions'],
+            tags: ['Interventions'],
             response: {
                 200: {
                     type: 'object',
@@ -17,7 +17,7 @@ export const interventionSchemas = {
     MonthlyAverageDurationSchema: {
         schema: {
             description: 'Get the monthly average duration of interventions',
-            tags: ['Analytics: Interventions'],
+            tags: ['Interventions'],
             response: {
                 200: {
                     type: 'array',
@@ -37,7 +37,7 @@ export const interventionSchemas = {
     MaintainerInterventionCountSchema: {
         schema: {
             description: 'Get the count of interventions per maintainer',
-            tags: ['Analytics: Interventions'],
+            tags: ['Interventions'],
             response: {
                 200: {
                     type: 'array',
@@ -45,9 +45,11 @@ export const interventionSchemas = {
                         type: 'object',
                         properties: {
                             maintainer_id: { type: 'number' },
+                            first_name: { type: 'string' },
+                            last_name: { type: 'string' },
                             intervention_count: { type: 'number' }
                         },
-                        required: ['maintainer_id', 'intervention_count']
+                        required: ['maintainer_id', 'first_name', 'last_name', 'intervention_count']
                     }
                 }
             }
@@ -56,7 +58,7 @@ export const interventionSchemas = {
     AverageAnswerTimeSchema: {
         schema: {
             description: 'Get the average response time for maintainers',
-            tags: ['Analytics: Interventions'],
+            tags: ['Interventions'],
             response: {
                 200: {
                     type: 'array',
@@ -65,9 +67,11 @@ export const interventionSchemas = {
                         properties: {
                             issue_id: { type: 'number' },
                             maintainer_id: { type: 'number' },
+                            first_name: { type: 'string' },
+                            last_name: { type: 'string' },
                             avg_response_time_minutes: { type: 'number' }
                         },
-                        required: ['issue_id', 'maintainer_id', 'avg_response_time_minutes']
+                        required: ['issue_id', 'maintainer_id', 'first_name', 'last_name', 'avg_response_time_minutes']
                     }
                 }
             }

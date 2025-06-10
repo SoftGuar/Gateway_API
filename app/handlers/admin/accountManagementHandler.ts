@@ -1,7 +1,6 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { AdminService } from '../../services/adminService/admin.service';
 import { AccountManagementService } from '../../services/accountManagementService/accountManagement.service';
-
 const adminService = new AdminService();
 const accountManagementService=new AccountManagementService();
 
