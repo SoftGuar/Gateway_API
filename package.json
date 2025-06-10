@@ -23,6 +23,7 @@
     "fastify-cookie": "^5.7.0",
     "fastify-structured-app": "file:",
     "prisma": "^6.4.1",
+    "systeminformation": "^5.27.1",
     "ws": "^8.18.1"
   },
   "devDependencies": {
