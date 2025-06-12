@@ -6,6 +6,7 @@ import { zonesRoutes } from './Zone/ZonesRoutes';
 import { UserRoutes } from './Users/UserRoutes';
 import { salesStatsRoutes } from './sales/saleStatsRoutes';
 import { quotationsRoutes } from './quotations/quotationsRoutes';
+import { logsRoutes } from './Logs/logsRoutes';
 
 export default async function registerAnalyticsRoutes(app: FastifyInstance) {
     app.register(DeviceRoutes);
@@ -15,4 +16,5 @@ export default async function registerAnalyticsRoutes(app: FastifyInstance) {
     app.register(navigationRoutes);
     app.register(salesStatsRoutes);
     app.register(quotationsRoutes);
+    app.register(logsRoutes);
 }
