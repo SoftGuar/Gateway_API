@@ -5,7 +5,8 @@ import fastifySwagger from '@fastify/swagger';
 import fastifySwaggerUi from '@fastify/swagger-ui';
 import registerRoutes from './routers';
 import { PrismaClient } from '@prisma/client';
-
+import { writeReport } from './utils/executive_report';
+import setupNotificationListeners from './services/notifications/notificationListener';
 // Load environment variables from .env
 dotenv.config();
 
@@ -19,6 +20,9 @@ fastify.decorateRequest('user', undefined);
 
 
 async function startServer() {
+  // Check database connection first
+  // await checkDatabaseConnection();
+  setupNotificationListeners();
 
   // 1. Register middlewares
   registerMiddlewares(fastify);
@@ -53,6 +57,7 @@ async function startServer() {
   try {
     await fastify.listen({ port, host });
     fastify.log.info(`Server started on port ${port}`);
+    setInterval(writeReport, 2 * 60 * 60 * 1000);
   } catch (err) {
     fastify.log.error(err);
     process.exit(1);

@@ -1,4 +1,5 @@
 import { Config } from '../../services.config';
+import { appEmitter } from '../notifications/event';
 
 import { HelperType } from './types';
 
@@ -31,6 +32,12 @@ export class HelperService {
       if (!response.ok) {
         throw new Error('Failed to create helper');
       }
+      // send notification
+      appEmitter.emit("user.created", {
+        type: 'Helper',
+        email: helperData.email,
+        name: helperData.first_name + ' ' + helperData.last_name
+      });
       const payload = await response.json();
       return payload.data;
     }
@@ -70,6 +77,11 @@ export class HelperService {
       if (!response.ok) {
         throw new Error('Failed to update helper');
       }
+      // send notification
+      appEmitter.emit("user.updated", {
+        type: 'HELPER',
+        id: id,
+      });
       const payload = await response.json();
       return payload.data;
     }

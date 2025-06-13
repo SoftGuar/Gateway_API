@@ -1,4 +1,5 @@
 import { Config } from '../../services.config';
+import { appEmitter } from '../notifications/event';
 import { AdminType } from './types';
 
 
@@ -30,6 +31,12 @@ export class AdminService {
                 if (!response.ok) {
                   throw new Error('Failed to create Admin');
                 }
+                // send notification
+                appEmitter.emit("user.created", {
+                  type: 'Admin',
+                  email: AdminData.email,
+                  name: AdminData.first_name + ' ' + AdminData.last_name
+                });
                 const payload = await response.json();
                 return payload.data;
               }
@@ -69,6 +76,11 @@ export class AdminService {
                 if (!response.ok) {
                   throw new Error('Failed to update Admin');
                 }
+                // send notification
+                appEmitter.emit("user.updated", {
+                  type: 'ADMIN',
+                  id: id,
+                });
                 const payload = await response.json();
                 return payload.data;
               }

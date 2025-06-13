@@ -3,28 +3,14 @@ export const routesSchemas = {
         schema:{
         summary: 'Get notifications for a user',
         description: 'Get notifications for a user',
-        tags: ['notifications'],
+        tags: ['Notifications'],
         params: {
             type: 'object',
             properties: {
                 userId: { type: 'number' },
+                userType: { type: 'string' },
             },
-            required: ['userId'],
-        },
-    }
-    },
-    getNotificationsByTypeAndUserId: {
-        schema:{
-        summary: 'Get notifications for a user by type and user ID',
-        description: 'Get notifications for a user by type and user ID',
-        tags: ['notifications'],
-        params: {
-            type: 'object',
-            properties: {
-                userId: { type: 'number' },
-                type: { type: 'string' },
-            },
-            required: ['userId', 'type'],
+            required: ['userId', 'userType'],
         },
     }
     },
@@ -32,7 +18,7 @@ export const routesSchemas = {
         schema:{
         summary: 'Get a notification by ID',
         description: 'Get a notification by ID',
-        tags: ['notifications'],
+        tags: ['Notifications'],
         params: {
             type: 'object',
             properties: {
@@ -46,7 +32,7 @@ export const routesSchemas = {
         schema:{
         summary: 'Update a notification',
         description: 'Update a notification',
-        tags: ['notifications'],
+        tags: ['Notifications'],
         params: {
             type: 'object',
             properties: {
@@ -60,7 +46,7 @@ export const routesSchemas = {
         schema:{
         summary: 'Mark a notification as read',
         description: 'Mark a notification as read',
-        tags: ['notifications'],
+        tags: ['Notifications'],
         params: {
             type: 'object',
             properties: {
@@ -74,7 +60,7 @@ export const routesSchemas = {
         schema:{
         summary: 'Mark a notification as unread',
         description: 'Mark a notification as unread',
-        tags: ['notifications'],
+        tags: ['Notifications'],
         params: {
             type: 'object',
             properties: {
@@ -88,7 +74,7 @@ export const routesSchemas = {
         schema:{
         summary: 'Delete a notification',
         description: 'Delete a notification',
-        tags: ['notifications'],
+        tags: ['Notifications'],
         params: {
             type: 'object',
             properties: {
@@ -102,13 +88,13 @@ export const routesSchemas = {
         schema: {
           summary: 'Create a notification',
           description: 'Create a notification to be sent through specified channels',
-          tags: ['notifications'],
+          tags: ['Notifications'],
           body: {
             type: 'object',
             required: ['requestId', 'timestamp', 'notificationType', 'channels', 'broadcast', 'recipient', 'message'],
             properties: {
               requestId: { 
-                type: 'string', 
+                type: 'number', 
                 description: 'Unique identifier for the notification request' 
               },
               timestamp: { 
@@ -137,11 +123,15 @@ export const routesSchemas = {
                 description: 'Recipients of the notification (empty if broadcast is true)',
                 items: { 
                   type: 'object',
-                  required: ['userId', 'email'],
+                  required: ['userId', 'userType', 'email'],
                   properties: {
                     userId: { 
                       type: 'integer',
                       description: 'User ID of the recipient' 
+                    },
+                    userType: { 
+                      type: 'string',
+                      description: 'Type of user (e.g., admin, customer)' 
                     },
                     email: { 
                       type: 'string',

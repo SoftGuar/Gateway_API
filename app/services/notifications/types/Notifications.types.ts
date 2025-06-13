@@ -1,5 +1,6 @@
 export interface createNotificationInput {
     user_id: number;
+    user_type: "USER" | "COMMERCIAL" | "ADMIN" | "SUPERADMIN" | "MAINTAINER" | "DECIDER" | "HELPER";
     title: string;
     message: string;
     read: boolean;

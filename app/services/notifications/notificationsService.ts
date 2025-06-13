@@ -1,10 +1,12 @@
 
+import { register } from "module";
 import { inAppChannelService } from "./inAppChannelService";
 import { updateNotificationInput } from "./types/Notifications.types";
 import { NotificationPayload } from "./types/payload";
 const notificationIP = "http://localhost:3002";
 export const notificationsService = {
     async notify(notification: NotificationPayload) {
+        console.log("Sending notification:", notification);
         if(notification.channels.includes("in-app")){
             await inAppChannelService.sendNotification(notification);
         }
@@ -18,8 +20,8 @@ export const notificationsService = {
         });
         return response.json();
     },
-    async getNotifications(userId: number) {
-        const response = await fetch(`${notificationIP}/notifications/${userId}`);
+    async getNotifications(userId: number, userType: string) {
+        const response = await fetch(`${notificationIP}/notifications/${userId}/${userType}`);
         return response.json();
     },
     async createNotification(notification: NotificationPayload) {
@@ -69,7 +71,23 @@ export const notificationsService = {
             method: "DELETE",
         });
         return response.json();
-    }
+    },
 
+    async registerToken(userId: number, userType: string, token: string, deviceInfo?: object) {
+        const response = await fetch(`${notificationIP}/push/register-token`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify({
+                userId,
+                userType,
+                token,
+                deviceInfo
+            }),
+        });
+        return response.json();
+    },
 }
 

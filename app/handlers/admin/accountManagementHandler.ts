@@ -13,6 +13,7 @@ declare module 'fastify' {
 }
 
 const userActionService = new UserActionService();
+
 const adminService = new AdminService();
 const accountManagementService=new AccountManagementService();
 

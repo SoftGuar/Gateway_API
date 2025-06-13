@@ -1,11 +1,12 @@
 export interface NotificationPayload {
-    requestId: string;
+    requestId: number;
     timestamp: string;
     notificationType: string;
     channels: Array<"email" | "push" | "in-app">;
     broadcast: boolean;
     recipient: Array<{
         userId: number;
+        userType?:"USER" | "COMMERCIAL" | "ADMIN" | "SUPERADMIN" | "MAINTAINER" | "DECIDER" | "HELPER";
         email: string;
     }>;
     message: {

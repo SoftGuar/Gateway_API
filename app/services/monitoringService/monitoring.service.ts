@@ -73,6 +73,11 @@ export class MonitoringService {
     return this.interventionService.getInterventionsByMaintainerId(maintainerId);
   }
 
+    async getInterventionsByDispositiveId(dispositiveId: string): Promise<InterventionType[]> {
+    return this.interventionService.getInterventionsByDispositiveId(dispositiveId);
+  }
+
+
   async updateIntervention(id: string, updateData: UpdateInterventionData): Promise<InterventionType> {
     return this.interventionService.updateIntervention(id, updateData);
   }
