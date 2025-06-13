@@ -4,7 +4,7 @@ import adminProductRouter from './product/product.router';
 import admintransactionRouter from './sales/transaction.router';
 import AdminhelperRecommendationRouter from'./helperRecommendation/helperRecommendation.router'
 import adminInterventionRouter from './intervention/intervention.router';
-
+import cartographyRouter from './cartographie/cartographie.router';
 import { FastifyInstance, FastifyPluginOptions } from 'fastify';
 
 const adminRoutes = (fastify: FastifyInstance) => {
@@ -28,9 +28,9 @@ const adminRoutes = (fastify: FastifyInstance) => {
   // register admin intervention routes with a prefix
   fastify.register(adminInterventionRouter, { prefix: '/intervention' });
 
+  //register admin cartography routes with a prefix
 
-  
-
+  fastify.register(cartographyRouter, { prefix: '/cartography' });
 
   
 };
