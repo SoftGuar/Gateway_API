@@ -16,6 +16,7 @@ import loginRouter from './login/login.router';
 import superAdminRouter from './superAdmin/superAdmin.router';
 
 import { FastifyInstance, FastifyPluginOptions } from 'fastify';
+import registerRoutesNotifications from './notifications';
 
   const registerRoutes = (fastify: FastifyInstance) => {
   // Register example routes with a prefix
@@ -57,7 +58,7 @@ import { FastifyInstance, FastifyPluginOptions } from 'fastify';
   //register analytics routes form index.ts in analytics folder
   fastify.register(registerAnalyticsRoutes, { prefix: '/analytics' });
 
-  
+  fastify.register(registerRoutesNotifications, { prefix: '/notifications' });
 };
 
 export default registerRoutes;

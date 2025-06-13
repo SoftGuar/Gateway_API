@@ -1,4 +1,14 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
+
+
+declare module 'fastify' {
+  interface FastifyRequest {
+    user?: {
+      userId: number;
+      role: string;
+    };
+  }
+}
 import { AuthenticationService } from '../services/authentication/authenticationService';
 
 async function checkRole(req: FastifyRequest, reply: FastifyReply, roles: string[]) {
@@ -23,6 +33,12 @@ async function checkRole(req: FastifyRequest, reply: FastifyReply, roles: string
         message: 'Access denied. Only ${role}s can perform this action.'
       });
     }
+
+    req.user = {
+      userId: Number(decoded.userId),
+      role: decoded.role
+    };
+  
     
   } catch (error) {
     return reply.code(401).send({

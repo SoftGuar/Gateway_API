@@ -1,6 +1,6 @@
 import { FastifyInstance } from 'fastify';
-import { getProfileHandler, updateProfileHandler, deleteProfileHandler } from '../../handlers/account/accountHandler';
-import { getProfileSchema, updateProfileSchema, deleteProfileSchema } from './account.schema';
+import { getProfileHandler, updateProfileHandler, deleteProfileHandler, getUserActionsHandler} from '../../handlers/account/accountHandler';
+import { getProfileSchema, updateProfileSchema, deleteProfileSchema, getUserActionsSchema } from './account.schema';
 
 const accountRouter = async (fastify: FastifyInstance) => {
   // Get the profile using the Bearer token
@@ -11,6 +11,12 @@ const accountRouter = async (fastify: FastifyInstance) => {
   
   // Delete the profile using the Bearer token
   fastify.delete('/', { schema: deleteProfileSchema }, deleteProfileHandler);
+
+  fastify.get(
+    '/history',
+    { schema: getUserActionsSchema },
+    getUserActionsHandler
+  );
 };
 
 export default accountRouter;

@@ -1,3 +1,5 @@
+import { appEmitter } from "../notifications/event";
+
 export interface OrderInput {
   product_id: number;
   user_id: number;
@@ -41,6 +43,11 @@ export const orderService = {
       }
 
       const responseData = await response.json();
+      appEmitter.emit("sale.completed", {
+        clientName: 'test',
+        quantity: 'test',
+        totalAmount: 'test',
+      });
       return responseData;
     } catch (error: any) {
       // Handle errors from the sales service or network issues

@@ -1,4 +1,5 @@
 import { Config } from '../../services.config';
+import { appEmitter } from '../notifications/event';
 
 import { UserType, UserWithHelpersType,HelperType } from './types';
 
@@ -7,6 +8,7 @@ export interface CreateUserData {
   last_name: string;
   email: string;
   password: string;
+  MAC: string;
   phone?: string;
 }
 
@@ -27,6 +29,13 @@ export class UserService {
     if (!response.ok) {
       throw new Error('Failed to create user');
     }
+    // send notification
+    appEmitter.emit("user.created",{
+      type: 'User',
+      email: userData.email,
+      name: userData.first_name + ' ' + userData.last_name
+    });
+    // return the created user data
     const payload = await response.json();
     return payload.data;
   }
@@ -66,6 +75,11 @@ export class UserService {
     if (!response.ok) {
       throw new Error('Failed to update user');
     }
+    // send notification
+    appEmitter.emit("user.updated",{
+      type: 'User',
+      id: id,
+    });
     const payload = await response.json();
     return payload.data;
   }
@@ -101,6 +115,17 @@ export class UserService {
     if (!response.ok) {
       throw new Error('Failed to add helper to user');
     }
+    // send notification
+    appEmitter.emit("user.helper.added",{
+      user:{
+        id: id,
+        type: "'USER'"
+      },
+      helper: {
+        id: helperId,
+        type: 'HELPER'
+      }
+    });
     const payload = await response.json();
     return payload.data;
   }

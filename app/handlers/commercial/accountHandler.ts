@@ -11,9 +11,13 @@ interface BaseAccountData {
   phone?: string;
 }
 
+interface CreateUserData extends BaseAccountData {
+  MAC: string;
+}
+
 // Handler for creating a regular user
 export async function createUserHandler(
-  request: FastifyRequest<{ Body: BaseAccountData }>,
+  request: FastifyRequest<{ Body: CreateUserData }>,
   reply: FastifyReply
 ) {
   try {
