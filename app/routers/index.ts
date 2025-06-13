@@ -4,6 +4,7 @@ import commercialRoutes from './commercial';
 
 import accountRouter from './account/account.router';
 import userHelperRouter from './user/user.router'
+import UserenvironmentRouter from './user/env/env.router';
 import helperRouter from './helper/helper.router'
 import maintainerRoutes from'./maintainer';
 
@@ -44,6 +45,9 @@ import registerRoutesNotifications from './notifications';
 
   //register user  routes with a prefix 
   fastify.register(userHelperRouter, { prefix: '/user' });
+
+    fastify.register(UserenvironmentRouter, { prefix: '/user/environment' });
+
 
 
   // Register login routes
