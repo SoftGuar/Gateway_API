@@ -1,6 +1,19 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { AdminService } from '../../services/adminService/admin.service';
 import { AccountManagementService } from '../../services/accountManagementService/accountManagement.service';
+import { UserActionService } from '../../services/accountManagementService/userAction.service';
+
+declare module 'fastify' {
+  interface FastifyRequest {
+    user?: {
+      userId: number;
+      role: string;
+    };
+  }
+}
+
+const userActionService = new UserActionService();
+
 const adminService = new AdminService();
 const accountManagementService=new AccountManagementService();
 
@@ -18,11 +31,18 @@ interface CreateUserData extends BaseAccountData {
 
 // Handler for creating a regular user
 export async function createUserHandler(
-  request: FastifyRequest<{ Body: CreateUserData }>,
+  request: FastifyRequest<{ Body: CreateUserData, Params: { }, user: { userId: number } }>,
   reply: FastifyReply
 ) {
   try {
     const result = await adminService.createUser(request.body);
+    if (!request.user || !request.user.userId) {
+      return reply.code(400).send({
+        success: false,
+        message: 'Actor ID is required to log the action in history'
+      });
+    }
+    await userActionService.logAction({ userId: request.user.userId, action: 'Created a user' });
     return reply.code(201).send({
       success: true,
       data: result
@@ -37,11 +57,18 @@ export async function createUserHandler(
 }
 // Get all users
 export async function getUsersHandler(
-  request: FastifyRequest,
+  request: FastifyRequest<{ Params: {},  user: { userId: number } }>,
   reply: FastifyReply
 ) {
   try {
     const result = await adminService.getUsers();
+    if (!request.user || !request.user.userId) {
+      return reply.code(400).send({
+        success: false,
+        message: 'Actor ID is required to log the action in history'
+      });
+    }
+    await userActionService.logAction({ userId: request.user.userId, action: 'Got users lists' });
     return reply.code(200).send({
       success: true,
       data: result
@@ -57,12 +84,19 @@ export async function getUsersHandler(
 
 // Get user by ID
 export async function getUserByIdHandler(
-  request: FastifyRequest<{ Params: { id: string } }>,
+  request: FastifyRequest<{ Params: { id: string}, user: { userId: number } }>,
   reply: FastifyReply
 ) {
   try {
     const { id } = request.params;
     const result = await adminService.getUserById(id);
+    if (!request.user || !request.user.userId) {
+      return reply.code(400).send({
+        success: false,
+        message: 'Actor ID is required to log the action in history'
+      });
+    }
+    await userActionService.logAction({ userId: request.user.userId, action: `Got user with ID ${id}` });
     return reply.code(200).send({
       success: true,
       data: result
@@ -79,7 +113,7 @@ export async function getUserByIdHandler(
 // Update user
 export async function updateUserHandler(
   request: FastifyRequest<{ 
-    Params: { id: string }, 
+    Params: { id: string}, user: { userId: number }, 
     Body: Partial<BaseAccountData> 
   }>,
   reply: FastifyReply
@@ -88,6 +122,13 @@ export async function updateUserHandler(
     const { id } = request.params;
     const updateData = request.body;
     const result = await adminService.updateUser(id, updateData);
+    if (!request.user || !request.user.userId) {
+      return reply.code(400).send({
+        success: false,
+        message: 'Actor ID is required to log the action in history'
+      });
+    }
+    await userActionService.logAction({ userId: request.user.userId, action: `Updated user with ID ${id}` });
     return reply.code(200).send({
       success: true,
       data: result
@@ -103,12 +144,19 @@ export async function updateUserHandler(
 
 // Delete user
 export async function deleteUserHandler(
-  request: FastifyRequest<{ Params: { id: string } }>,
+  request: FastifyRequest<{ Params: { id: string }, user: { userId: number } }>,
   reply: FastifyReply
 ) {
   try {
     const { id } = request.params;
     const result = await adminService.deleteUser(id);
+    if (!request.user || !request.user.userId) {
+      return reply.code(400).send({
+        success: false,
+        message: 'Actor ID is required to log the action in history'
+      });
+    }
+    await userActionService.logAction({ userId: request.user.userId, action: `Deleted user with ID ${id}` });
     return reply.code(200).send({
       success: true,
       message: result.message
@@ -124,12 +172,19 @@ export async function deleteUserHandler(
 
 // Handler for getting user's helpers
 export async function getUserHelpersHandler(
-  request: FastifyRequest<{ Params: { id: string } }>,
+  request: FastifyRequest<{ Params: { id: string }, user: { userId: number }} >,
   reply: FastifyReply
 ) {
   try {
     const { id } = request.params;
     const result = await adminService.getUserHelpers(id);
+    if (!request.user || !request.user.userId) {
+      return reply.code(400).send({
+        success: false,
+        message: 'Actor ID is required to log the action in history'
+      });
+    }
+    await userActionService.logAction({ userId: request.user.userId, action: `Got helpers for user with ID ${id}` });
     return reply.code(200).send({
       success: true,
       data: result
@@ -145,12 +200,19 @@ export async function getUserHelpersHandler(
 
 // Handler for adding helper to user
 export async function addHelperToUserHandler(
-  request: FastifyRequest<{ Params: { id: string, helperId: string } }>,
+  request: FastifyRequest<{ Params: { id: string, helperId: string},  user: { userId: number } } >,
   reply: FastifyReply
 ) {
   try {
     const { id, helperId } = request.params;
     const result = await adminService.addHelperToUser(id, helperId);
+    if (!request.user || !request.user.userId) {
+      return reply.code(400).send({
+        success: false,
+        message: 'Actor ID is required to log the action in history'
+      });
+    }
+    await userActionService.logAction({ userId: request.user.userId, action: `Added helper with ID ${helperId} to user with ID ${id}` });
     return reply.code(200).send({
       success: true,
       data: result
@@ -166,12 +228,19 @@ export async function addHelperToUserHandler(
 
 // Handler for removing helper from user
 export async function removeHelperFromUserHandler(
-  request: FastifyRequest<{ Params: { id: string, helperId: string } }>,
+  request: FastifyRequest<{ Params: { id: string, helperId: string },  user: { userId: number }} >,
   reply: FastifyReply
 ) {
   try {
     const { id, helperId } = request.params;
     const result = await adminService.removeHelperFromUser(id, helperId);
+    if (!request.user || !request.user.userId) {
+      return reply.code(400).send({
+        success: false,
+        message: 'Actor ID is required to log the action in history'
+      });
+    }
+    await userActionService.logAction({ userId: request.user.userId, action: `Removed helper with ID ${helperId} from user with ID ${id}` });
     return reply.code(200).send({
       success: true,
       data: result
@@ -186,11 +255,18 @@ export async function removeHelperFromUserHandler(
 }
 
 export async function createAssistanceHandler(
-  request: FastifyRequest<{ Body: BaseAccountData }>,
+  request: FastifyRequest<{ Body: BaseAccountData, Params: { }, user: { userId: number } }>,
   reply: FastifyReply
 ) {
   try {
     const result = await accountManagementService.createAssistance(request.body);
+    if (!request.user || !request.user.userId) {
+      return reply.code(400).send({
+        success: false,
+        message: 'Actor ID is required to log the action in history'
+      });
+    }
+    await userActionService.logAction({ userId: request.user.userId, action: 'Created an assistance' });
     return reply.code(201).send({
       success: true,
       data: result
@@ -209,11 +285,18 @@ export async function createAssistanceHandler(
 
 // Handler for creating a regular Helper
 export async function createHelperHandler(
-  request: FastifyRequest<{ Body: BaseAccountData }>,
+  request: FastifyRequest<{ Body: BaseAccountData, Params: {}, user: { userId: number } }>,
   reply: FastifyReply
 ) {
   try {
     const result = await adminService.createHelper(request.body);
+    if (!request.user || !request.user.userId) {
+      return reply.code(400).send({
+        success: false,
+        message: 'Actor ID is required to log the action in history'
+      });
+    }
+    await userActionService.logAction({ userId: request.user.userId, action: 'Created a helper' });
     return reply.code(201).send({
       success: true,
       data: result
@@ -228,11 +311,18 @@ export async function createHelperHandler(
 }
 // Get all helpers
 export async function getHelpersHandler(
-  request: FastifyRequest,
+  request: FastifyRequest< { Params: {}, user: { userId: number }  }>,
   reply: FastifyReply
 ) {
   try {
     const result = await adminService.getHelpers();
+    if (!request.user || !request.user.userId) {
+      return reply.code(400).send({
+        success: false,
+        message: 'Actor ID is required to log the action in history'
+      });
+    }
+    await userActionService.logAction({ userId: request.user.userId, action: 'Got helpers lists' });
     return reply.code(200).send({
       success: true,
       data: result
@@ -248,12 +338,19 @@ export async function getHelpersHandler(
 
 // Get helper by ID
 export async function getHelperByIdHandler(
-  request: FastifyRequest<{ Params: { id: string } }>,
+  request: FastifyRequest<{ Params: { id: string}, user: { userId: number } } >,
   reply: FastifyReply
 ) {
   try {
     const { id } = request.params;
     const result = await adminService.getHelperById(id);
+    if (!request.user || !request.user.userId) {
+      return reply.code(400).send({
+        success: false,
+        message: 'Actor ID is required to log the action in history'
+      });
+    }
+    await userActionService.logAction({ userId: request.user.userId, action: `Got helper with ID ${id}` });
     return reply.code(200).send({
       success: true,
       data: result
@@ -270,7 +367,7 @@ export async function getHelperByIdHandler(
 // Update helper
 export async function updateHelperHandler(
   request: FastifyRequest<{ 
-    Params: { id: string }, 
+    Params: { id: string} ,  user: { userId: number } , 
     Body: Partial<BaseAccountData> 
   }>,
   reply: FastifyReply
@@ -279,6 +376,13 @@ export async function updateHelperHandler(
     const { id } = request.params;
     const updateData = request.body;
     const result = await adminService.updateHelper(id, updateData);
+    if (!request.user || !request.user.userId) {
+      return reply.code(400).send({
+        success: false,
+        message: 'Actor ID is required to log the action in history'
+      });
+    }
+    await userActionService.logAction({ userId: request.user.userId, action: `Updated helper with ID ${id}` });
     return reply.code(200).send({
       success: true,
       data: result
@@ -294,12 +398,19 @@ export async function updateHelperHandler(
 
 // Delete helper
 export async function deleteHelperHandler(
-  request: FastifyRequest<{ Params: { id: string } }>,
+  request: FastifyRequest<{ Params: { id: string },  user: { userId: number } }>,
   reply: FastifyReply
 ) {
   try {
     const { id } = request.params;
     const result = await adminService.deleteHelper(id);
+    if (!request.user || !request.user.userId) {
+      return reply.code(400).send({
+        success: false,
+        message: 'Actor ID is required to log the action in history'
+      });
+    }
+    await userActionService.logAction({ userId: request.user.userId, action: `Deleted helper with ID ${id}` });
     return reply.code(200).send({
       success: true,
       message: result.message
@@ -316,11 +427,18 @@ export async function deleteHelperHandler(
 
 // Handler for creating a regular decider
 export async function createDeciderHandler(
-  request: FastifyRequest<{ Body: BaseAccountData }>,
+  request: FastifyRequest<{ Body: BaseAccountData , Params: { }, user: { userId: number }  }>,
   reply: FastifyReply
 ) {
   try {
     const result = await adminService.createDecider(request.body);
+    if (!request.user || !request.user.userId) {
+      return reply.code(400).send({
+        success: false,
+        message: 'Actor ID is required to log the action in history'
+      });
+    }
+    await userActionService.logAction({ userId: request.user.userId, action: 'Created a decider' });
     return reply.code(201).send({
       success: true,
       data: result
@@ -335,11 +453,18 @@ export async function createDeciderHandler(
 }
 // Get all deciders
 export async function getDecidersHandler(
-  request: FastifyRequest,
+  request: FastifyRequest< { Params: { }, user: { userId: number }  }>,
   reply: FastifyReply
 ) {
   try {
     const result = await adminService.getDeciders();
+    if (!request.user || !request.user.userId) {
+      return reply.code(400).send({
+        success: false,
+        message: 'Actor ID is required to log the action in history'
+      });
+    }
+    await userActionService.logAction({ userId: request.user.userId, action: 'Got deciders lists' });
     return reply.code(200).send({
       success: true,
       data: result
@@ -355,12 +480,19 @@ export async function getDecidersHandler(
 
 // Get decider by ID
 export async function getDeciderByIdHandler(
-  request: FastifyRequest<{ Params: { id: string } }>,
+  request: FastifyRequest<{ Params: { id: string},  user: { userId: number } }>,
   reply: FastifyReply
 ) {
   try {
     const { id } = request.params;
     const result = await adminService.getDeciderById(id);
+    if (!request.user || !request.user.userId) {
+      return reply.code(400).send({
+        success: false,
+        message: 'Actor ID is required to log the action in history'
+      });
+    }
+    await userActionService.logAction({ userId: request.user.userId, action: `Got decider with ID ${id}` });
     return reply.code(200).send({
       success: true,
       data: result
@@ -377,7 +509,7 @@ export async function getDeciderByIdHandler(
 // Update decider
 export async function updateDeciderHandler(
   request: FastifyRequest<{ 
-    Params: { id: string }, 
+    Params: { id: string},  user: { userId: number } , 
     Body: Partial<BaseAccountData> 
   }>,
   reply: FastifyReply
@@ -386,6 +518,13 @@ export async function updateDeciderHandler(
     const { id } = request.params;
     const updateData = request.body;
     const result = await adminService.updateDecider(id, updateData);
+    if (!request.user || !request.user.userId) {
+      return reply.code(400).send({
+        success: false,
+        message: 'Actor ID is required to log the action in history'
+      });
+    }
+    await userActionService.logAction({ userId: request.user.userId, action: `Updated decider with ID ${id}` });
     return reply.code(200).send({
       success: true,
       data: result
@@ -401,12 +540,19 @@ export async function updateDeciderHandler(
 
 // Delete decider
 export async function deleteDeciderHandler(
-  request: FastifyRequest<{ Params: { id: string } }>,
+  request: FastifyRequest<{ Params: { id: string },  user: { userId: number } }>,
   reply: FastifyReply
 ) {
   try {
     const { id } = request.params;
     const result = await adminService.deleteDecider(id);
+    if (!request.user || !request.user.userId) {
+      return reply.code(400).send({
+        success: false,
+        message: 'Actor ID is required to log the action in history'
+      });
+    }
+    await userActionService.logAction({ userId: request.user.userId, action: `Deleted decider with ID ${id}` });
     return reply.code(200).send({
       success: true,
       message: result.message
@@ -423,11 +569,18 @@ export async function deleteDeciderHandler(
 
 // Handler for creating a regular commercial
 export async function createCommercialHandler(
-  request: FastifyRequest<{ Body: BaseAccountData }>,
+  request: FastifyRequest<{ Body: BaseAccountData , Params: {}, user: { userId: number } }>,
   reply: FastifyReply
 ) {
   try {
     const result = await adminService.createCommercial(request.body);
+    if (!request.user || !request.user.userId) {
+      return reply.code(400).send({
+        success: false,
+        message: 'Actor ID is required to log the action in history'
+      });
+    }
+    await userActionService.logAction({ userId: request.user.userId, action: 'Created a commercial' });
     return reply.code(201).send({
       success: true,
       data: result
@@ -442,11 +595,18 @@ export async function createCommercialHandler(
 }
 // Get all commercials
 export async function getCommercialsHandler(
-  request: FastifyRequest,
+  request: FastifyRequest<{ Params: {}, user: { userId: number } }>,
   reply: FastifyReply
 ) {
   try {
     const result = await adminService.getCommercials();
+    if (!request.user || !request.user.userId) {
+      return reply.code(400).send({
+        success: false,
+        message: 'Actor ID is required to log the action in history'
+      });
+    }
+    await userActionService.logAction({ userId: request.user.userId, action: 'Got commercials lists' });
     return reply.code(200).send({
       success: true,
       data: result
@@ -462,12 +622,19 @@ export async function getCommercialsHandler(
 
 // Get commercial by ID
 export async function getCommercialByIdHandler(
-  request: FastifyRequest<{ Params: { id: string } }>,
+  request: FastifyRequest<{ Params: { id: string} ,  user: { userId: number } }>,
   reply: FastifyReply
 ) {
   try {
     const { id } = request.params;
     const result = await adminService.getCommercialById(id);
+    if (!request.user || !request.user.userId) {
+      return reply.code(400).send({
+        success: false,
+        message: 'Actor ID is required to log the action in history'
+      });
+    }
+    await userActionService.logAction({ userId: request.user.userId, action: `Got commercial with ID ${id}` });
     return reply.code(200).send({
       success: true,
       data: result
@@ -484,7 +651,7 @@ export async function getCommercialByIdHandler(
 // Update commercial
 export async function updateCommercialHandler(
   request: FastifyRequest<{ 
-    Params: { id: string }, 
+    Params: { id: string }, user: { userId: number } , 
     Body: Partial<BaseAccountData> 
   }>,
   reply: FastifyReply
@@ -493,6 +660,13 @@ export async function updateCommercialHandler(
     const { id } = request.params;
     const updateData = request.body;
     const result = await adminService.updateCommercial(id, updateData);
+    if (!request.user || !request.user.userId) {
+      return reply.code(400).send({
+        success: false,
+        message: 'Actor ID is required to log the action in history'
+      });
+    }
+    await userActionService.logAction({ userId: request.user.userId, action: `Updated commercial with ID ${id}` });
     return reply.code(200).send({
       success: true,
       data: result
@@ -508,12 +682,19 @@ export async function updateCommercialHandler(
 
 // Delete commercial
 export async function deleteCommercialHandler(
-  request: FastifyRequest<{ Params: { id: string } }>,
+  request: FastifyRequest<{ Params: { id: string },  user: { userId: number } }>,
   reply: FastifyReply
 ) {
   try {
     const { id } = request.params;
     const result = await adminService.deleteCommercial(id);
+    if (!request.user || !request.user.userId) {
+      return reply.code(400).send({
+        success: false,
+        message: 'Actor ID is required to log the action in history'
+      });
+    }
+    await userActionService.logAction({ userId: request.user.userId, action: `Deleted commercial with ID ${id}` });
     return reply.code(200).send({
       success: true,
       message: result.message
@@ -529,11 +710,19 @@ export async function deleteCommercialHandler(
 
 // Handler for creating a regular Maintainer
 export async function createMaintainerHandler(
-  request: FastifyRequest<{ Body: BaseAccountData }>,
+  request: FastifyRequest<{ Body: BaseAccountData , user: { userId: number } }>,
   reply: FastifyReply
 ) {
   try {
     const result = await adminService.createMaintainer(request.body);
+    if (!request.user || !request.user.userId) {
+      return reply.code(400).send({
+        success: false,
+        message: 'Actor ID is required to log the action in history'
+      });
+    }
+    await userActionService.logAction({ userId: request.user.userId, action: 'Created a maintainer' });
+
     return reply.code(201).send({
       success: true,
       data: result
@@ -548,11 +737,18 @@ export async function createMaintainerHandler(
 }
 // Get all maintainers
 export async function getMaintainersHandler(
-  request: FastifyRequest,
+  request: FastifyRequest< { Params: { user: { userId: number } } }>,
   reply: FastifyReply
 ) {
   try {
     const result = await adminService.getMaintainers();
+    if (!request.user || !request.user.userId) {
+      return reply.code(400).send({
+        success: false,
+        message: 'Actor ID is required to log the action in history'
+      });
+    }
+    await userActionService.logAction({ userId: request.user.userId, action: 'Got maintainers lists' });
     return reply.code(200).send({
       success: true,
       data: result
@@ -568,12 +764,19 @@ export async function getMaintainersHandler(
 
 // Get maintainer by ID
 export async function getMaintainerByIdHandler(
-  request: FastifyRequest<{ Params: { id: string } }>,
+  request: FastifyRequest<{ Params: { id: string,  user: { userId: number } } }>,
   reply: FastifyReply
 ) {
   try {
     const { id } = request.params;
     const result = await adminService.getMaintainerById(id);
+    if (!request.user || !request.user.userId) {
+      return reply.code(400).send({
+        success: false,
+        message: 'Actor ID is required to log the action in history'
+      });
+    }
+    await userActionService.logAction({ userId: request.user.userId, action: `Got maintainer with ID ${id}` });
     return reply.code(200).send({
       success: true,
       data: result
@@ -590,7 +793,7 @@ export async function getMaintainerByIdHandler(
 // Update maintainer
 export async function updateMaintainerHandler(
   request: FastifyRequest<{ 
-    Params: { id: string }, 
+    Params: { id: string, user: { userId: number } }, 
     Body: Partial<BaseAccountData> 
   }>,
   reply: FastifyReply
@@ -599,6 +802,13 @@ export async function updateMaintainerHandler(
     const { id } = request.params;
     const updateData = request.body;
     const result = await adminService.updateMaintainer(id, updateData);
+    if (!request.user || !request.user.userId) {
+      return reply.code(400).send({
+        success: false,
+        message: 'Actor ID is required to log the action in history'
+      });
+    }
+    await userActionService.logAction({ userId: request.user.userId, action: `Updated maintainer with ID ${id}` });
     return reply.code(200).send({
       success: true,
       data: result
@@ -614,12 +824,19 @@ export async function updateMaintainerHandler(
 
 // Delete maintainer
 export async function deleteMaintainerHandler(
-  request: FastifyRequest<{ Params: { id: string } }>,
+  request: FastifyRequest<{ Params: { id: string,  user: { userId: number } } }>,
   reply: FastifyReply
 ) {
   try {
     const { id } = request.params;
     const result = await adminService.deleteMaintainer(id);
+    if (!request.user || !request.user.userId) {
+      return reply.code(400).send({
+        success: false,
+        message: 'Actor ID is required to log the action in history'
+      });
+    }
+    await userActionService.logAction({ userId: request.user.userId, action: `Deleted maintainer with ID ${id}` });
     return reply.code(200).send({
       success: true,
       message: result.message

@@ -81,3 +81,29 @@ export const deleteProfileSchema = {
     })
   }
 };
+
+export const getUserActionsSchema = {
+  summary: 'Get user action history',
+  description: 'Returns the list of actions performed by the authenticated user.',
+  tags: ['Account Management: History'],
+  headers: authHeader,
+  response: {
+    200: Type.Object({
+      success: Type.Literal(true),
+      data: Type.Array(
+        Type.Object({
+          action: Type.String(),
+          createdAt: Type.String({ format: 'date-time' })
+        })
+      )
+    }),
+      403: Type.Object({
+        success: Type.Literal(false),
+        message: Type.String()
+      }),
+      500: Type.Object({
+        success: Type.Literal(false),
+        message: Type.String()
+      })
+  }
+};

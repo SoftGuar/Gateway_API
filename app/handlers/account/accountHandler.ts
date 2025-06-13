@@ -1,6 +1,9 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { AccountService } from '../../services/account/account.service';
+import { UserActionService } from '../../services/accountManagementService/userAction.service';
 
+
+const userActionService = new UserActionService();
 // Handler to get the profile based on the Bearer token
 export async function getProfileHandler(
   request: FastifyRequest,
@@ -17,6 +20,7 @@ export async function getProfileHandler(
     const token = authHeader.split(' ')[1];
     const accountService = new AccountService();
     const profile = await accountService.getProfile(token);
+    await userActionService.logAction({ userId: profile.id, action: 'User consulted their profile' });
     return reply.code(200).send({
       success: true,
       data: profile
@@ -47,6 +51,7 @@ export async function updateProfileHandler(
     const updateData = request.body;
     const accountService = new AccountService();
     const updatedProfile = await accountService.updateProfile(token, updateData);
+    
     return reply.code(200).send({
       success: true,
       data: updatedProfile
@@ -86,5 +91,26 @@ export async function deleteProfileHandler(
       success: false,
       message: 'Failed to delete profile'
     });
+  }
+}
+
+export async function getUserActionsHandler(
+  request: FastifyRequest,
+  reply: FastifyReply
+) {
+
+    const authHeader = request.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return reply.code(401).send({
+        success: false,
+        message: 'Missing or invalid Authorization header'
+      });
+    }
+    const token = authHeader.split(' ')[1];
+  try {
+    const records = await userActionService.getActions(token);
+    return reply.code(200).send({ success: true, data: records });
+  } catch (err) {
+    return reply.code(500).send({ success: false, message: 'Failed to fetch history' });
   }
 }

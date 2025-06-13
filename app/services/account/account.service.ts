@@ -10,6 +10,11 @@ import {
   SuperAdminType 
 } from '../accountManagementService/types';
 
+import { UserActionService } from "../accountManagementService/userAction.service";
+
+
+const userActionService = new UserActionService();
+
 type ProfileGetter = (userId: string) => Promise<UserType | HelperType | CommercialType | AdminType | MaintainerType | DeciderType | SuperAdminType>;
 type ProfileUpdater = (
   userId: string, 
@@ -73,6 +78,7 @@ export class AccountService {
       if (!updater) {
         throw new Error(`Unsupported role: ${role}`);
       }
+      await userActionService.logAction({ userId: Number(userId), action: 'You edited your profile' });
       return await updater(userId, updateData);
     } catch (error) {
       throw new Error('Failed to verify token and update profile: ' + error);
