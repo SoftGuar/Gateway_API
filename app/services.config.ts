@@ -8,6 +8,7 @@ export class Config {
     private authenticationIP: string;
     private adminServiceIP: string;
     private monitoringServiceIP :string;
+    private cartographieServiceIP: string;
 
     
     private constructor() {
@@ -16,6 +17,8 @@ export class Config {
       this.authenticationIP = process.env.AUTHENTICATION_IP || 'http://127.0.0.1:5000';
       this.adminServiceIP=process.env.adminService_IP || 'http://127.0.0.1:8000';
       this.monitoringServiceIP=process.env.monitoringServiceIP || 'http://127.0.0.1:2000';
+      this.cartographieServiceIP=process.env.CARTOGRAPHIE_SERVICE_IP || 'http://127.0.0.1:7000';
+
 
     }
     
@@ -52,12 +55,14 @@ export class Config {
       return this.monitoringServiceIP;
     }
 
-
     
-    public getPort(): number {
-      return Number(process.env.PORT) || 3000;
+    /**
+     * Get the IP address for the cartographie service.
+     */
+    public getCartographieServiceIP(): string {
+      return this.cartographieServiceIP;
     }
-    
+   
     public getHost(): string {
       return process.env.HOST || '0.0.0.0';
     }
