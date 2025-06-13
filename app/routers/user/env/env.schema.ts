@@ -29,7 +29,7 @@ const environmentProperties = {
 
 // GET /environments
 export const getEnvironmentsSchema = {
-  tags: ['Cartographie : Environment management'],
+  tags: ['User : Environment management'],
   headers: authHeader,
   response: {
     200: Type.Object({
@@ -44,30 +44,10 @@ export const getEnvironmentsSchema = {
   }
 };
 
-// POST /environments
-export const createEnvironmentSchema = {
-  tags: ['Cartographie : Environment management'],
-  headers: authHeader,
-  body: Type.Object({
-    id: Type.Optional(Type.String()),
-    name: Type.String(),
-    address: Type.Optional(Type.String())
-  }),
-  response: {
-    201: Type.Object({
-      success: Type.Literal(true),
-      data: Type.Object(environmentProperties)
-    }),
-    400: Type.Object({
-      success: Type.Literal(false),
-      message: Type.String()
-    })
-  }
-};
 
 // GET /environments/:id
 export const getEnvironmentByIdSchema = {
-  tags: ['Cartographie : Environment management'],
+  tags: ['User : Environment management'],
   headers: authHeader,
   params: Type.Object({
     id: Type.String()
@@ -86,4 +66,5 @@ export const getEnvironmentByIdSchema = {
     })
   }
 };
+
 
