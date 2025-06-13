@@ -10,38 +10,16 @@ import { PrismaClient } from '@prisma/client';
 dotenv.config();
 
 const isProd = process.env.ENV ? (process.env.ENV === 'PROD') : false;
-
 const host = process.env.HOST || 'localhost';
 const port = process.env.PORT ? Number(process.env.PORT) : 3000;
-
 const domain = process.env.DOMAIN || host+':'+port;
 
-// Ensure DATABASE_URL is available
-// if (!process.env.DATABASE_URL) {
-//   console.error('DATABASE_URL environment variable is not set');
-//   process.exit(1);
-// }
-
 const fastify = Fastify({ logger: true });
+fastify.decorateRequest('user', undefined);
 
-// Initialize Prisma once at app startup
-// const prisma = new PrismaClient();
-
-// Check database connection
-// async function checkDatabaseConnection() {
-//   try {
-//     await prisma.$connect();
-//     console.log('Database connection established');
-//   } catch (error) {
-//     console.error('Failed to connect to database:', error);
-//     process.exit(1);
-//   }
-// }
 
 async function startServer() {
-  // Check database connection first
-  // await checkDatabaseConnection();
-  
+
   // 1. Register middlewares
   registerMiddlewares(fastify);
 
