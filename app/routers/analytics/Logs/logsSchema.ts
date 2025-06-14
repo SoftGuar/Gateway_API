@@ -2,7 +2,7 @@
 export const logsSchemas = {
     getLogs: {
         description: "Get the last 100 logs",
-        tags: ["Logs"],
+        tags: ["Analytics: Logs"],
         response: {
             200: {
                 type: "array",

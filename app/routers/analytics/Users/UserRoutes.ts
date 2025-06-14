@@ -10,14 +10,6 @@ export async function UserRoutes(fastify: FastifyInstance) {
         schema: userSchemas.TopUsersSchema.schema
     }, UserHandler.getTopUsers);
 
-    fastify.get("/users/ratings", {
-        schema: userSchemas.UserRatingsSchema.schema
-    }, UserHandler.getUserRatings);
-
-    fastify.get("/users/feedback", {
-        schema: userSchemas.UserFeedbackSchema.schema
-    }, UserHandler.getUserFeedback);
-
     fastify.get("/users/session-durations", {
         schema: userSchemas.UserSessionDurationSchema.schema
     }, UserHandler.getUserSessionDuration);

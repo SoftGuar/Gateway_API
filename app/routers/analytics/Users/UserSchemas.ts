@@ -2,7 +2,7 @@ export const userSchemas = {
     UserTotalSchema: {
         schema: {
             description: 'Get the total number of users',
-            tags: ['Users'],
+            tags: ['Analytics: Users'],
             response: {
                 200: {
                     type: 'number',
@@ -14,7 +14,7 @@ export const userSchemas = {
     TopUsersSchema: {
         schema: {
             description: 'Get the top 10 users with the most sessions and their names',
-            tags: ['Users'],
+            tags: ['Analytics: Users'],
             response: {
                 200: {
                     type: 'array',
@@ -31,46 +31,10 @@ export const userSchemas = {
             }
         }
     },
-    UserRatingsSchema: {
-        schema: {
-            description: 'Get the overall average user rating',
-            tags: ['Users'],
-            response: {
-                200: {
-                    type: 'object',
-                    properties: {
-                        overall_avg_rating: { type: 'number' }
-                    },
-                    required: ['overall_avg_rating']
-                }
-            }
-        }
-    },
-    UserFeedbackSchema: {
-        schema: {
-            description: 'Get all user feedback',
-            tags: ['Users'],
-            response: {
-                200: {
-                    type: 'array',
-                    items: {
-                        type: 'object',
-                        properties: {
-                            id: { type: 'number' },
-                            user_id: { type: 'number' },
-                            rating: { type: 'number' },
-                            created_at: { type: 'string', format: 'date-time' }
-                        },
-                        required: ['id', 'user_id', 'rating', 'created_at']
-                    }
-                }
-            }
-        }
-    },
     UserSessionDurationSchema: {
         schema: {
             description: 'Get the average session duration for each user with their names',
-            tags: ['Users'],
+            tags: ['Analytics: Users'],
             response: {
                 200: {
                     type: 'array',
@@ -90,7 +54,7 @@ export const userSchemas = {
     DAUsSchema: {
         schema: {
             description: 'Get the daily active users (DAUs)',
-            tags: ['Users'],
+            tags: ['Analytics: Users'],
             response: {
                 200: {
                     type: 'array',
@@ -109,7 +73,7 @@ export const userSchemas = {
     MAUsSchema: {
         schema: {
             description: 'Get the monthly active users (MAUs)',
-            tags: ['Users'],
+            tags: ['Analytics: Users'],
             response: {
                 200: {
                     type: 'array',
@@ -128,7 +92,7 @@ export const userSchemas = {
     WAUsSchema: {
         schema: {
             description: 'Get the weekly active users (WAUs)',
-            tags: ['Users'],
+            tags: ['Analytics: Users'],
             response: {
                 200: {
                     type: 'array',
