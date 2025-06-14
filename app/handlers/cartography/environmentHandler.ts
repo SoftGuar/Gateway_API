@@ -1,6 +1,9 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { CartographieService } from '../../services/cartographie/cartographie.service';
 import { EnvironmentCreateData } from '../../services/cartographie/types';
+import { AuthenticationService } from '../../services/authentication/authenticationService';
+import { AccountService } from '../../services/account/account.service';
+import { Unknown } from '@sinclair/typebox';
 
 const cartographieService = new CartographieService();
 
@@ -10,7 +13,21 @@ export async function createEnvironmentHandler(
   reply: FastifyReply
 ) {
   try {
-    const result = await cartographieService.environment.createEnvironment(request.body);
+    const authHeader = request.headers.authorization;
+    let createdBy = 'unknown';
+    if (authHeader) {
+      const token = authHeader.split(' ')[1];
+      const accountService = new AccountService();
+      const userInfo = await accountService.getProfile(token);
+      createdBy = `${userInfo.first_name} ${userInfo.last_name}` || "Unknown";
+    }
+
+    // Pass createdBy to the service
+    const result = await cartographieService.environment.createEnvironment({
+      ...request.body,
+      createdBy, 
+    });
+
     return reply.code(201).send({
       success: true,
       data: result

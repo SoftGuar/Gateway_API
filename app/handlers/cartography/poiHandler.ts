@@ -1,6 +1,7 @@
 // handlers/maintainer/poiHandler.ts
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { CartographieService } from '../../services/cartographie/cartographie.service';
+import { AccountService } from '../../services/account/account.service';
 
 const cartographieService = new CartographieService();
 
@@ -20,7 +21,15 @@ export async function createPOIHandler(
   reply: FastifyReply
 ) {
   try {
-    const result = await cartographieService.poi.createPOI(request.body);
+    const authHeader = request.headers.authorization;
+            let createdBy = 'unknown';
+            if (authHeader) {
+              const token = authHeader.split(' ')[1];
+              const accountService = new AccountService();
+              const userInfo = await accountService.getProfile(token);
+              createdBy = `${userInfo.first_name} ${userInfo.last_name}` || "Unknown";
+            }
+    const result = await cartographieService.poi.createPOI({ ...request.body, createdBy });
     return reply.code(201).send({
       success: true,
       data: result
@@ -77,8 +86,16 @@ export async function updatePOIHandler(
   reply: FastifyReply
 ) {
   try {
+    const authHeader = request.headers.authorization;
+    let updatedBy = 'unknown';
+    if (authHeader) {
+      const token = authHeader.split(' ')[1];
+      const accountService = new AccountService();
+      const userInfo = await accountService.getProfile(token);
+      updatedBy = `${userInfo.first_name} ${userInfo.last_name}` || "Unknown";
+    }
     const { id } = request.params;
-    const result = await cartographieService.poi.updatePOI(id, request.body);
+    const result = await cartographieService.poi.updatePOI(id, { ...request.body, updatedBy });
     if (!result) {
       return reply.code(404).send({
         success: false,
@@ -104,8 +121,16 @@ export async function deletePOIHandler(
   reply: FastifyReply
 ) {
   try {
+    const authHeader = request.headers.authorization;
+    let deletedBy = 'unknown';
+    if (authHeader) {
+      const token = authHeader.split(' ')[1];
+      const accountService = new AccountService();
+      const userInfo = await accountService.getProfile(token);
+      deletedBy = `${userInfo.first_name} ${userInfo.last_name}` || "Unknown";
+    }
     const { id } = request.params;
-    const result = await cartographieService.poi.deletePOI(id);
+    const result = await cartographieService.poi.deletePOI(id,deletedBy);
     if (!result) {
       return reply.code(404).send({
         success: false,

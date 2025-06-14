@@ -1,5 +1,6 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { CartographieService } from '../../services/cartographie/cartographie.service';
+import { AccountService } from '../../services/account/account.service';
 import { FloorCreateData, FloorUpdateData } from '../../services/cartographie/types';
 
 const cartographieService = new CartographieService();
@@ -30,7 +31,15 @@ export async function createFloorHandler(
   reply: FastifyReply
 ) {
   try {
-    const result = await cartographieService.floor.createFloor(request.body);
+    const authHeader = request.headers.authorization;
+    let createdBy = 'unknown';
+    if (authHeader) {
+      const token = authHeader.split(' ')[1];
+      const accountService = new AccountService();
+      const userInfo = await accountService.getProfile(token);
+      createdBy = `${userInfo.first_name} ${userInfo.last_name}` || "Unknown";
+    }
+    const result = await cartographieService.floor.createFloor({ ...request.body, createdBy });
     return reply.code(201).send({
       success: true,
       data: result
@@ -71,8 +80,16 @@ export async function updateFloorHandler(
   reply: FastifyReply
 ) {
   try {
+    const authHeader = request.headers.authorization;
+    let updatedBy = 'unknown';
+    if (authHeader) {
+      const token = authHeader.split(' ')[1];
+      const accountService = new AccountService();
+      const userInfo = await accountService.getProfile(token);
+      updatedBy = `${userInfo.first_name} ${userInfo.last_name}` || "Unknown";
+    }
     const { id } = request.params;
-    const result = await cartographieService.floor.updateFloor(id, request.body);
+    const result = await cartographieService.floor.updateFloor(id, { ...request.body, updatedBy });
     return reply.code(200).send({
       success: true,
       data: result
