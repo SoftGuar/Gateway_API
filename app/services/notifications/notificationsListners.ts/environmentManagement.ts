@@ -23,11 +23,11 @@ export default function setupNotificationListenersEnvironment() {
             recipient: adminRecipients,
             message: {
               subject: "New Environment Created",
-              body: `A new environment "${data.name}" has been created by ${data.createdBy || 'unknown'}.`,
+              body: `A new environment "${data.name}" has been created.`,
               attachments: [],
               pushNotification: {
                 title: "New Environment",
-                body: `${data.name} has been created by ${data.createdBy || 'unknown'}`,
+                body: `${data.name} has been created.`,
               },
             },
             schedule: undefined,
@@ -54,11 +54,11 @@ export default function setupNotificationListenersEnvironment() {
             recipient: adminRecipients,
             message: {
               subject: "New Zone Created",
-              body: `A new zone "${data.zoneName}" has been created by ${data.createdBy || 'unknown'}.`,
+              body: `A new zone "${data.zoneName}" has been created.`,
               attachments: [],
               pushNotification: {
                 title: "New Zone",
-                body: `${data.zoneName} has been created by ${data.createdBy || 'unknown'}`,
+                body: `${data.zoneName} has been created.`,
               },
             },
             schedule: undefined,
@@ -85,11 +85,11 @@ export default function setupNotificationListenersEnvironment() {
             recipient: adminRecipients,
             message: {
               subject: "Zone Updated",
-              body: `The zone "${data.zoneName}" has been updated by ${data.updatedBy || 'unknown'}.`,
+              body: `The zone "${data.zoneName}" has been updated.`,
               attachments: [],
               pushNotification: {
                 title: "Zone Updated",
-                body: `${data.zoneName} has been updated by ${data.updatedBy || 'unknown'}`,
+                body: `${data.zoneName} has been updated.`,
               },
             },
             schedule: undefined,
@@ -116,11 +116,11 @@ export default function setupNotificationListenersEnvironment() {
             recipient: adminRecipients,
             message: {
               subject: "Zone Deleted",
-              body: `The zone "${data.zoneId}" has been deleted by ${data.deletedBy || 'unknown'}.`,
+              body: `The zone "${data.zoneId}" has been deleted.`,
               attachments: [],
               pushNotification: {
                 title: "Zone Deleted",
-                body: `${data.zoneId} has been deleted by ${data.deletedBy || 'unknown'}`,
+                body: `${data.zoneId} has been deleted.`,
               },
             },
             schedule: undefined,
@@ -148,11 +148,11 @@ export default function setupNotificationListenersEnvironment() {
             recipient: adminRecipients,
             message: {
               subject: "New POI Created",
-              body: `A new POI "${data.poiName}" has been created by ${data.createdBy || 'unknown'}.`,
+              body: `A new POI "${data.poiName}" has been created.`,
               attachments: [],
               pushNotification: {
                 title: "New POI",
-                body: `${data.poiName} has been created by ${data.createdBy || 'unknown'}`,
+                body: `${data.poiName} has been created`,
               },
             },
             schedule: undefined,
@@ -178,11 +178,11 @@ export default function setupNotificationListenersEnvironment() {
             recipient: adminRecipients,
             message: {
               subject: "POI Updated",
-              body: `The POI "${data.poiName}" has been updated by ${data.updatedBy || 'unknown'}.`,
+              body: `The POI "${data.poiName}" has been updated.`,
               attachments: [],
               pushNotification: {
                 title: "POI Updated",
-                body: `${data.poiName} has been updated by ${data.updatedBy || 'unknown'}`,
+                body: `${data.poiName} has been updated.`,
               },
             },
             schedule: undefined,
@@ -208,11 +208,11 @@ export default function setupNotificationListenersEnvironment() {
             recipient: adminRecipients,
             message: {
               subject: "POI Deleted",
-              body: `The POI "${data.poiId}" has been deleted by ${data.deletedBy || 'unknown'}.`,
+              body: `The POI "${data.poiId}" has been deleted.`,
               attachments: [],
               pushNotification: {
                 title: "POI Deleted",
-                body: `${data.poiId} has been deleted by ${data.deletedBy || 'unknown'}`,
+                body: `${data.poiId} has been deleted.`,
               },
             },
             schedule: undefined,
@@ -239,11 +239,11 @@ export default function setupNotificationListenersEnvironment() {
           recipient: adminRecipients,
           message: {
             subject: "New Floor Created",
-            body: `A new floor "${data.floorName}" has been created by ${data.createdBy || 'unknown'}.`,
+            body: `A new floor "${data.floorName}" has been created.`,
             attachments: [],
             pushNotification: {
               title: "New Floor",
-              body: `${data.floorName} has been created at environment ${data.environmentId} by ${data.createdBy || 'unknown'}`,
+              body: `${data.floorName} has been created at environment ${data.environmentId}.`,
             },
           },
           schedule: undefined,
@@ -269,11 +269,11 @@ export default function setupNotificationListenersEnvironment() {
           recipient: adminRecipients,
           message: {
             subject: "Floor Updated",
-            body: `The floor "${data.floorId}" has been updated by ${data.updatedBy || 'unknown'}.`,
+            body: `The floor "${data.floorId}" has been updated.`,
             attachments: [],
             pushNotification: {
               title: "Floor Updated",
-              body: `${data.floorId} has been updated by ${data.updatedBy || 'unknown'}`,
+              body: `${data.floorId} has been updated.`,
             },
           },
           schedule: undefined,
@@ -298,11 +298,11 @@ export default function setupNotificationListenersEnvironment() {
           recipient: adminRecipients,
           message: {
             subject: "Floor Deleted",
-            body: `The floor "${data.floorId}" has been deleted by ${data.deletedBy || 'unknown'}.`,
+            body: `The floor "${data.floorId}" has been deleted.`,
             attachments: [],
             pushNotification: {
               title: "Floor Deleted",
-              body: `${data.floorId} has been deleted by ${data.deletedBy || 'unknown'}`,
+              body: `${data.floorId} has been deleted.`,
             },
           },
           schedule: undefined,

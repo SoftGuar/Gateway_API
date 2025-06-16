@@ -7,9 +7,17 @@ import { WebSocket } from "ws";
 export const inAppChannelService={
     async  sendNotification(notification: NotificationPayload) {
         const notificationMessage = JSON.stringify({
-            type: "notification",
-            data: notification,
-            timestamp: new Date().toISOString()
+            id: notification.requestId,
+            user_id: notification.recipient?.[0]?.userId ?? null,
+            user_type: notification.recipient?.[0]?.userType ?? null,
+            type: notification.notificationType,
+            title: notification.message.pushNotification?.title || notification.message.body,
+            message: notification.message.pushNotification?.body || notification.message.body,
+            metadata: notification.metadata,
+            is_read: false,
+            created_at: notification.timestamp,
+            sent_at: notification.schedule?.sendAt ?? notification.timestamp,
+            read_at: null
         });
         activeConnections.forEach((connection, connectionId) => {
             // Skip if connection is not open

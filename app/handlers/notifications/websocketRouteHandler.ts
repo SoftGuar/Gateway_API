@@ -13,16 +13,24 @@ export const websocketRouteHandler=(
     connection: WebSocket
 )=>{
     const connectionId = Math.random().toString(36).substring(2, 15);
-            const connectionData: ActiveConnection = {
-                socket: connection,
-                user_id: Number(req.params.user_id),
-                user_type: req.params.user_type,
-                topics: []
-            };
-            activeConnections.set(connectionId, connectionData);
-            console.log(activeConnections)
-            connection.on("message", (message) => {
-                try {
+    //verify that userID and userType doesn't exist in activeConnections already
+    for (const [id, connData] of activeConnections.entries()) {
+        if (connData.user_id === req.params.user_id && connData.user_type === req.params.user_type) {
+            console.log(`User with ID ${req.params.user_id} and type ${req.params.user_type} is already connected.`);
+            connection.close(1000, "User already connected");
+            return;
+        }
+    }
+    const connectionData: ActiveConnection = {
+        socket: connection,
+        user_id: Number(req.params.user_id),
+        user_type: req.params.user_type,
+        topics: []
+    };
+    activeConnections.set(connectionId, connectionData);
+    console.log(activeConnections)
+    connection.on("message", (message) => {
+        try {
                     const parsed = JSON.parse(message.toString());
                     console.log("Received:", parsed);
     
