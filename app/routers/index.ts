@@ -18,6 +18,7 @@ import superAdminRouter from './superAdmin/superAdmin.router';
 
 import { FastifyInstance, FastifyPluginOptions } from 'fastify';
 import registerRoutesNotifications from './notifications';
+import NavigationRouter from './user/env/navigate.route';
 
   const registerRoutes = (fastify: FastifyInstance) => {
   // Register example routes with a prefix
@@ -47,7 +48,7 @@ import registerRoutesNotifications from './notifications';
   fastify.register(userHelperRouter, { prefix: '/user' });
 
     fastify.register(UserenvironmentRouter, { prefix: '/user/environment' });
-
+    fastify.register(NavigationRouter, { prefix: '/navigation' });
 
 
   // Register login routes

@@ -4,6 +4,7 @@ import { FloorService } from './floor.service';
 import { FloorPlanService } from './floor_plan_processing.service';
 import { POIService } from './poi.service';
 import { ZoneService } from './zones.service';
+import { NavigationService } from './navigation.service';
 
 export class CartographieService {
   private baseUrl: string;
@@ -12,6 +13,7 @@ export class CartographieService {
   public floorPlan: FloorPlanService;
   public poi: POIService;
   public zone: ZoneService;
+  public navigation: NavigationService;
 
   constructor() {
     this.baseUrl = Config.getInstance().getCartographieServiceIP();
@@ -22,6 +24,7 @@ export class CartographieService {
     this.floorPlan = new FloorPlanService(this.baseUrl);
     this.poi = new POIService(this.baseUrl);
     this.zone = new ZoneService(this.baseUrl);
+    this.navigation = new NavigationService(this.baseUrl);
   }
 
   getBaseUrl(): string {
