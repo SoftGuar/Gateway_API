@@ -143,3 +143,22 @@ export interface ZoneTypeResponse {
   name: string;
   description?: string;
 }
+
+export interface NavigationRequest {
+  floor: string;
+  poi: string;
+  poi1?: string;
+  x_start?: number;
+  y_start?: number;
+  current_orientation?: number;
+}
+
+export interface NavigationObstacleRequest {
+  floor: string;
+  poi: string;
+  x: number;
+  y: number;
+  distance: number;
+  orientation: number;
+  environment?: string;
+}

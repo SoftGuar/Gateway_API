@@ -13,6 +13,17 @@ const AdminType = Type.Object({
   privilege: Type.Number()
 });
 
+const GetAdminType = Type.Object({
+  id: Type.Number(),
+  first_name: Type.String(),
+  last_name: Type.String(),
+  email: Type.String({ format: 'email' }),
+  phone: Type.Optional(Type.String()),
+  privilege: Type.Number(),
+  created_at: Type.String({ format: 'date-time' }),
+  updated_at: Type.String({ format: 'date-time' })
+});
+
 export const createAdminSchema = {
   tags: ['SuperAdmin : Administrators Management'],
   headers: authHeader,
@@ -38,7 +49,7 @@ export const getAdminsSchema = {
   response: {
     200: Type.Object({
       success: Type.Literal(true),
-      data: Type.Array(AdminType)
+      data: Type.Array(GetAdminType)
     })
   }
 };
@@ -52,7 +63,7 @@ export const getAdminByIdSchema = {
   response: {
     200: Type.Object({
       success: Type.Literal(true),
-      data: AdminType
+      data: GetAdminType
     }),
     404: Type.Object({
       success: Type.Literal(false),

@@ -1,3 +1,4 @@
+import { appEmitter } from '../notifications/event';
 import { EnvironmentType, EnvironmentCreateData, Floor } from './types';
 
 export class EnvironmentService {
@@ -8,7 +9,7 @@ export class EnvironmentService {
   }
 
   // POST /environments
-  async createEnvironment(environmentData: EnvironmentCreateData): Promise<EnvironmentType> {
+  async createEnvironment(environmentData: EnvironmentCreateData & { createdBy?: string }): Promise<EnvironmentType> {
     const response = await fetch(`${this.baseUrl}/environments`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -17,6 +18,8 @@ export class EnvironmentService {
     if (!response.ok) {
       throw new Error('Failed to create environment');
     }
+    // Emit event with createdBy info
+    appEmitter.emit('environment.created', environmentData);
     const payload = await response.json();
     return payload.data || payload;
   }

@@ -29,32 +29,6 @@ export class UserSessionsService {
     }
   }
 
-  static async getUserRatings() {
-    try {
-      const response = await fetch(`${this.analyticsBaseUrl}/users/ratings`);
-      if (!response.ok) {
-        throw new Error(`Error fetching user ratings: ${response.statusText}`);
-      }
-      return await response.json();
-    } catch (error) {
-      console.error("Error fetching user ratings:", error);
-      throw error;
-    }
-  }
-
-  static async getUserFeedback() {
-    try {
-      const response = await fetch(`${this.analyticsBaseUrl}/users/feedback`);
-      if (!response.ok) {
-        throw new Error(`Error fetching user feedback: ${response.statusText}`);
-      }
-      return await response.json();
-    } catch (error) {
-      console.error("Error fetching user feedback:", error);
-      throw error;
-    }
-  }
-
   static async getUserSessionDuration() {
     try {
       const response = await fetch(`${this.analyticsBaseUrl}/users/session-durations`);

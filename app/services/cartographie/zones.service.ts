@@ -1,3 +1,4 @@
+import { appEmitter } from '../notifications/event';
 import { ZoneType, ZoneCreateData, ZoneUpdateData, ZoneTypeResponse } from './types';
 
 export class ZoneService {
@@ -8,7 +9,7 @@ export class ZoneService {
   }
 
   // POST /zones
-  async createZone(zoneData: ZoneCreateData): Promise<ZoneType> {
+  async createZone(zoneData: ZoneCreateData & { createdBy?: string }): Promise<ZoneType> {
     const response = await fetch(`${this.baseUrl}/zones`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -17,6 +18,11 @@ export class ZoneService {
     if (!response.ok) {
       throw new Error('Failed to create zone');
     }
+    // Emit event with createdBy info
+    appEmitter.emit('zone.created', {
+      zoneName: zoneData.name,
+      createdBy: zoneData.createdBy || 'unknown',
+    });
     const payload = await response.json();
     return payload.data || payload;
   }
@@ -46,7 +52,7 @@ export class ZoneService {
   }
 
   // PUT /zones/:id
-  async updateZone(id: string, updateData: ZoneUpdateData): Promise<ZoneType> {
+  async updateZone(id: string, updateData: ZoneUpdateData & { updatedBy?: string }): Promise<ZoneType> {
     const response = await fetch(`${this.baseUrl}/zones/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
@@ -55,18 +61,25 @@ export class ZoneService {
     if (!response.ok) {
       throw new Error('Failed to update zone');
     }
+    // Emit event with updatedBy info
+    appEmitter.emit('zone.updated', {
+      zoneName: updateData.name,
+      updatedBy: updateData.updatedBy || 'unknown',
+    });
     const payload = await response.json();
     return payload.data || payload;
   }
 
   // DELETE /zones/:id
-  async deleteZone(id: string): Promise<{ message: string }> {
+  async deleteZone(id: string, deletedBy: string): Promise<{ message: string }> {
     const response = await fetch(`${this.baseUrl}/zones/${id}`, {
       method: 'DELETE'
     });
     if (!response.ok) {
       throw new Error('Failed to delete zone');
     }
+    // Emit event for zone deletion
+    appEmitter.emit('zone.deleted', { zoneId: id, deletedBy:  deletedBy });
     return await response.json();
   }
 

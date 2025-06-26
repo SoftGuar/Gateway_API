@@ -1,4 +1,5 @@
 import { Config } from '../../services.config';
+import { appEmitter } from '../notifications/event';
 import { DispositiveType,ProductType} from './types';
 
 
@@ -36,6 +37,7 @@ export class DispositiveService {
                   throw new Error('Failed to create dispositive');
                 }
                 const payload = await response.json();
+                appEmitter.emit("device.registered",DispositiveData)
                 return payload.data;
               }
             
@@ -100,6 +102,17 @@ export class DispositiveService {
                   throw new Error('Failed to assign user');
                 }
                 const payload = await response.json();
+                // Run the event emission in a separate microtask (non-blocking)
+                Promise.resolve().then(() => {
+                  try {
+                    appEmitter.emit("sale.completed", {
+                      deviceId: id,
+                      userId: userId,
+                    });
+                  } catch (error) {
+                    console.error("Error emitting sale.completed event:", error);
+                  }
+                });
                 return payload.data;
           }
               
@@ -114,6 +127,9 @@ export class DispositiveService {
                       throw new Error('Process failed');
                     }
                     const payload = await response.json();
+                    appEmitter.emit("device.blocked",{
+                      deviceId:id
+                    })
                     return payload.data;
                   }
 

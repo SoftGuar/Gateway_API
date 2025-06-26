@@ -1,4 +1,5 @@
 import { Config } from '../../services.config';
+import { appEmitter } from '../notifications/event';
 
 import { CommercialType } from './types';
 
@@ -28,6 +29,12 @@ export class CommercialService {
       if (!response.ok) {
         throw new Error('Failed to create Commercial');
       }
+      // send notification
+      appEmitter.emit("user.created", {
+        type: 'Commercial',
+        email: CommercialData.email,
+        name: CommercialData.first_name + ' ' + CommercialData.last_name
+      });
       const payload = await response.json();
       return payload.data;
     }
@@ -67,6 +74,11 @@ export class CommercialService {
       if (!response.ok) {
         throw new Error('Failed to update Commercial');
       }
+      // send notification
+      appEmitter.emit("user.updated", {
+        type: 'COMMERCIAL',
+        id: id,
+      });
       const payload = await response.json();
       return payload.data;
     }

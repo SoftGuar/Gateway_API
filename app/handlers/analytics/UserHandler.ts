@@ -20,26 +20,6 @@ export class UserHandler {
     }
   }
 
-  static async getUserRatings(req: FastifyRequest, reply: FastifyReply) {
-    try {
-      const ratings = await UserSessionsService.getUserRatings();
-      reply.status(200).send(ratings);
-    } catch (error) {
-      console.error("Error in getUserRatings handler:", error);
-      reply.status(500).send({ error: "Failed to fetch user ratings" });
-    }
-  }
-
-  static async getUserFeedback(req: FastifyRequest, reply: FastifyReply) {
-    try {
-      const feedback = await UserSessionsService.getUserFeedback();
-      reply.status(200).send(feedback);
-    } catch (error) {
-      console.error("Error in getUserFeedback handler:", error);
-      reply.status(500).send({ error: "Failed to fetch user feedback" });
-    }
-  }
-
   static async getUserSessionDuration(
     req: FastifyRequest,
     reply: FastifyReply

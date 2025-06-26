@@ -1,17 +1,17 @@
 export const deviceSchemas={ 
     DeviceTotalSchema : { schema: {
-        description: 'Get the total number of devices',
-        tags: ['Analytics: Devices'],
-        response: {
-            200: {
-                type: 'object',
-                properties: {
-                    total_devices: { type: 'number' }
-                },
-                required: ['total_devices']
-            }
+    description: 'Get the total number of devices',
+    tags: ['Analytics: Devices'],
+    response: {
+        200: {
+            type: 'object',
+            properties: {
+                total_devices: { type: 'number' }
+            },
+            required: ['total_devices']
         }
-    }},
+    }
+}},
     DeviceStatusSchema : { schema: {
     description: 'Get the status of all devices',
     tags: ['Analytics: Devices'],
@@ -151,12 +151,11 @@ DevicePerformanceSchema: { schema: {
                 type: 'object',
                 properties: {
                     device_id: { type: 'number' },
-                    device_mac: { type: 'string' },
-                    avg_battery_level: { type: 'number', nullable: true },
-                    total_issues: { type: 'number' },
-                    avg_days_to_first_issue: { type: 'number', nullable: true }
+                    issues_count: { type: 'number' },
+                    interventions_count: { type: 'number' },
+                    avg_battery_level: { type: 'number' },
                 },
-                required: ['device_id', 'device_mac', 'total_issues']
+                required: ['device_id', 'avg_battery_level', 'interventions_count']
             }
         }
     }

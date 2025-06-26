@@ -1,4 +1,5 @@
 import { Config } from '../../services.config';
+import { appEmitter } from '../notifications/event';
 import { InterventionStatus,InterventionType, ReportType } from './types';
 
 
@@ -46,6 +47,8 @@ export class InterventionService {
       throw new Error('Failed to create intervention');
     }
     const payload = await response.json();
+    // send notification
+    appEmitter.emit("Intervention.created", interventionData);
     return payload.data;
   }
 

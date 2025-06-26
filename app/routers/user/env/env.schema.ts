@@ -68,3 +68,49 @@ export const getEnvironmentByIdSchema = {
 };
 
 
+export const navigateSchema = {
+  tags: ['User : Environment management'],
+  headers: authHeader,
+  body: Type.Object({
+    floor: Type.String(),
+    poi: Type.String(),
+    poi1: Type.Optional(Type.String()),
+    x_start: Type.Optional(Type.Number()),
+    y_start: Type.Optional(Type.Number()),
+    current_orientation: Type.Optional(Type.Number())
+  }),
+  response: {
+    200: Type.Object({
+      success: Type.Literal(true),
+      data: Type.Any()
+    }),
+    404: Type.Object({
+      success: Type.Literal(false),
+      message: Type.String()
+    })
+  }
+};
+
+export const navigateWithObstacleSchema = {
+  tags: ['User : Environment management'],
+  headers: authHeader,
+  body: Type.Object({
+    floor: Type.String(),
+    poi: Type.String(),
+    x: Type.Number(),
+    y: Type.Number(),
+    distance: Type.Number(),
+    orientation: Type.Number(),
+    environment: Type.Optional(Type.String())
+  }),
+  response: {
+    200: Type.Object({
+      success: Type.Literal(true),
+      data: Type.Any()
+    }),
+    404: Type.Object({
+      success: Type.Literal(false),
+      message: Type.String()
+    })
+  }
+};

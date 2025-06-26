@@ -1,3 +1,4 @@
+import { appEmitter } from '../notifications/event';
 import { POIType, POICreateData, POIUpdateData, CategoryType } from './types';
 
 export class POIService {
@@ -8,7 +9,7 @@ export class POIService {
   }
 
   // POST /pois
-  async createPOI(poiData: POICreateData): Promise<POIType> {
+  async createPOI(poiData: POICreateData & { createdBy?: string }): Promise<POIType> {
     const response = await fetch(`${this.baseUrl}/pois`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -17,6 +18,11 @@ export class POIService {
     if (!response.ok) {
       throw new Error('Failed to create POI');
     }
+    // Emit event with createdBy info
+    appEmitter.emit('poi.created', {
+      poiName: poiData.name,
+      createdBy: poiData.createdBy || 'unknown',
+    });
     const payload = await response.json();
     return payload.data || payload;
   }
@@ -46,7 +52,7 @@ export class POIService {
   }
 
   // PUT /pois/:id
-  async updatePOI(id: string, updateData: POIUpdateData): Promise<POIType> {
+  async updatePOI(id: string, updateData: POIUpdateData & { updatedBy?: string }): Promise<POIType> {
     const response = await fetch(`${this.baseUrl}/pois/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
@@ -55,18 +61,25 @@ export class POIService {
     if (!response.ok) {
       throw new Error('Failed to update POI');
     }
+    // Emit event with updatedBy info
+    appEmitter.emit('poi.updated', {
+      poiName: updateData.name,
+      updatedBy: updateData.updatedBy || 'unknown',
+    });
     const payload = await response.json();
     return payload.data || payload;
   }
 
   // DELETE /pois/:id
-  async deletePOI(id: string): Promise<{ message: string }> {
+  async deletePOI(id: string, deletedBy: string): Promise<{ message: string }> {
     const response = await fetch(`${this.baseUrl}/pois/${id}`, {
       method: 'DELETE'
     });
     if (!response.ok) {
       throw new Error('Failed to delete POI');
     }
+    // Emit event for deletion
+    appEmitter.emit('poi.deleted', { poiId: id, deletedBy: deletedBy });
     return await response.json();
   }
 
